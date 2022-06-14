@@ -42,7 +42,6 @@ export class BuyerComponent implements OnInit {
       next: (res) => {
         if (res.data) {
           this.customer = res.data;
-          console.log(this.customer);
         } else {
           this.router.navigateByUrl('/dashboard/customers');
         }

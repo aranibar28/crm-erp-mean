@@ -1,1 +1,95 @@
-<p>call-customer works!</p> 
+<ng-container *ngIf="load_data">
+    <div class="text-center text-warning" colspan="8">
+        <span>Cargando...</span>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!load_data">
+    <a class="btn btn-info font-weight-bolder font-size-sm mr-3 pointer" data-toggle="modal" [attr.data-target]="'#modalLlamada'">
+        Nueva llamada
+    </a>
+    <hr class="mb-5">
+    <div *ngIf="this.calls.length === 0" class="text-center text-warning" colspan="8">
+        <span>No hay resultados.</span>
+    </div>
+    <div *ngFor="let item of calls | paginate: { itemsPerPage: 5, currentPage: p }" class="mb-3">
+        <div class="d-flex align-items-center flex-grow-1">
+            <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
+                <div class="d-flex flex-column align-items-cente py-2 w-75">
+                    <a class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">
+                        {{ item.result }} | {{ item.advisor?.full_name || 'Sin asesor' }}
+                    </a>
+                    <span class="text-muted font-weight-bold">
+                        {{ item.date | date }} - {{ item.time }}
+                    </span>
+                    <span class="text-muted font-weight-bold">
+                        {{ item.note || 'Sin comentarios' }}
+                    </span>
+                </div>
+                <span class="label label-lg label-light-primary label-inline font-weight-bold py-4"> {{ item.created_at | date }} </span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event"></pagination-controls>
+    </div>
+</ng-container>
+
+
+<div class="modal fade" id="modalLlamada" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form  (ngSubmit)="register()" [formGroup]="myForm" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar nueva llamada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <h3 class="font-size-lg text-dark font-weight-bold mb-6">1. General:</h3>
+                <div class="mb-15">
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Fecha (*):</label>
+                        <div class="col-lg-8">
+                            <input formControlName="date" type="date" class="form-control" />
+                            <small *ngIf="validators('date')" class="text-danger"> Este campo es obligatorio. </small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Resultado (*):</label>
+                        <div class="col-lg-8">
+                            <select formControlName="result" name="" class="form-control">
+                                <option value="" selected disabled>Seleccionar</option>
+                                <option value="Ocupado">Ocupado</option>
+                                <option value="Conectado">Conectado</option>
+                                <option value="Dejo un mensaje">Dejo un mensaje</option>
+                                <option value="Sin respuesta">Sin respuesta</option>
+                                <option value="N° Incorrecto">N° Incorrecto</option>
+                                <option value="Proxima llamada">Proxima llamada</option>
+                                <option value="Venta cerrada">Venta cerrada</option>
+                            </select>
+                            <small *ngIf="validators('result')" class="text-danger"> Este campo es obligatorio. </small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label">Hora (*):</label>
+                        <div class="col-lg-8">
+                            <input formControlName="time" type="time" class="form-control"  min="09:00" max="18:00">
+                            <small *ngIf="validators('time')" class="text-danger"> Este campo es obligatorio. </small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                       <div class="col-lg-12">
+                        <textarea formControlName="note" class="form-control" rows="4" placeholder="Alguna nota o información"></textarea>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                <button *ngIf="!load_btn" type="submit" class="btn btn-primary font-weight-bold">Crear</button>
+                <button *ngIf="load_btn" class="btn btn-primary font-weight-bold spinner spinner-white spinner-left">Creando</button>
+            </div>
+        </form>
+    </div>
+</div>

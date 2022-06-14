@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 const base_url = environment.base_url + '/customer';
 declare var $: any;
@@ -9,17 +9,6 @@ declare var $: any;
   providedIn: 'root',
 })
 export class CustomerService {
-  private title = new BehaviorSubject<String>('App title');
-  private title$ = this.title.asObservable();
-
-  setTitle(title: String) {
-    this.title.next(title);
-  }
-
-  getTitle(): Observable<String> {
-    return this.title$;
-  }
-
   constructor(private http: HttpClient) {}
 
   get token(): string {
@@ -91,27 +80,27 @@ export class CustomerService {
     {
       title: 'Actividades',
       path: 'prospect',
-      class: 'btn btn-danger'
+      class: 'btn btn-danger',
     },
     {
       title: 'Intereses',
       path: 'interest',
-      class: 'btn btn-warning'
+      class: 'btn btn-warning',
     },
     {
       title: 'LLamadas',
       path: 'call',
-      class: 'btn btn-success'
+      class: 'btn btn-success',
     },
     {
       title: 'Correos',
       path: 'mail',
-      class: 'btn btn-info'
+      class: 'btn btn-info',
     },
     {
       title: 'Tareas',
       path: 'task',
-      class: 'btn btn-dark'
+      class: 'btn btn-dark',
     },
   ];
 }

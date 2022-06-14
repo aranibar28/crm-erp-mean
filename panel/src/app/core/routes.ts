@@ -39,6 +39,7 @@ const childRoutes: Routes = [
       { path: 'mail', component: MailCustomerComponent, title: 'Correos'},
       { path: 'call', component: CallCustomerComponent, title: 'Llamadas'},
       { path: 'task', component: TaskCustomerComponent, title: 'Tareas'},
+      { path: '**', redirectTo: 'Dashboard' },
     ],
   },
 
