@@ -1,0 +1,184 @@
+<div class="card card-custom card-shadowless rounded-top-0">
+    <!--begin::Body-->
+    <div class="card-header border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">Clientes
+            <span class="text-muted pt-2 font-size-sm d-block">Formulario para actualizar un cliente</span></h3>
+        </div>
+        <div class="card-toolbar">
+            <a routerLink="/dashboard/collaborator" class="btn btn-warning"><i class="las la-undo mr-1"></i>Volver Atrás</a>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="row justify-content-center py-8 px-8 px-lg-10">
+            <div class="col-md-10">
+                <!--begin::Wizard Form-->
+                <form (ngSubmit)="register()" [formGroup]="myForm" class="form" id="kt_form" autocomplete="off">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-9">
+                            <!--begin::Wizard Step 1-->
+                            <div class="my-5 step" data-wizard-type="step-content" data-wizard-state="current">
+                                <h5 class="text-dark font-weight-bold mb-10">Datos personales:</h5>
+                                
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Nombres <span class="text-danger">*</span></label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <input formControlName="first_name" class="form-control form-control-solid form-control-lg" type="text" placeholder="Nombres"/>
+                                        <small *ngIf="validators('first_name')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Apellidos <span class="text-danger">*</span></label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <input formControlName="last_name" class="form-control form-control-solid form-control-lg" type="text" placeholder="Apellidos"/>
+                                        <small *ngIf="validators('last_name')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Email <span class="text-danger">*</span></label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <input formControlName="email" class="form-control form-control-solid form-control-lg" type="text" placeholder="Correo eletrónico"/>
+                                        <small *ngIf="validators('email')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Password <span class="text-danger">*</span></label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <input formControlName="password" class="form-control form-control-solid form-control-lg" type="password" placeholder="Password"/>
+                                        <small *ngIf="validators('password')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Telefono</label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <div class="input-group input-group-solid input-group-lg">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="la la-phone"></i>
+                                                </span>
+                                            </div>
+                                            <input formControlName="phone" type="text" class="form-control form-control-solid form-control-lg" placeholder="Telefono"/>
+                                        </div>
+                                        <small *ngIf="validators('phone')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Documento</label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <div class="input-group input-group-solid input-group-lg">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="la la-id-card"></i>
+                                                </span>
+                                            </div>
+                                            <input formControlName="dni" type="text" class="form-control form-control-solid form-control-lg" placeholder="Número de documento"/>
+                                        </div>
+                                        <small *ngIf="validators('dni')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Género</label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <select formControlName="genre" class="form-control form-control-solid form-control-lg">
+                                            <option value="" selected disabled>Seleccionar</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
+                                        <small *ngIf="validators('genre')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                 <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Nacimiento <span class="text-danger">*</span></label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <input formControlName="birthday" class="form-control form-control-solid form-control-lg" type="date" />
+                                        <small *ngIf="validators('birthday')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">País</label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <select formControlName="country" class="form-control form-control-solid form-control-lg">
+                                            <option value="" selected disabled>Seleccionar país...</option>
+                                            <option value="Argentina">Argentina</option>
+                                            <option value="Bolivia">Bolivia</option>
+                                            <option value="Brasil">Brasil</option>
+                                            <option value="Chile">Chile</option>
+                                            <option value="Colombia">Colombia</option>
+                                            <option value="Costa Rica">Costa Rica</option>
+                                            <option value="Cuba">Cuba</option>
+                                            <option value="Ecuador">Ecuador</option>
+                                            <option value="El Salvador">El Salvador</option>
+                                            <option value="España">España</option>
+                                            <option value="Estados Unidos">Estados Unidos</option>
+                                            <option value="Guatemala">Guatemala</option>
+                                            <option value="Haití">Haití</option>
+                                            <option value="Honduras">Honduras</option>
+                                            <option value="México">México</option>
+                                            <option value="Nicaragua">Nicaragua</option>
+                                            <option value="Panamá">Panamá</option>
+                                            <option value="Paraguay">Paraguay</option>
+                                            <option value="Perú">Perú</option>
+                                            <option value="República Dominican">República Dominican</option>
+                                            <option value="Uruguay">Uruguay</option>
+                                            <option value="Venezuela">Venezuela</option>
+                                            <option value="Otro">Otro</option>
+                                        </select>
+                                        <small *ngIf="validators('country')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <!--end::Group-->
+                                <!--begin::Group-->
+                                <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label">City</label>
+                                <div class="col-lg-9 col-xl-9">
+                                    <select formControlName="city" class="form-control form-control-solid form-control-lg">
+                                        <option value="" selected disabled>Seleccionar ciudad...</option>
+                                        <option value="Argentina">Argentina</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                    <small *ngIf="validators('city')" class="text-danger"> Este campo es obligatorio. </small>
+                                </div>
+                            </div>
+                            <!--end::Group-->
+                            </div>
+                            <!--end::Wizard Step 1-->
+                         
+                            <!--begin::Wizard Actions-->
+                            <div class="d-flex justify-content-between border-top pt-10 mt-15">
+                                <div class="mr-2">
+                                    <a class="btn btn-light-primary font-weight-bolder px-9 py-4" data-wizard-type="action-prev">Regresar</a>
+                                </div>
+                                <button *ngIf="!load_btn" type="submit" class="btn btn-success font-weight-bolder px-9 py-4">
+                                    Guardar <i class="fa fa-save ml-2"></i>
+                                </button>
+                                <button *ngIf="load_btn" type="button" class="btn btn-success font-weight-bolder px-9 py-4" disabled>
+                                    Guardando <i class="spinner-grow spinner-grow-sm ml-2"></i>
+                                </button>
+                            </div>
+                            <!--end::Wizard Actions-->
+                        </div>
+                    </div>
+                </form>
+                <!--end::Wizard Form-->
+            </div>
+        </div>
+    </div>
+    <!--end::Body-->
+</div>

@@ -1,0 +1,38 @@
+<div class="d-flex flex-column flex-root" style="height: 100vh; background-color:#dbc9ec !important;">
+    <!--begin::Login-->
+    <div class="login login-signin-on login-2 d-flex flex-row-fluid" id="kt_login">
+        <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid">
+            <div class="login-form text-center  p-7 position-relative overflow-hidden" style="min-width: 380px;">
+                <!--begin::Login Header-->
+                <div class="d-flex flex-center mb-15">
+                    <a>
+                        <img src="assets/media/logos/logo-letter-9.png" class="max-h-100px" alt="" />
+                    </a>
+                </div>
+                <!--end::Login Header-->
+                <!--begin::Login Sign in form-->
+                <div class="login-signin">
+                    <div class="mb-10">
+                        <h3>Panel Administrador</h3>
+                        <p class="opacity-60 font-weight-bold">Ingresa tu cuenta de colaborador:</p>
+                    </div>
+                    <form (ngSubmit)="login()" [formGroup]="myForm" class="form" autocomplete="off">
+                        <div class="form-group">
+                            <input formControlName="email" class="form-control h-auto  placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="text" placeholder="Email" />
+                            <small *ngIf="validate('email')" class="text-danger"> Este campo es obligatorio. </small>
+                        </div>
+                        <div class="form-group">
+                            <input formControlName="password" class="form-control h-auto  placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8" type="password" placeholder="Password" />
+                            <small *ngIf="validate('password')" class="text-danger"> Este campo es obligatorio. </small>
+                        </div>
+                        <div class="form-group text-center mt-10">
+                            <button type="submit" class="btn btn-pill btn-primary font-weight-bold opacity-90 px-15 py-3">Ingresar</button>
+                        </div>
+                    </form>
+                </div>
+                <!--end::Login Sign in form-->
+            </div>
+        </div>
+    </div>
+    <!--end::Login-->
+</div>

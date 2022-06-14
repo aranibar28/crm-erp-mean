@@ -1,0 +1,13 @@
+<div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <div class="d-flex justify-content-between align-items-center flex-wrap mr-2" style="width: 100%;">
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ title }}</h5>
+            <div *ngIf="path.includes('create') || path.includes(':id')">
+                <a [routerLink]="back" class="btn btn-light-warning font-weight-bolder btn-sm">Regresar</a>
+            </div>
+            <div *ngIf="!path.includes('create') && !path.includes(':id')">
+                <a *ngIf="title != 'Dashboard'" [routerLink]="path + '/create'" class="btn btn-light-primary font-weight-bolder btn-sm">Nuevo</a>
+            </div>
+        </div>      
+    </div>
+</div>
