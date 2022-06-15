@@ -4,7 +4,7 @@ const Customer_CallSchema = Schema({
   date:       { type: String, required: true },
   time:       { type: String, required: true },
   result:     { type: String, required: true },
-  note:       { type: String, required: true },
+  note:       { type: String, required: false },
   customer:   { type: Schema.Types.ObjectId, required: false, ref: "Customer" },
   advisor:    { type: Schema.Types.ObjectId, required: false, ref: "Collaborator" },
   created_at: { type: Date, required: true, default: Date.now },

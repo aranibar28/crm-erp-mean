@@ -27,4 +27,14 @@ export class ProspectService {
     const url = `${base_url}/read_calls/${id}`;
     return this.http.get(url, this.headers);
   }
+
+  create_mail(data: any): Observable<any> {
+    const url = `${base_url}/create_mail`;
+    return this.http.post(url, data, this.headers);
+  }
+
+  read_mails(id: any): Observable<any> {
+    const url = `${base_url}/read_mails/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }

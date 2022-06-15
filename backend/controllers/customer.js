@@ -9,7 +9,6 @@ var handlebars = require("handlebars");
 var ejs = require("ejs");
 var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
-var path = require("path");
 
 const create_customer = async (req, res = response) => {
   let data = req.body;

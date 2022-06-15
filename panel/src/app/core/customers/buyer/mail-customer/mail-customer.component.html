@@ -1,1 +1,87 @@
-<p>mail-customer works!</p>
+<ng-container *ngIf="load_data">
+    <div class="text-center text-warning" colspan="8">
+        <span>Cargando...</span>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!load_data">
+    <a class="btn btn-info font-weight-bolder font-size-sm mr-3 pointer" data-toggle="modal" [attr.data-target]="'#modalCorreo'">
+        Nuevo Correo
+    </a>
+    <hr class="mb-5">
+    
+    <div *ngIf="this.mails.length === 0" class="text-center text-warning" colspan="8">
+        <span>No hay resultados.</span>
+    </div>
+
+     <div *ngFor="let item of mails | paginate: { itemsPerPage: 5, currentPage: p }" class="mb-3">
+        <div class="row">
+            <div class="col-12">
+                <div class="cursor-pointer shadow-xs toggle-off mb-3" data-inbox="message">
+                    <div class="d-flex align-items-start card-spacer-x py-4">
+                        <div class="d-flex flex-column flex-grow-1 flex-wrap mr-2">
+                            <div class="d-flex">
+                                <a class="font-size-lg font-weight-bolder text-dark-75 text-hover-primary mr-2">
+                                    {{ item.asunt }}
+                                </a>
+                                <div class="font-weight-bold text-muted">
+                                    <span class="label label-success label-dot mr-2">
+                                    </span>Enviado
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div class="text-muted font-weight-bold toggle-on-item" data-inbox="toggle">
+                                    <span class="label label-warning label-dot mr-2">
+                                    </span>Enviado por: {{ item.advisor?.full_name || 'Sin asesor' }}
+                                </div>
+                                <div class="text-muted font-weight-bold toggle-on-item" data-inbox="toggle">
+                                    <a (click)="toggleEmail(item._id)" class="text-primary pointer" >Ver mensaje</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="font-weight-bold text-muted mr-2">{{ item.created_at | time }}</div>
+                        </div>
+                    </div>
+                    <div [attr.id]="'card_'+item._id" class="card-spacer-x pt-2 pb-5 toggle-off-item">
+                        <div class="mb-1" [innerHTML]="item.container | sanitizing"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event"></pagination-controls>
+    </div>
+</ng-container>
+
+<div class="modal fade" id="modalCorreo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px !important;">
+        <form (ngSubmit)="register()" [formGroup]="myForm" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo correo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12 form-group">
+                        <input formControlName="asunt" type="text" class="form-control form-control-solid" placeholder="Asunto" name="asunto">
+                        <small *ngIf="validators('asunt')" class="text-danger"> Este campo es obligatorio. </small>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <tinymce formControlName="container" [config]="config"></tinymce>
+                        <small *ngIf="validators('container')" class="text-danger"> Este campo es obligatorio. </small>
+                    </div>
+                </div>    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                <button *ngIf="!load_btn" type="submit" class="btn btn-primary font-weight-bold">Crear</button>
+                <button *ngIf="load_btn" class="btn btn-primary font-weight-bold spinner spinner-white spinner-left">Creando</button>
+            </div>
+        </form>
+    </div>
+</div>
