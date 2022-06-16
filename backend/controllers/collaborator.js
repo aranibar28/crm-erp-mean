@@ -83,6 +83,11 @@ const change_status = async (req, res = response) => {
   res.json({ data: reg });
 };
 
+const list_advisors = async (req, res = response) => {
+  let reg = await Collaborator.find({ role: "Asesor", status: true }).select("_id full_name");
+  res.json({ data: reg });
+};
+
 const login_collaborator = async (req, res = response) => {
   let { email, password } = req.body;
   try {
@@ -114,5 +119,6 @@ module.exports = {
   update_collaborator,
   delete_collaborator,
   change_status,
+  list_advisors,
   login_collaborator,
 };

@@ -55,8 +55,9 @@ export class CallCustomerComponent implements OnInit {
     this.prospectService.create_call(this.myForm.value).subscribe({
       next: () => {
         $('#modalLlamada').modal('hide');
-        this.notify.success('Datos Guardados');
+        this.notify.success('Se guardaron los datos.');
         this.load_btn = false;
+        this.myForm.reset();
         this.init_data();
       },
       error: (err) => {

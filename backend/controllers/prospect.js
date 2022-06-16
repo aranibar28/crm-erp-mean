@@ -2,6 +2,7 @@ const { response } = require("express");
 const Customer = require("../models/customer");
 const Customer_Call = require("../models/customers/customer_call");
 const Customer_Mail = require("../models/customers/customer_mail");
+const Customer_Task = require("../models/customers/customer_task");
 
 var fs = require("fs");
 var handlebars = require("handlebars");
@@ -9,6 +10,7 @@ var ejs = require("ejs");
 var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
 
+// Calls Customers
 const create_call = async (req, res = response) => {
   let data = req.body;
   try {
@@ -30,6 +32,17 @@ const read_calls = async (req, res = response) => {
   }
 };
 
+const delete_call = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Customer_Call.findByIdAndDelete(id);
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+// Mails Customers
 const create_mail = async (req, res = response) => {
   let data = req.body;
   try {
@@ -47,6 +60,16 @@ const read_mails = async (req, res = response) => {
   let id = req.params["id"];
   try {
     let reg = await Customer_Mail.find({ customer: id }).populate("advisor").sort({ created_at: -1 });
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const delete_mail = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Customer_Mail.findByIdAndDelete(id);
     res.json({ data: reg });
   } catch (error) {
     res.json({ data: undefined, msg: error.message });
@@ -97,9 +120,45 @@ const send_email_prospect = async (customer, asunt, email, container) => {
   });
 };
 
+// Taks Customers
+const create_task = async (req, res = response) => {
+  let data = req.body;
+  try {
+    let reg = await Customer_Task.create(data);
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const read_tasks = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Customer_Task.find({ customer: id }).populate("advisor").populate("advisor_make").sort({ created_at: -1 });
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const delete_task = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Customer_Task.findByIdAndDelete(id);
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
 module.exports = {
   create_call,
-  read_calls,
   create_mail,
+  create_task,
+  read_calls,
   read_mails,
+  read_tasks,
+  delete_call,
+  delete_mail,
+  delete_task,
 };

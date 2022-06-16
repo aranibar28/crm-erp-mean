@@ -52,13 +52,12 @@ export class MailCustomerComponent implements OnInit {
     }
     this.load_btn = true;
     this.myForm.addControl('customer', this.fb.control(this.id));
-    console.log(this.myForm.value);
-
     this.prospectService.create_mail(this.myForm.value).subscribe({
       next: () => {
         $('#modalCorreo').modal('hide');
         this.notify.success('Se envió un correo al cliente.');
         this.load_btn = false;
+        this.myForm.reset();
         this.init_data();
       },
       error: (err) => {

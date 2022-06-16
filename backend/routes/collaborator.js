@@ -10,6 +10,7 @@ router.get("/read/:id", [validateJWT], ctrl.read_collaborator_by_id);
 router.put("/update/:id", [validateJWT], ctrl.update_collaborator);
 router.delete("/delete/:id", [validateJWT], ctrl.delete_collaborator);
 router.put("/status/:id", [validateJWT], ctrl.change_status);
+router.get("/list_advisors", [validateJWT], ctrl.list_advisors);
 
 router.post("/login", ctrl.login_collaborator);
 

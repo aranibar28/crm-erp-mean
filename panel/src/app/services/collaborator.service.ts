@@ -49,6 +49,11 @@ export class CollaboratorService {
     return this.http.put(url, data, this.headers);
   }
 
+  list_advisors(): Observable<any> {
+    const url = `${base_url}/list_advisors`;
+    return this.http.get(url, this.headers);
+  }
+
   success(msg: string) {
     $.notify(msg, {
       type: 'success',
