@@ -15,5 +15,8 @@ router.delete("/delete_mail/:id", [validateJWT], ctrl.delete_mail);
 router.post("/create_task", [validateJWT], ctrl.create_task);
 router.get("/read_tasks/:id", [validateJWT], ctrl.read_tasks);
 router.delete("/delete_task/:id", [validateJWT], ctrl.delete_task);
+router.put("/make_task/:id", [validateJWT], ctrl.make_task);
+
+router.get("/list_activities/:id", [validateJWT], ctrl.list_activities);
 
 module.exports = router;

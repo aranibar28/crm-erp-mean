@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CollaboratorService } from 'src/app/services/collaborator.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { ProspectService } from 'src/app/services/prospect.service';
-import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -12,12 +12,13 @@ declare var $: any;
   templateUrl: './task-customer.component.html',
 })
 export class TaskCustomerComponent implements OnInit {
+  public id = this.activatedRoute.snapshot.parent?.params['id'];
+  public advisors: Array<any> = [];
+  public tasks: Array<any> = [];
+  public initForm = {};
   public date = new Date();
   public load_data = true;
   public load_btn = false;
-  public advisors: Array<any> = [];
-  public tasks: Array<any> = [];
-  public id: any;
   public p: number = 1;
 
   constructor(
@@ -26,9 +27,7 @@ export class TaskCustomerComponent implements OnInit {
     private prospectService: ProspectService,
     private notify: GlobalService,
     private fb: FormBuilder
-  ) {
-    this.id = this.activatedRoute.snapshot.parent?.params['id'];
-  }
+  ) {}
 
   myForm: FormGroup = this.fb.group({
     title: [, [Validators.required]],
@@ -38,11 +37,13 @@ export class TaskCustomerComponent implements OnInit {
     priority: ['', [Validators.required]],
     note: [, [Validators.required]],
     advisor: ['', [Validators.required]],
+    customer: [this.id, [Validators.required]],
   });
 
   ngOnInit(): void {
     this.init_advisors();
     this.init_data();
+    this.initForm = this.myForm.value;
   }
 
   init_advisors() {
@@ -71,14 +72,38 @@ export class TaskCustomerComponent implements OnInit {
       next: () => {
         $('#modalTarea').modal('hide');
         this.notify.success('Se guardaron los datos.');
+        this.myForm.reset(this.initForm);
         this.load_btn = false;
-        this.myForm.reset();
         this.init_data();
       },
       error: (err) => {
         this.notify.success(err.msg);
         this.load_btn = false;
       },
+    });
+  }
+
+  make_task(id: any) {
+    Swal.fire({
+      title: 'Marcar esta tarea?',
+      text: 'Desea marcar esta tarea como hecho',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#8950FC',
+      cancelButtonColor: '#f1416c',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.prospectService.make_task(id).subscribe({
+          next: () => {
+            Swal.fire('Listo!', 'Tarea realizada.', 'success');
+            this.init_data();
+          },
+          error: (err) => {
+            Swal.fire('Ups!', err.error.msg, 'error');
+          },
+        });
+      }
     });
   }
 

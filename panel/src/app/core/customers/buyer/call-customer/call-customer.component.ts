@@ -10,10 +10,11 @@ declare var $: any;
   templateUrl: './call-customer.component.html',
 })
 export class CallCustomerComponent implements OnInit {
+  public id = this.activatedRoute.snapshot.parent?.params['id'];
+  public calls: Array<any> = [];
+  public initForm = {};
   public load_data = true;
   public load_btn = false;
-  public calls: Array<any> = [];
-  public id: any;
   public p: number = 1;
 
   constructor(
@@ -21,9 +22,7 @@ export class CallCustomerComponent implements OnInit {
     private prospectService: ProspectService,
     private notify: GlobalService,
     private fb: FormBuilder
-  ) {
-    this.id = this.activatedRoute.snapshot.parent?.params['id'];
-  }
+  ) {}
 
   myForm: FormGroup = this.fb.group({
     date: [, [Validators.required]],
@@ -34,6 +33,7 @@ export class CallCustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.init_data();
+    this.initForm = this.myForm.value;
   }
 
   init_data() {
@@ -56,8 +56,8 @@ export class CallCustomerComponent implements OnInit {
       next: () => {
         $('#modalLlamada').modal('hide');
         this.notify.success('Se guardaron los datos.');
+        this.myForm.reset(this.initForm);
         this.load_btn = false;
-        this.myForm.reset();
         this.init_data();
       },
       error: (err) => {

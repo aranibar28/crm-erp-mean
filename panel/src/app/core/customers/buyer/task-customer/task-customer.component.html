@@ -90,7 +90,7 @@
                                 </p>
         
                                 <!-- MARCAR ENVIO -->
-                                <a *ngIf="!item.status" class="text-success pointer" data-toggle="modal" [attr.data-target]="'#modalMarcar-' + item._id">
+                                <a (click)="make_task(item._id)" *ngIf="!item.status" class="text-success pointer">
                                     [Marcar como hecho]
                                 </a>
         
@@ -101,30 +101,6 @@
         
                                 <div class="separator separator-dashed mt-8 mb-5"></div>
         
-                                <div class="modal fade" id="modalMarcar-{{ item._id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Realización de tarea</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <i aria-hidden="true" class="ki ki-close"></i>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Al aceptar esta marcando la realicación de la tarea con su cuenta.</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-warning font-weight-bold" data-dismiss="modal">Cerrar</button>
-                                                <button  type="button" class="btn btn-success font-weight-bold">Marcar</button>
-        
-                                                <!-- <button class="btn btn-success" type="button" disabled>
-                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                    Marcando...
-                                                  </button> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                            </td>
                         </tr>
                     </ng-container>

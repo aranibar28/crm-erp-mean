@@ -47,4 +47,14 @@ export class ProspectService {
     const url = `${base_url}/read_tasks/${id}`;
     return this.http.get(url, this.headers);
   }
+
+  make_task(id: any): Observable<any> {
+    const url = `${base_url}/make_task/${id}`;
+    return this.http.put(url, {}, this.headers);
+  }
+
+  list_activities(id: any): Observable<any> {
+    const url = `${base_url}/list_activities/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }

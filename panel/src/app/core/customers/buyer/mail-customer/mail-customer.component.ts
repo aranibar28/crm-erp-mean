@@ -10,11 +10,12 @@ declare var $: any;
   templateUrl: './mail-customer.component.html',
 })
 export class MailCustomerComponent implements OnInit {
+  public id = this.activatedRoute.snapshot.parent?.params['id'];
+  public mails: Array<any> = [];
+  public initForm = {};
+  public config = {};
   public load_data = true;
   public load_btn = false;
-  public mails: Array<any> = [];
-  public config: any = {};
-  public id: any;
   public p: number = 1;
 
   constructor(
@@ -22,9 +23,7 @@ export class MailCustomerComponent implements OnInit {
     private prospectService: ProspectService,
     private notify: GlobalService,
     private fb: FormBuilder
-  ) {
-    this.id = this.activatedRoute.snapshot.parent?.params['id'];
-  }
+  ) {}
 
   myForm: FormGroup = this.fb.group({
     asunt: [, [Validators.required]],
@@ -34,6 +33,7 @@ export class MailCustomerComponent implements OnInit {
   ngOnInit(): void {
     this.config = { height: 200 };
     this.init_data();
+    this.initForm = this.myForm.value;
   }
 
   init_data() {
@@ -56,8 +56,8 @@ export class MailCustomerComponent implements OnInit {
       next: () => {
         $('#modalCorreo').modal('hide');
         this.notify.success('Se envió un correo al cliente.');
+        this.myForm.reset(this.initForm);
         this.load_btn = false;
-        this.myForm.reset();
         this.init_data();
       },
       error: (err) => {

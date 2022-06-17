@@ -7,11 +7,9 @@ import { CustomerService } from 'src/app/services/customer.service';
   templateUrl: './dashboard-customer.component.html',
 })
 export class DashboardCustomerComponent implements OnInit {
-  public id: any;
+  public id = this.activatedRoute.snapshot.parent?.params['id'];
 
-  constructor(private activatedRoute: ActivatedRoute) {
-    this.id = this.activatedRoute.snapshot.parent?.params['id'];
-  }
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {}
 }

@@ -1,1 +1,28 @@
-<p>prospect-customer works!</p>
+<ng-container *ngIf="load_data">
+    <div class="text-center text-warning" colspan="8">
+        <span>Cargando...</span>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!load_data">
+    <a class="btn btn-info font-weight-bolder font-size-sm mr-3 pointer" data-toggle="modal" [attr.data-target]="'#modalCorreo'">
+        Nuevo Correo
+    </a>
+    <hr class="mb-5">
+    
+    <div *ngIf="this.activities.length === 0" class="text-center text-warning" colspan="8">
+        <span>No hay resultados.</span>
+    </div>
+
+     <div *ngFor="let item of activities | paginate: { itemsPerPage: 5, currentPage: p }" class="mb-3">
+        <div class="row">
+            <div class="col-12">
+                <b>{{ item.type }} - </b>
+                <span>{{ item.activity }} por <b class="text-success">{{ item.advisor?.full_name }}</b> {{ item.created_at | time }}.</span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event"></pagination-controls>
+    </div>
+</ng-container>

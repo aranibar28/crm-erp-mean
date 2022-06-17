@@ -3,6 +3,7 @@ const Customer = require("../models/customer");
 const Customer_Call = require("../models/customers/customer_call");
 const Customer_Mail = require("../models/customers/customer_mail");
 const Customer_Task = require("../models/customers/customer_task");
+const Customer_Activity = require("../models/customers/customer_activity");
 
 var fs = require("fs");
 var handlebars = require("handlebars");
@@ -16,6 +17,7 @@ const create_call = async (req, res = response) => {
   try {
     data.advisor = req.id;
     let reg = await Customer_Call.create(data);
+    create_activity("LLamada", "Se registro una llamada " + data.result, data.customer, data.advisor);
     res.json({ data: reg });
   } catch (error) {
     res.json({ data: undefined, msg: error.message });
@@ -49,6 +51,7 @@ const create_mail = async (req, res = response) => {
     data.advisor = req.id;
     let customer = await Customer.findById({ _id: data.customer });
     let reg = await Customer_Mail.create(data);
+    create_activity("Correo", "Se envió un correo con el asunto: " + data.asunt, data.customer, data.advisor);
     send_email_prospect(customer.full_name, data.asunt, customer.email, data.container);
     res.json({ data: reg });
   } catch (error) {
@@ -125,6 +128,7 @@ const create_task = async (req, res = response) => {
   let data = req.body;
   try {
     let reg = await Customer_Task.create(data);
+    create_activity("Tarea", "Se registro una tarea como " + data.title, data.customer, data.advisor);
     res.json({ data: reg });
   } catch (error) {
     res.json({ data: undefined, msg: error.message });
@@ -151,6 +155,32 @@ const delete_task = async (req, res = response) => {
   }
 };
 
+const make_task = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Customer_Task.findByIdAndUpdate({ _id: id }, { status: true, advisor_make: req.id });
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+// Activities Customers
+const create_activity = async (type, activity, customer, advisor) => {
+  let data = { type, activity, customer, advisor };
+  await Customer_Activity.create(data);
+};
+
+const list_activities = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Customer_Activity.find({ customer: id }).populate("advisor").sort({ created_at: -1 });
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
 module.exports = {
   create_call,
   create_mail,
@@ -161,4 +191,6 @@ module.exports = {
   delete_call,
   delete_mail,
   delete_task,
+  make_task,
+  list_activities,
 };
