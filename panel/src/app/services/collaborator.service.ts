@@ -53,26 +53,4 @@ export class CollaboratorService {
     const url = `${base_url}/list_advisors`;
     return this.http.get(url, this.headers);
   }
-
-  success(msg: string) {
-    $.notify(msg, {
-      type: 'success',
-      spacing: 10,
-      timer: 2000,
-      placement: { from: 'top', align: 'right' },
-      delay: 1000,
-      animate: { enter: 'animated bounce', exit: 'animated bounce' },
-    });
-  }
-
-  danger(msg: string) {
-    $.notify(msg, {
-      type: 'danger',
-      spacing: 10,
-      timer: 2000,
-      placement: { from: 'top', align: 'right' },
-      delay: 1000,
-      animate: { enter: 'animated bounce', exit: 'animated bounce' },
-    });
-  }
 }

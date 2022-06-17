@@ -10,7 +10,7 @@ import { TimePipe } from 'src/app/pipes/time.pipe';
 import { SanitizingPipe } from 'src/app/pipes/sanitizing.pipe';
 
 import { DashboardCustomerComponent } from './dashboard-customer/dashboard-customer.component';
-import { ProspectCustomerComponent } from './prospect-customer/prospect-customer.component';
+import { ActivityCustomerComponent } from './activity-customer/activity-customer.component';
 import { InterestCustomerComponent } from './interest-customer/interest-customer.component';
 import { TaskCustomerComponent } from './task-customer/task-customer.component';
 import { CallCustomerComponent } from './call-customer/call-customer.component';
@@ -22,7 +22,7 @@ import { MailCustomerComponent } from './mail-customer/mail-customer.component';
     SanitizingPipe,
     BuyerComponent,
     DashboardCustomerComponent,
-    ProspectCustomerComponent,
+    ActivityCustomerComponent,
     InterestCustomerComponent,
     TaskCustomerComponent,
     CallCustomerComponent,

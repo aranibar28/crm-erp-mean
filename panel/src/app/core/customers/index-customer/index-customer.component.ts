@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
+import { PublicService } from 'src/app/services/public.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,8 +16,9 @@ export class IndexCustomerComponent implements OnInit {
   public p: number = 1;
 
   constructor(
-    private customerService: CustomerService,
     private activatedRoute: ActivatedRoute,
+    private customerService: CustomerService,
+    private publicService: PublicService,
     private router: Router
   ) {}
 
@@ -60,7 +62,7 @@ export class IndexCustomerComponent implements OnInit {
     this.customerService.change_status(id, { status }).subscribe({
       next: () => {
         this.init_data();
-        this.customerService.success(`Estado ${word}.`);
+        this.publicService.success(`Estado ${word}.`);
       },
     });
   }
@@ -74,7 +76,7 @@ export class IndexCustomerComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.customerService.delete_customer(id).subscribe(() => {
-          this.customerService.success(`Cliente ${name} eliminado.`);
+          this.publicService.success(`Cliente ${name} eliminado.`);
           this.init_data();
         });
       }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { GlobalService } from 'src/app/services/global.service';
+import { PublicService } from 'src/app/services/public.service';
 import { ProspectService } from 'src/app/services/prospect.service';
 declare var $: any;
 
@@ -21,7 +21,7 @@ export class MailCustomerComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private prospectService: ProspectService,
-    private notify: GlobalService,
+    private notify: PublicService,
     private fb: FormBuilder
   ) {}
 

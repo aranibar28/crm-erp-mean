@@ -12,10 +12,10 @@ import { UpdateCustomerComponent } from './customers/update-customer/update-cust
 
 import { BuyerComponent } from './customers/buyer/buyer.component';
 import { DashboardCustomerComponent } from './customers/buyer/dashboard-customer/dashboard-customer.component';
-import { ProspectCustomerComponent } from './customers/buyer/prospect-customer/prospect-customer.component';
+import { ActivityCustomerComponent } from './customers/buyer/activity-customer/activity-customer.component';
 import { InterestCustomerComponent } from './customers/buyer/interest-customer/interest-customer.component';
-import { MailCustomerComponent } from './customers/buyer/mail-customer/mail-customer.component';
 import { CallCustomerComponent } from './customers/buyer/call-customer/call-customer.component';
+import { MailCustomerComponent } from './customers/buyer/mail-customer/mail-customer.component';
 import { TaskCustomerComponent } from './customers/buyer/task-customer/task-customer.component';
 
 const childRoutes: Routes = [
@@ -34,10 +34,10 @@ const childRoutes: Routes = [
     component: BuyerComponent,
     children: [
       { path: 'dashboard', component: DashboardCustomerComponent, title: 'Dashboard'},
-      { path: 'prospect', component: ProspectCustomerComponent, title: 'Actividades'},
+      { path: 'activities', component: ActivityCustomerComponent, title: 'Actividades'},
       { path: 'interest', component: InterestCustomerComponent, title: 'Intereses'},
-      { path: 'mail', component: MailCustomerComponent, title: 'Correos'},
       { path: 'call', component: CallCustomerComponent, title: 'Llamadas'},
+      { path: 'mail', component: MailCustomerComponent, title: 'Correos'},
       { path: 'task', component: TaskCustomerComponent, title: 'Tareas'},
       { path: '**', redirectTo: 'Dashboard' },
     ],

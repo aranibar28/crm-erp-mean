@@ -4,13 +4,13 @@ declare var $: any;
 @Injectable({
   providedIn: 'root',
 })
-export class GlobalService {
+export class PublicService {
   constructor() {}
 
   menu: any[] = [
     {
       title: 'Actividades',
-      path: 'prospect',
+      path: 'activities',
       class: 'btn btn-danger',
     },
     {

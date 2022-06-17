@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,9 @@ export class LoginComponent implements OnInit {
   public load_btn: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -23,8 +24,8 @@ export class LoginComponent implements OnInit {
   }
 
   myForm: FormGroup = this.fb.group({
-    email: [, [Validators.required, Validators.minLength(3)]],
-    password: [, [Validators.required]],
+    email: [, [Validators.required, Validators.email]],
+    password: [, [Validators.required, Validators.minLength(3)]],
   });
 
   login() {
@@ -39,15 +40,15 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('x-id', data._id);
           localStorage.setItem('x-token', token);
           localStorage.setItem('x-user', JSON.stringify(data));
-          this.authService.success('Bienvenido ' + data.full_name);
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
           this.router.navigateByUrl('/dashboard');
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          Swal.fire('Bienvenido!', 'Hola ' + data.full_name, 'success');
         } else {
-          this.authService.danger(res.msg);
+          Swal.fire('', res.msg, 'error');
         }
       },
       error: (err) => {
-        this.authService.danger(err.msg);
+        Swal.fire('', err.msg, 'error');
       },
     });
   }

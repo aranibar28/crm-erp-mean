@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CollaboratorService } from 'src/app/services/collaborator.service';
-import { GlobalService } from 'src/app/services/global.service';
+import { PublicService } from 'src/app/services/public.service';
 import { ProspectService } from 'src/app/services/prospect.service';
 import Swal from 'sweetalert2';
 declare var $: any;
@@ -25,7 +25,7 @@ export class TaskCustomerComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private collaboratorService: CollaboratorService,
     private prospectService: ProspectService,
-    private notify: GlobalService,
+    private notify: PublicService,
     private fb: FormBuilder
   ) {}
 

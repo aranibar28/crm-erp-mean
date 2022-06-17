@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
+import { PublicService } from 'src/app/services/public.service';
 
 @Component({
   selector: 'app-create-customer',
@@ -11,8 +12,9 @@ export class CreateCustomerComponent implements OnInit {
   public load_btn: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
     private customerService: CustomerService,
+    private publicService: PublicService,
+    private fb: FormBuilder,
     private router: Router
   ) {}
 
@@ -41,16 +43,16 @@ export class CreateCustomerComponent implements OnInit {
       next: (res) => {
         if (res.data) {
           this.load_btn = false;
-          this.customerService.success('Datos guardados correctamente.');
+          this.publicService.success('Datos guardados correctamente.');
           this.router.navigateByUrl('/dashboard/customers');
         } else {
           this.load_btn = false;
-          this.customerService.danger(res.msg);
+          this.publicService.danger(res.msg);
         }
       },
       error: (err) => {
         this.load_btn = false;
-        this.customerService.danger(err.msg);
+        this.publicService.danger(err.msg);
       },
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CollaboratorService } from 'src/app/services/collaborator.service';
+import { PublicService } from 'src/app/services/public.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,7 +14,10 @@ export class IndexCollaboratorComponent implements OnInit {
   public filter: string = '';
   public p: number = 1;
 
-  constructor(private collaboratorService: CollaboratorService) {}
+  constructor(
+    private collaboratorService: CollaboratorService,
+    private publicService: PublicService
+  ) {}
 
   ngOnInit(): void {
     this.init_data();
@@ -38,7 +42,7 @@ export class IndexCollaboratorComponent implements OnInit {
     this.collaboratorService.change_status(id, { status }).subscribe({
       next: () => {
         this.init_data();
-        this.collaboratorService.success(`Estado ${word}.`);
+        this.publicService.success(`Estado ${word}.`);
       },
     });
   }
@@ -53,7 +57,7 @@ export class IndexCollaboratorComponent implements OnInit {
       if (result.isConfirmed) {
         this.collaboratorService.delete_collaborator(id).subscribe(() => {
           this.init_data();
-          this.collaboratorService.success(`Colaborador ${name} eliminado.`);
+          this.publicService.success(`Colaborador ${name} eliminado.`);
         });
       }
     });

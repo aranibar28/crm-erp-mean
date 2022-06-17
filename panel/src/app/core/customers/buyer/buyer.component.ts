@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { CustomerService } from 'src/app/services/customer.service';
+import { PublicService } from 'src/app/services/public.service';
 
 @Component({
   selector: 'app-buyer',
@@ -19,12 +18,13 @@ export class BuyerComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private customerService: CustomerService,
+    private publicService: PublicService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({ id }) => (this.id = id));
-    this.menu = this.customerService.menu;
+    this.menu = this.publicService.menu;
     this.title = document.title;
     this.init_data();
   }

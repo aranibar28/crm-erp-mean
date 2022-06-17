@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -12,10 +13,10 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.logged();
+    this.is_logged();
   }
 
-  logged() {
+  is_logged() {
     if (this.authService.user) {
       this.user = JSON.parse(localStorage.getItem('x-user')!);
     } else {
@@ -24,7 +25,17 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear();
-    this.router.navigateByUrl('/login');
+    Swal.fire({
+      text: '¿Desea cerrar sesión?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cerrar!',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.logout();
+        this.router.navigateByUrl('/login');
+      }
+    });
   }
 }

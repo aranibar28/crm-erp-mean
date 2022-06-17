@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CollaboratorService } from 'src/app/services/collaborator.service';
+import { PublicService } from 'src/app/services/public.service';
 
 @Component({
   selector: 'app-create-collaborator',
@@ -13,6 +14,7 @@ export class CreateCollaboratorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private collaboratorService: CollaboratorService,
+    private publicService: PublicService,
     private router: Router
   ) {}
 
@@ -40,16 +42,16 @@ export class CreateCollaboratorComponent implements OnInit {
       next: (res) => {
         if (res.data) {
           this.load_btn = false;
-          this.collaboratorService.success('Datos guardados correctamente.');
+          this.publicService.success('Datos guardados correctamente.');
           this.router.navigateByUrl('/dashboard/collaborator');
         } else {
           this.load_btn = false;
-          this.collaboratorService.danger(res.msg);
+          this.publicService.danger(res.msg);
         }
       },
       error: (err) => {
         this.load_btn = false;
-        this.collaboratorService.danger(err.msg);
+        this.publicService.danger(err.msg);
       },
     });
   }

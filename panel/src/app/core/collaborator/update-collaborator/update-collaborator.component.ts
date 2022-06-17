@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CollaboratorService } from 'src/app/services/collaborator.service';
+import { PublicService } from 'src/app/services/public.service';
 declare var $: any;
 
 @Component({
@@ -17,6 +18,7 @@ export class UpdateCollaboratorComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private collaboratorService: CollaboratorService,
+    private publicService: PublicService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -72,15 +74,15 @@ export class UpdateCollaboratorComponent implements OnInit {
           if (res.data) {
             this.load_btn = false;
             this.router.navigateByUrl('/dashboard/collaborator');
-            this.collaboratorService.success('Se guardó correctamente');
+            this.publicService.success('Se guardó correctamente');
           } else {
             this.load_btn = false;
-            this.collaboratorService.danger(res.msg);
+            this.publicService.danger(res.msg);
           }
         },
         error: (err) => {
           this.load_btn = false;
-          this.collaboratorService.danger(err.msg);
+          this.publicService.danger(err.msg);
         },
       });
   }
