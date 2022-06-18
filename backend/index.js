@@ -13,6 +13,7 @@ db_connection();
 app.use("/api/collaborator", require("./routes/collaborator"));
 app.use("/api/customer", require("./routes/customer"));
 app.use("/api/prospect", require("./routes/prospect"));
+app.use("/api/courses", require("./routes/course"));
 
 app.listen(port, () => {
   console.log("Servidor corriendo Puerto: " + port);
