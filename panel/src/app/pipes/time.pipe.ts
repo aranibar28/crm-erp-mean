@@ -15,7 +15,7 @@ export class TimePipe implements PipeTransform {
       return 'hace un momento';
     }
     const divider = [60, 60, 24, 30, 12];
-    const string = [' segundo', ' minuto', ' hora', ' día', ' mes', ' año'];
+    const string = [' segundo', ' minuto', ' hora', ' día', ' month', ' año'];
     let i;
     for (i = 0; Math.floor(time / divider[i]) > 0; i++) {
       time /= divider[i];

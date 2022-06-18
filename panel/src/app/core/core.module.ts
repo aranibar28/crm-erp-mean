@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AccountModule } from './account/account.module';
 import { CollaboratorModule } from './collaborator/collaborator.module';
 import { CustomersModule } from './customers/customers.module';
+import { CoursesModule } from './courses/courses.module';
 import { BuyerModule } from './customers/buyer/buyer.module';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { BuyerModule } from './customers/buyer/buyer.module';
     AccountModule,
     CollaboratorModule,
     CustomersModule,
+    CoursesModule,
     BuyerModule
   ],
   exports: [CoreComponent],

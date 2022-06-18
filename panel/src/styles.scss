@@ -19,3 +19,20 @@
 .swal2-title {
   margin-top: 0 !important;
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.img-upload {
+  max-width: 264px;
+  height: 264px;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 9px;
+  margin: 0;
+  cursor: pointer;
+}

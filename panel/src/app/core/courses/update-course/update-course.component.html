@@ -1,0 +1,62 @@
+<div class="card card-custom card-shadowless rounded-top-0">
+    <div class="card-header border-0 pt-5">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label font-weight-bolder text-dark">Actualizar curso</span>
+            <span class="text-muted mt-3 font-weight-bold font-size-sm">Formulario de un actualizar curso</span>
+        </h3>
+        <div class="card-toolbar">
+           <a routerLink="/dashboard/courses" class="btn btn-primary">Regresar</a> 
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
+            <div class="col-xl-12 col-xxl-10">
+
+                <form (ngSubmit)="update()" [formGroup]="myForm" class="form" autocomplete="off" >
+                    <div class="row justify-content-center">
+                        <div class="col-xl-9">
+                            <div class="my-5 step">
+                                <h5 class="text-dark font-weight-bold mb-10">Datos generales:</h5>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Titulo (*)</label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <input  formControlName="title" class="form-control form-control-solid form-control-lg" type="text" placeholder="Título"/>
+                                        <small *ngIf="validators('title')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Descripción (*)</label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <textarea formControlName="description" class="form-control form-control-solid form-control-lg" rows="3" placeholder="Una reseña del curso"></textarea>
+                                        <small *ngIf="validators('description')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label">Portada (*)</label>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <div class="text-center">
+                                            <img [src]="imgSelected" id="#input-imgx" class="mb-2 img-upload">
+                                            <label class="custom-file-upload d-flex flex-column">
+                                                <input (change)="fileChanged($event)" id="#input-file" type="file" /> Subir Imagen
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between border-top pt-10 mt-15">
+                                <div class="mr-2">
+                                    <a routerLink="/dashboard/courses" class="btn btn-light-primary font-weight-bolder px-9 py-4">Regresar</a>
+                                </div>
+                                <div>
+                                    <button *ngIf="!load_btn" type="submit" class="btn btn-success font-weight-bolder px-9 py-4">Registrar</button>
+                                    <button *ngIf="load_btn" type="button" class="btn btn-primary font-weight-bolder py-4 spinner spinner-white spinner-left">Creando</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>

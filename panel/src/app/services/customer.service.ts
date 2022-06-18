@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 const base_url = environment.base_url + '/customer';
-declare var $: any;
 
 @Injectable({
   providedIn: 'root',

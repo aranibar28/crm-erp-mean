@@ -18,6 +18,10 @@ import { CallCustomerComponent } from './customers/buyer/call-customer/call-cust
 import { MailCustomerComponent } from './customers/buyer/mail-customer/mail-customer.component';
 import { TaskCustomerComponent } from './customers/buyer/task-customer/task-customer.component';
 
+import { IndexCourseComponent } from './courses/index-course/index-course.component';
+import { CreateCourseComponent } from './courses/create-course/create-course.component';
+import { UpdateCourseComponent } from './courses/update-course/update-course.component';
+
 const childRoutes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
 
@@ -42,6 +46,10 @@ const childRoutes: Routes = [
       { path: '**', redirectTo: 'Dashboard' },
     ],
   },
+
+  { path: 'courses', component: IndexCourseComponent },
+  { path: 'courses/create', component: CreateCourseComponent },
+  { path: 'courses/:id', component: UpdateCourseComponent },
 
   { path: '**', redirectTo: '' },
 ];
