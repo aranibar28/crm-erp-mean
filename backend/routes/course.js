@@ -15,4 +15,6 @@ router.delete("/delete/:id", [validateJWT], ctrl.delete_course);
 router.put("/status/:id", [validateJWT], ctrl.change_status);
 router.get("/image/:img", ctrl.image);
 
+router.get("/get_data_by_course/:id", [validateJWT], ctrl.get_data_by_course);
+
 module.exports = router;

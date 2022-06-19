@@ -1,7 +1,24 @@
 const { response } = require("express");
 const Course = require("../models/course");
+const Cycle_Course = require("../models/cycles/cycle_course");
+const Cycle_Instructor = require("../models/cycles/cycle_instructor");
+const Cycle_Room = require("../models/cycles/cycle_room");
 var path = require("path");
 var fs = require("fs");
+
+// localhost:3000/api/categories/image/default.png //
+const image = async (req, res = response) => {
+  let img = req.params["img"];
+  fs.stat("./uploads/courses/" + img, (err) => {
+    if (!err) {
+      let path_img = "./uploads/courses/" + img;
+      res.status(200).sendFile(path.resolve(path_img));
+    } else {
+      let path_img = "./uploads/default.png";
+      res.status(200).sendFile(path.resolve(path_img));
+    }
+  });
+};
 
 const create_course = async (req, res = response) => {
   let data = req.body;
@@ -103,26 +120,23 @@ const change_status = async (req, res = response) => {
   res.json({ data: reg });
 };
 
-// localhost:3000/api/categories/image/default.png //
-const image = async (req, res = response) => {
-  let img = req.params["img"];
-  fs.stat("./uploads/courses/" + img, (err) => {
-    if (!err) {
-      let path_img = "./uploads/courses/" + img;
-      res.status(200).sendFile(path.resolve(path_img));
-    } else {
-      let path_img = "./uploads/default.png";
-      res.status(200).sendFile(path.resolve(path_img));
-    }
-  });
+const get_data_by_course = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Cycle_Course.findById(id);
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
 };
 
 module.exports = {
+  image,
   create_course,
   read_courses,
   read_course_by_id,
   update_course,
   delete_course,
   change_status,
-  image,
+  get_data_by_course,
 };
