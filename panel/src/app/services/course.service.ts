@@ -59,4 +59,9 @@ export class CourseService {
     const url = `${base_url}/status/${id}`;
     return this.http.put(url, data, this.headers);
   }
+
+  get_data_by_course(id: any): Observable<any> {
+    const url = `${base_url}/get_data_by_course/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }

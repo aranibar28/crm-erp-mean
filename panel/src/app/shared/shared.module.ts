@@ -5,10 +5,26 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 @NgModule({
-  declarations: [SidebarComponent, FooterComponent, HeaderComponent, BreadcrumbsComponent],
-  imports: [CommonModule, RouterModule],
-  exports: [SidebarComponent, FooterComponent, HeaderComponent, BreadcrumbsComponent],
+  declarations: [
+    SidebarComponent,
+    FooterComponent,
+    HeaderComponent,
+    BreadcrumbsComponent,
+    NotfoundComponent,
+  ],
+  imports: [
+    CommonModule, 
+    RouterModule
+  ],
+  exports: [
+    SidebarComponent,
+    FooterComponent,
+    HeaderComponent,
+    BreadcrumbsComponent,
+    NotfoundComponent,
+  ],
 })
 export class SharedModule {}

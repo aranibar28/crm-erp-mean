@@ -22,6 +22,10 @@ import { IndexCourseComponent } from './courses/index-course/index-course.compon
 import { CreateCourseComponent } from './courses/create-course/create-course.component';
 import { UpdateCourseComponent } from './courses/update-course/update-course.component';
 
+import { IndexCycleComponent } from './cycles/index-cycle/index-cycle.component';
+import { CreateCycleComponent } from './cycles/create-cycle/create-cycle.component';
+import { ExpiredCycleComponent } from './cycles/expired-cycle/expired-cycle.component';
+
 const childRoutes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
 
@@ -37,12 +41,12 @@ const childRoutes: Routes = [
     path: 'customers/buyer/:id',
     component: BuyerComponent,
     children: [
-      { path: 'dashboard', component: DashboardCustomerComponent, title: 'Dashboard'},
-      { path: 'activities', component: ActivityCustomerComponent, title: 'Actividades'},
-      { path: 'interest', component: InterestCustomerComponent, title: 'Intereses'},
-      { path: 'call', component: CallCustomerComponent, title: 'Llamadas'},
-      { path: 'mail', component: MailCustomerComponent, title: 'Correos'},
-      { path: 'task', component: TaskCustomerComponent, title: 'Tareas'},
+      { path: 'dashboard', component: DashboardCustomerComponent, title: 'Dashboard' },
+      { path: 'activities', component: ActivityCustomerComponent, title: 'Actividades' },
+      { path: 'interest', component: InterestCustomerComponent, title: 'Intereses' },
+      { path: 'call', component: CallCustomerComponent, title: 'Llamadas' },
+      { path: 'mail', component: MailCustomerComponent, title: 'Correos' },
+      { path: 'task', component: TaskCustomerComponent, title: 'Tareas' },
       { path: '**', redirectTo: 'Dashboard' },
     ],
   },
@@ -50,6 +54,9 @@ const childRoutes: Routes = [
   { path: 'courses', component: IndexCourseComponent },
   { path: 'courses/create', component: CreateCourseComponent },
   { path: 'courses/:id', component: UpdateCourseComponent },
+  { path: 'courses/:id/cycles', component: IndexCycleComponent },
+  { path: 'courses/:id/cycles/create', component: CreateCycleComponent },
+  { path: 'courses/:id/cycles/expired', component: ExpiredCycleComponent },
 
   { path: '**', redirectTo: '' },
 ];

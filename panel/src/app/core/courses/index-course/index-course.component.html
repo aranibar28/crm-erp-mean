@@ -47,10 +47,10 @@
                                 </div>
                             </td>
                             <td>
-                                <a class="btn btn-info">Vigentes</a>
+                                <a [routerLink]="item._id + '/cycles'" class="btn btn-info">Vigentes</a>
                             </td>
                             <td>
-                                <a class="btn btn-warning">Historial</a>
+                                <a [routerLink]="item._id + '/cycles/expired'" class="btn btn-warning">Historial</a>
                             </td>
                             <td>
                                 <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ item.created_at | date }}</span>

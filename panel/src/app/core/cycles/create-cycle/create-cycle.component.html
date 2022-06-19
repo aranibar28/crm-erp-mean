@@ -1,0 +1,247 @@
+<ng-container *ngIf="load_data">
+    <div class="text-center text-warning">
+        Cargando...
+    </div>
+</ng-container>
+<ng-container *ngIf="!load_data">
+    <ng-container *ngIf="!data">
+        <app-notfound></app-notfound>
+    </ng-container>
+    <ng-container *ngIf="data">
+        <form (ngSubmit)="register()" #myForm="ngForm" autocomplete="off">
+            <div class="card card-custom gutter-b example example-compact form-group">
+        
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <span class="font-weight-bolder text-dark">Crear ciclo de <span class="text-primary">{{ course.title }}</span></span>
+                    </h3>
+                </div>
+            
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-5 col-sm-12">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <h6 class="text-dark font-weight-bolder mb-7">Datos del ciclo:</h6>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1">
+                                            <b>Nivel</b>
+                                        </label>
+                                        <select  #nivel [(ngModel)]="cycle.nivel" name="nivel" required class="form-control">
+                                            <option value="" selected disabled>Seleccionar</option>
+                                            <option value="Basico 1">Basico 1</option>
+                                            <option value="Basico 2">Basico 2</option>
+                                            <option value="Basico 3">Basico 3</option>
+                                            <option value="Intermedio 1">Intermedio 1</option>
+                                            <option value="Intermedio 2">Intermedio 2</option>
+                                            <option value="Intermedio 2">Intermedio 3</option>
+                                            <option value="Avanzado 1">Avanzado 1</option>
+                                            <option value="Avanzado 2">Avanzado 2</option>
+                                            <option value="Avanzado 3">Avanzado 3</option>
+                                        </select>
+                                        <small *ngIf="validators('nivel')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1">
+                                            <b>Sede</b>
+                                        </label>
+                                        <select [(ngModel)]="cycle.sede" name="sede" required class="form-control">
+                                            <option value="" selected disabled>Seleccionar</option>
+                                            <option value="Lima">Lima</option>
+                                            <option value="Arequipa">Arequipa</option>
+                                            <option value="Trujillo">Trujillo</option>
+                                        </select>
+                                        <small *ngIf="validators('sede')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1">
+                                            <b>Precio</b>
+                                        </label>
+                                       <input [(ngModel)]="cycle.price" name="price" required type="text" class="form-control" placeholder="Precio mensual">
+                                       <small *ngIf="validators('price')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                            </div>  
+                            
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 class="text-dark font-weight-bolder mb-7">Fecha de clases:</h6>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1">
+                                            <b>Inicio</b>
+                                        </label>
+                                        <div class="input-group date mb-2" >
+                                            <input [(ngModel)]="cycle.start_date" name="start_date" required [min]="date | date:'yyyy-MM-dd'" type="date" class="form-control" placeholder="Inicio de clases"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                <i class="la la-bullhorn"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="validators('start_date')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1">
+                                            <b>Fin</b>
+                                        </label>
+                                        <div class="input-group date mb-2" >
+                                            <input [(ngModel)]="cycle.end_date" name="end_date" required [min]="date | date:'yyyy-MM-dd'" type="date" class="form-control" placeholder="Fin de clases"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                <i class="la la-bullhorn"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="validators('end_date')" class="text-danger"> Este campo es obligatorio. </small>
+                                    </div>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-12">
+                            <tinymce [(ngModel)]="cycle.description" name="description"></tinymce>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card card-custom gutter-b example example-compact form-group">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <span class="font-weight-bolder text-dark">Agregar salones</span>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-5 col-sm-12">
+                            <div class="row">
+                               
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1"><b>Salon</b></label>
+                                        <select [(ngModel)]="room.room" name="room" class="form-control">
+                                            <option value="" selected="" disabled>Seleccionar</option>
+                                            <option value="Salon 1">Salon 1</option>
+                                            <option value="Salon 2">Salon 2</option>
+                                            <option value="Salon 3">Salon 3</option>
+                                            <option value="Salon 4">Salon 4</option>
+                                            <option value="Salon 5">Salon 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1"><b>Aforo total</b></label>
+                                        <input [(ngModel)]="room.aforo" name="aforo" type='number' class="form-control" placeholder="Aforo total"/>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1"><b>Hora inicio</b></label>
+                                        <input [(ngModel)]="room.start_time" name="start_time" type="time" class="form-control"  min="09:00" max="18:00">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1"><b>Hora fin</b></label>
+                                        <input [(ngModel)]="room.end_time" name="end_time" type="time" class="form-control"  min="09:00" max="18:00">
+                                    </div>
+                                </div>
+                                <div  class="col-12 col-md-12  form-group">
+                                    <label for="exampleSelect1"><b>Horario semanal</b></label>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="checkbox-list" >
+                                                <label class="checkbox" for="customCheck1">
+                                                    <input (change)="select_day($event)" type="checkbox" class="custom-control-input" value="Lunes" id="customCheck1">Lunes
+                                                    <span></span>
+                                                </label>
+                                                <label class="checkbox" for="customCheck2">
+                                                    <input (change)="select_day($event)" type="checkbox" class="custom-control-input" value="Martes" id="customCheck2">Martes
+                                                    <span></span>
+                                                </label>
+                                                <label class="checkbox" for="customCheck3">
+                                                    <input (change)="select_day($event)" type="checkbox" class="custom-control-input" value="Miercoles" id="customCheck3">Miercoles
+                                                    <span></span>
+                                                </label>
+                                                <label class="checkbox" for="customCheck4">
+                                                    <input (change)="select_day($event)" type="checkbox" class="custom-control-input" value="Jueves" id="customCheck4">Jueves
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="checkbox-list" >
+                                                <label class="checkbox" for="customCheck5">
+                                                    <input (change)="select_day($event)" type="checkbox" class="custom-control-input" value="Viernes" id="customCheck5">Viernes
+                                                    <span></span>
+                                                </label>
+                                                <label class="checkbox" for="customCheck6">
+                                                    <input (change)="select_day($event)" type="checkbox" class="custom-control-input" value="Sabado" id="customCheck6">Sabado
+                                                    <span></span>
+                                                </label>
+                                                <label class="checkbox" for="customCheck7">
+                                                    <input (change)="select_day($event)" type="checkbox" class="custom-control-input" value="Domingo" id="customCheck7">Domingo
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12">
+                                    <a (click)="add_item()" type="button" class="btn btn-primary mb-0">Agregar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-12">
+                            <table class="table table-striped table-bordered table-hover mb-0">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Salon</th>
+                                        <th scope="col">Aforo</th>
+                                        <th scope="col">Hora</th>
+                                        <th scope="col">Días</th>
+                                        <th scope="col">Quitar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of rooms; let i = index">
+                                        <th>{{ item.room }}</th>
+                                        <th>{{ item.aforo }}</th>
+                                        <th>{{ item.start_time }} - {{ item.end_time }}</th>
+                                        <th>
+                                            <ng-container *ngFor="let subitem of item.frequency; let last = last">
+                                                <span *ngIf="!last">{{ subitem.substr(0,3) }}, </span>
+                                                <span *ngIf="last">{{ subitem.substr(0,3) }}</span>
+                                            </ng-container>
+                                        </th>
+                                        <th><a (click)="del_item(i)" class="text-danger pointer">[Quitar]</a></th>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="rooms.length == 0">
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            <span class="">No se encontraron resultados</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button *ngIf="!load_btn" type="submit" class="btn btn-primary font-weight-bold">Crear ciclo</button>
+            <button *ngIf="load_btn" type="button" class="btn btn-primary font-weight-bold spinner spinner-white spinner-left">Creando</button>
+        </form>
+    </ng-container>
+</ng-container>
