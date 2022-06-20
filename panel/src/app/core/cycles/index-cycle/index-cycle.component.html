@@ -1,165 +1,192 @@
-<div class="card card-custom card-stretch gutter-b">
-
-    <div class="card-header border-0 mt-5">
-        <h3 class="card-title align-items-start flex-column text-dark">
-            <span class="font-weight-bolder text-dark">Ciclos vigentes</span>
-            <span class="text-muted mt-3 font-weight-bold font-size-sm">Solo se muestran cursos con clases vigentes</span>
-        </h3>
-        <div class="card-toolbar">
-            <a routerLink="expired" class="btn btn-info btn-sm font-weight-bold font-size-sm mr-3">Ir a vencidos</a>
-            <a routerLink="create" class="btn btn-primary btn-sm font-weight-bold font-size-sm mr-3">Nuevo ciclo</a>
-        </div>
+<ng-container *ngIf="load_data">
+    <div class="text-center text-warning">
+        Cargando...
     </div>
+</ng-container>
 
-    <div class="card-body py-0 mt-n3">
-        <div class="mb-7 ">
-            <div class="row align-items-center">
-                <div class="col-lg-9 col-xl-8">
+<ng-container *ngIf="!load_data">
+    <ng-container *ngIf="!data">
+        <app-notfound></app-notfound>
+    </ng-container>
+    <ng-container *ngIf="data">
+        <div class="card card-custom card-stretch gutter-b">
+            <div class="card-header border-0 mt-5">
+                <h3 class="card-title align-items-start flex-column text-dark">
+                    <span class="font-weight-bolder text-dark">Ciclos vigentes</span>
+                    <span class="text-muted mt-3 font-weight-bold font-size-sm">Solo se muestran cursos con clases vigentes</span>
+                </h3>
+                <div class="card-toolbar">
+                    <a routerLink="expired" class="btn btn-info btn-sm font-weight-bold font-size-sm mr-3">Ir a vencidos</a>
+                    <a routerLink="create" class="btn btn-primary btn-sm font-weight-bold font-size-sm mr-3">Nuevo ciclo</a>
+                </div>
+            </div>
+        
+            <div class="card-body py-0 mt-n3">
+                <div class="mb-7 ">
                     <div class="row align-items-center">
-                        <div class="col-md-5 my-2 my-md-0">
-                            <div class="d-flex align-items-center">
-                                <label class="mr-3 mb-0 d-none d-md-block">Nivel:</label>
-                                <select class="form-control">
-                                    <option value="Todos">Todos</option>
-                                    <option value="Basico 1">Basico 1</option>
-                                    <option value="Basico 2">Basico 2</option>
-                                    <option value="Basico 3">Basico 3</option>
-                                    <option value="Intermedio 1">Intermedio 1</option>
-                                    <option value="Intermedio 2">Intermedio 2</option>
-                                    <option value="Intermedio 2">Intermedio 3</option>
-                                    <option value="Avanzado 1">Avanzado 1</option>
-                                    <option value="Avanzado 2">Avanzado 2</option>
-                                    <option value="Avanzado 3">Avanzado 3</option>
-                                </select>
+                        <div class="col-lg-9 col-xl-8">
+                            <div class="row align-items-center">
+                                <div class="col-md-5 my-2 my-md-0">
+                                    <div class="d-flex align-items-center">
+                                        <label class="mr-3 mb-0 d-none d-md-block">Nivel:</label>
+                                        <select class="form-control">
+                                            <option value="Todos">Todos</option>
+                                            <option value="Basico 1">Basico 1</option>
+                                            <option value="Basico 2">Basico 2</option>
+                                            <option value="Basico 3">Basico 3</option>
+                                            <option value="Intermedio 1">Intermedio 1</option>
+                                            <option value="Intermedio 2">Intermedio 2</option>
+                                            <option value="Intermedio 2">Intermedio 3</option>
+                                            <option value="Avanzado 1">Avanzado 1</option>
+                                            <option value="Avanzado 2">Avanzado 2</option>
+                                            <option value="Avanzado 3">Avanzado 3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <a class="btn btn-light-primary px-6 font-weight-bold pointer">Buscar</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <a class="btn btn-light-primary px-6 font-weight-bold pointer">Buscar</a>
-                        </div>
+                       
                     </div>
                 </div>
-               
+                
+        
+        
+                <table class="table table-borderless table-vertical-center">
+                    <thead>
+                        <tr>
+                            <th class="p-0" style="width: 50px"></th>
+                            <th class="p-0" style="min-width: 120px"></th>
+                            <th class="p-0" style="min-width: 100px"></th>
+                            <th class="p-0" style="min-width: 50px"></th>
+                            <th class="p-0" style="min-width: 70px"></th>
+                            <th class="p-0" style="min-width: 70px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of cycles">
+                            <tr style="background: #f6f4ff;">
+                                <td colspan="6">
+                                    <div>
+                                        <p style="margin-bottom: 0px;"><b class="badge badge-dark">Código ciclo:</b> &nbsp; #{{ item.cycle._id }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="background: #f6f4ff;">
+                                <td class="pl-4">
+                                    <div class="symbol symbol-50 symbol-fixed mr-2 mt-2">
+                                        <div class="symbol-label" style="background-image: url({{ img_url }}{{ course.image }})"></div>
+                                    </div>
+                                </td>
+                                <td class="pl-0">
+                                    <a class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                        {{ item.cycle.nivel }}
+                                    </a>
+                                    <span class="text-muted font-weight-bold d-block">
+                                        {{ item.cycle.start_date | date }} - {{ item.cycle.final_date | date }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                        <ng-container *ngFor="let subitem of item.cycle.months; let last = last">
+                                            <span *ngIf="subitem == 1">Ene<ng-container *ngIf="!last">, </ng-container> </span>
+                                            <span *ngIf="subitem == 2">Feb<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 3">Mar<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 4">Abr<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 5">May<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 6">Jun<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 7">Jul<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 8">Ago<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 9">Sep<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 10">Oct<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 11">Nov<ng-container *ngIf="!last">, </ng-container></span>
+                                            <span *ngIf="subitem == 12">Dic<ng-container *ngIf="!last">, </ng-container></span>
+                                        </ng-container>
+                                    </span>
+                                    <span class="text-muted font-weight-bold d-block">
+                                        Ciclos
+                                    </span>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.cycle.status">
+                                        <span class="badge badge-warning">Publicado</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="!item.cycle.status">
+                                        <span class="badge badge-success">Borrador</span>
+                                    </ng-container>
+                                </td>
+                                
+                                <td class="text-right">
+                                    <span class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                        {{ item.cycle.created_at | date}}
+                                    </span>
+                                    <span class="text-muted font-weight-bold d-block">
+                                        Creación
+                                    </span>
+                                </td>
+                                <td class="text-right pr-4" >
+                                    <div class="dropdown dropdown-inline dropleft">
+                                        <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ki ki-bold-more-ver"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" >
+                                                <i class="icon-1x text-dark-50 flaticon-edit"></i> &nbsp; Editar curso
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <table class="table table-bordered table-sm table-striped" style="margin-bottom: 0px;">
+                                        <ng-container>
+                                            <thead>
+                                                <th class="text-primary">Salón</th>
+                                                <th class="text-primary">Horario</th>
+                                                <th class="text-primary">Días</th>
+                                                <th class="text-primary">Aforo</th>
+                                            </thead>
+                                            <tr *ngFor="let subitem of item.rooms">
+                                                <td>
+                                                   {{ subitem.room }}
+                                                </td>
+                                                <td>
+                                                    <span>{{ subitem.start_time }}</span> - <span>{{ subitem.final_time }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                        <ng-container *ngFor="let item of subitem.frequency; let ultimo = last">
+                                                            <span *ngIf="!ultimo">{{item.substr(0,3)}}, </span>
+                                                            <span *ngIf="ultimo">{{item.substr(0,3)}}</span>
+                                                        </ng-container>
+                                                    </span>
+                                                    <span class="text-muted font-weight-bold">Días</span>
+                                                </td>
+                                                <td>
+                                                    <strong>{{ subitem.aforo }}</strong>
+                                                    <span>(0)</span>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                        
+                                    </table>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                <span class="text-muted">No se encontraron resultados.</span>
+                            </td>
+                        </tr>
+                    </tbody>  
+                </table>
             </div>
         </div>
+    </ng-container>
+</ng-container>
         
-
-
-        <table class="table table-borderless table-vertical-center">
-            <thead>
-                <tr>
-                    <th class="p-0" style="width: 50px"></th>
-                    <th class="p-0" style="min-width: 120px"></th>
-                    <th class="p-0" style="min-width: 100px"></th>
-                    <th class="p-0" style="min-width: 50px"></th>
-                    <th class="p-0" style="min-width: 70px"></th>
-                    <th class="p-0" style="min-width: 70px"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="background: #f6f4ff;">
-                    <td colspan="6">
-                        <div>
-                            <p style="margin-bottom: 0px;"><b class="badge badge-dark">Código ciclo:</b> &nbsp; #61f3597b1334ee5e705c7055</p>
-                        </div>
-                    </td>
-                </tr>
-                <tr style="background: #f6f4ff;">
-                    <td class="pl-4">
-                        <div class="symbol symbol-50 symbol-fixed mr-2 mt-2">
-                            <div class="symbol-label" style="background-image: url('assets/media/stock-600x400/img-26.jpg')"></div>
-                        </div>
-                    </td>
-                    <td class="pl-0">
-                        <a class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
-                            Avanzado 1
-                        </a>
-                        <span class="text-muted font-weight-bold d-block">
-                            01/01/2022 - 01/03/2022
-                        </span>
-                    </td>
-                    <td>
-                        <span class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
-                            Ene,Feb,Mar
-                        </span>
-                        <span class="text-muted font-weight-bold d-block">
-                            Ciclos
-                        </span>
-                    </td>
-                    <td>
-                        <ng-container>
-                            <span class="badge badge-warning">Publicado</span>
-                        </ng-container>
-                        <!-- <ng-container>
-                            <span class="badge badge-success">Borrador</span>
-                        </ng-container> -->
-                    </td>
-                    
-                    <td class="text-right">
-                        <span class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
-                            12 Dic, 2021
-                        </span>
-                        <span class="text-muted font-weight-bold d-block">
-                            Creación
-                        </span>
-                    </td>
-                    <td class="text-right pr-4" >
-                        <div class="dropdown dropdown-inline dropleft">
-                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="ki ki-bold-more-ver"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" >
-                                    <i class="icon-1x text-dark-50 flaticon-edit"></i> &nbsp; Editar curso
-                                </a>
-
-                            </div>
-                        </div>
-
-                       
-                    </td>
-                    
-                </tr>
-                <tr>
-                    <td colspan="6">
-                        <table class="table table-bordered table-sm table-striped" style="margin-bottom: 0px;">
-                            <ng-container>
-                                <thead>
-                                    <th class="text-primary">Salón</th>
-                                    <th class="text-primary">Horario</th>
-                                    <th class="text-primary">Días</th>
-                                    <th class="text-primary">Aforo</th>
-                                </thead>
-                                <tr>
-                                    <td>
-                                        Salon 1
-                                    </td>
-                                    <td>
-                                        <span>15:00</span> - <span>16:30</span>
-                                    </td>
-                                    <td>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                            Lun,Mie,Vie
-                                        </span>
-                                        <span class="text-muted font-weight-bold">Días</span>
-                                    </td>
-                                    <td>
-                                        <strong>40</strong>
-                                        <span>(10)</span>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                            
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-            <!-- <tbody>
-                <tr>
-                    <td colspan="6" class="text-center">
-                        <span class="text-muted">No se encontraron resultados.</span>
-                    </td>
-                </tr>
-            </tbody>   -->
-        </table>
-    </div>
-</div>

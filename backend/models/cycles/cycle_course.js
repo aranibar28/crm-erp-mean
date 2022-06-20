@@ -1,15 +1,16 @@
 const { Schema, model } = require("mongoose");
 
 const Cycle_CourseSchema = Schema({
-  frequency:    { type: Object, required: true },
   nivel:        { type: String, required: true },
   sede:         { type: String, required: true },
-  description:  { type: String, required: false },
-  init_date:    { type: String, required: true },
-  start_date:   { type: String, required: true },
-  end_date:     { type: String, required: true },
-  year:         { type: Number, required: true },
   price:        { type: Number, required: true },
+  start_date:   { type: String, required: true },
+  final_date:   { type: String, required: true },
+  inscription:  { type: String, required: true },
+  months:       { type: Object, required: true },
+  year:         { type: Number, required: true },
+  frequency:    { type: Object, required: true },
+  description:  { type: String, required: false },
   status:       { type: Boolean, required: true, default: false },
   course:       { type: Schema.Types.ObjectId, required: false, ref: "Course" },
   collaborator: { type: Schema.Types.ObjectId, required: false, ref: "Collaborator" },

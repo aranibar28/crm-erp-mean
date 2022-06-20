@@ -3,6 +3,7 @@
         Cargando...
     </div>
 </ng-container>
+
 <ng-container *ngIf="!load_data">
     <ng-container *ngIf="!data">
         <app-notfound></app-notfound>
@@ -95,14 +96,14 @@
                                             <b>Fin</b>
                                         </label>
                                         <div class="input-group date mb-2" >
-                                            <input [(ngModel)]="cycle.end_date" name="end_date" required [min]="date | date:'yyyy-MM-dd'" type="date" class="form-control" placeholder="Fin de clases"/>
+                                            <input [(ngModel)]="cycle.final_date" name="final_date" required [min]="date | date:'yyyy-MM-dd'" type="date" class="form-control" placeholder="Fin de clases"/>
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
                                                 <i class="la la-bullhorn"></i>
                                                 </span>
                                             </div>
                                         </div>
-                                        <small *ngIf="validators('end_date')" class="text-danger"> Este campo es obligatorio. </small>
+                                        <small *ngIf="validators('final_date')" class="text-danger"> Este campo es obligatorio. </small>
                                     </div>
                                 </div>
             
@@ -154,7 +155,7 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="exampleSelect1"><b>Hora fin</b></label>
-                                        <input [(ngModel)]="room.end_time" name="end_time" type="time" class="form-control"  min="09:00" max="18:00">
+                                        <input [(ngModel)]="room.final_time" name="final_time" type="time" class="form-control"  min="09:00" max="18:00">
                                     </div>
                                 </div>
                                 <div  class="col-12 col-md-12  form-group">
@@ -218,7 +219,7 @@
                                     <tr *ngFor="let item of rooms; let i = index">
                                         <th>{{ item.room }}</th>
                                         <th>{{ item.aforo }}</th>
-                                        <th>{{ item.start_time }} - {{ item.end_time }}</th>
+                                        <th>{{ item.start_time }} - {{ item.final_time }}</th>
                                         <th>
                                             <ng-container *ngFor="let subitem of item.frequency; let last = last">
                                                 <span *ngIf="!last">{{ subitem.substr(0,3) }}, </span>

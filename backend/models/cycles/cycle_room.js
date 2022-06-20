@@ -1,20 +1,21 @@
 const { Schema, model } = require("mongoose");
 
-const Cycle_InstructorSchema = Schema({
-  frequency:     { type: Object, required: true },
+const Cycle_RoomSchema = Schema({
   room:          { type: String, required: true },
+  frequency:     { type: Object, required: true },
   start_time:    { type: String, required: true },
-  end_time:      { type: String, required: true },
-  total_aforo:   { type: Number, required: true },
-  current_aforo: { type: Number, required: true, default: 0 },
+  final_time:    { type: String, required: true },
+  aforo:         { type: Number, required: true },
+  students:      { type: Number, required: true, default: 0 },
   course:        { type: Schema.Types.ObjectId, required: false, ref: "Course" },
   cycle_course:  { type: Schema.Types.ObjectId, required: false, ref: "Cycle_Course" },
+  collaborator:  { type: Schema.Types.ObjectId, required: false, ref: "Collaborator" },
   created_at:    { type: Date, required: true, default: Date.now },
 });
 
-Cycle_InstructorSchema.method("toJSON", function () {
+Cycle_RoomSchema.method("toJSON", function () {
   const { __v, ...object } = this.toObject();
   return object;
 });
 
-module.exports = model("Cycle_Instructor", Cycle_InstructorSchema);
+module.exports = model("Cycle_Room", Cycle_RoomSchema);

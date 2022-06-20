@@ -60,8 +60,13 @@ export class CourseService {
     return this.http.put(url, data, this.headers);
   }
 
-  get_data_by_course(id: any): Observable<any> {
-    const url = `${base_url}/get_data_by_course/${id}`;
+  create_cycle(data: any): Observable<any> {
+    const url = `${base_url}/create_cycle`;
+    return this.http.post(url, data, this.headers);
+  }
+
+  read_cycles(id: any): Observable<any> {
+    const url = `${base_url}/read_cycles/${id}`;
     return this.http.get(url, this.headers);
   }
 }
