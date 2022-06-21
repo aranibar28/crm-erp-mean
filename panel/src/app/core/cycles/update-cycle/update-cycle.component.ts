@@ -8,7 +8,6 @@ declare var $: any;
 @Component({
   selector: 'app-update-cycle',
   templateUrl: './update-cycle.component.html',
-  styles: [],
 })
 export class UpdateCycleComponent implements OnInit {
   @ViewChild('myForm') myForm!: NgForm;
@@ -121,8 +120,21 @@ export class UpdateCycleComponent implements OnInit {
     }
   }
 
-  del_item(index: any) {
-    //this.rooms.splice(index, 1);
+  delete_room(id: any, name: any) {
+    Swal.fire({
+      icon: 'question',
+      title: 'Eliminar Salón',
+      text: `¿Desea eliminar el ${name}?`,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.courseService.del_rooms_cycle(id).subscribe(() => {
+          Swal.fire('Listo!', name + ' eliminado.', 'success');
+          this.init_data();
+        });
+      }
+    });
   }
 
   validators(name: string) {

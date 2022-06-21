@@ -304,6 +304,16 @@ const add_rooms_cycle = async (req, res = response) => {
   }
 };
 
+const del_rooms_cycle = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    await Cycle_Room.findByIdAndDelete(id);
+    res.status(200).json({ data: true });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
 module.exports = {
   image,
   create_course,
@@ -318,4 +328,5 @@ module.exports = {
   read_expired_cycles,
   update_cycle,
   add_rooms_cycle,
+  del_rooms_cycle,
 };

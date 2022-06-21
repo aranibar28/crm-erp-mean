@@ -89,4 +89,9 @@ export class CourseService {
     const url = `${base_url}/add_rooms_cycle`;
     return this.http.post(url, data, this.headers);
   }
+
+  del_rooms_cycle(id: any): Observable<any> {
+    const url = `${base_url}/del_rooms_cycle/${id}`;
+    return this.http.delete(url, this.headers);
+  }
 }

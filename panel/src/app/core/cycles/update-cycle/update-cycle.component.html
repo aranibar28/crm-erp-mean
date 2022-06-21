@@ -232,7 +232,7 @@
                                                 <span *ngIf="last">{{ subitem.substr(0,3) }}</span>
                                             </ng-container>
                                         </th>
-                                        <th><a (click)="del_item(i)" class="text-danger pointer">[Quitar]</a></th>
+                                        <th><a (click)="delete_room(item._id, item.room)" class="text-danger pointer">[Quitar]</a></th>
                                     </tr>
                                 </tbody>
                                 <tbody *ngIf="rooms.length == 0">
