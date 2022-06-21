@@ -9,7 +9,6 @@ const Cycle_CourseSchema = Schema({
   inscription:  { type: String, required: true },
   months:       { type: Object, required: true },
   year:         { type: Number, required: true },
-  frequency:    { type: Object, required: true },
   description:  { type: String, required: false },
   status:       { type: Boolean, required: true, default: false },
   course:       { type: Schema.Types.ObjectId, required: false, ref: "Course" },

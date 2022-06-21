@@ -22,5 +22,6 @@ router.get("/read_expired_cycles/:id", [validateJWT], ctrl.read_expired_cycles);
 router.put("/update_cycle/:id", [validateJWT], ctrl.update_cycle);
 router.post("/add_rooms_cycle", [validateJWT], ctrl.add_rooms_cycle);
 router.delete("/del_rooms_cycle/:id", [validateJWT], ctrl.del_rooms_cycle);
+router.put("/change_status_cycle/:id", [validateJWT], ctrl.change_status_cycle);
 
 module.exports = router;

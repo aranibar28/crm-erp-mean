@@ -153,7 +153,7 @@ const create_cycle = async (req, res = response) => {
 
     // Calcular fecha de inscripción
     let init_date = start_format;
-    init_date.setDate(init_date.getDate() - 14);
+    init_date.setDate(init_date.getDate() - 15);
     let month;
     let day;
 
@@ -267,6 +267,29 @@ const update_cycle = async (req, res = response) => {
   try {
     // Calcular fecha de inscripción
     let start_format = new Date(data.start_date + "T00:00:00");
+    let final_format = new Date(data.final_date + "T23:59:59");
+    let start_month = start_format.getMonth() + 1;
+    let final_month = final_format.getMonth() + 1;
+
+    // Obtener meses entre dos rangos de fechas
+    let arr_months = [];
+    if (start_month != final_month) {
+      if (start_month >= final_month) {
+        for (let i = start_month; i <= 12; i++) {
+          arr_months.push(i);
+        }
+        for (let i = 1; i <= final_month; i++) {
+          arr_months.push(i);
+        }
+      } else {
+        for (let i = start_month; i <= final_month; i++) {
+          arr_months.push(i);
+        }
+      }
+    } else {
+      arr_months.push(start_month);
+    }
+
     let init_date = start_format;
     init_date.setDate(init_date.getDate() - 14);
     let month;
@@ -285,6 +308,7 @@ const update_cycle = async (req, res = response) => {
     }
 
     data.inscription = init_date.getFullYear() + "-" + month + "-" + day;
+    data.months = arr_months;
 
     let reg = await Cycle_Course.findByIdAndUpdate(id, data, { new: true });
     res.json({ data: reg });
@@ -314,6 +338,14 @@ const del_rooms_cycle = async (req, res = response) => {
   }
 };
 
+const change_status_cycle = async (req, res = response) => {
+  let id = req.params["id"];
+  let data = req.body;
+  var new_status = data.status ? false : true;
+  reg = await Cycle_Course.findByIdAndUpdate(id, { status: new_status });
+  res.json({ data: reg });
+};
+
 module.exports = {
   image,
   create_course,
@@ -329,4 +361,5 @@ module.exports = {
   update_cycle,
   add_rooms_cycle,
   del_rooms_cycle,
+  change_status_cycle,
 };

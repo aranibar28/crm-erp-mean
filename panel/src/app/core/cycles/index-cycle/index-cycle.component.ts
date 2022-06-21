@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from 'src/app/services/course.service';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-index-cycle',
@@ -66,5 +67,15 @@ export class IndexCycleComponent implements OnInit {
         (item) => item.cycle.nivel == this.filter
       );
     }
+  }
+
+  change_status(id: any, status: any) {
+    const word = status ? 'desactivado' : 'activado';
+    this.courseService.change_status_cycle(id, { status }).subscribe({
+      next: () => {
+        this.init_data();
+        Swal.fire('Listo!', 'Estado ' + word, 'success');
+      },
+    });
   }
 }

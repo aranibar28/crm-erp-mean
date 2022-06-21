@@ -38,14 +38,12 @@ export class UpdateCycleComponent implements OnInit {
         this.id_cycle = cycle;
       },
     });
-
     this.init_data();
   }
 
   init_data() {
     this.courseService.read_cycle_by_id(this.id, this.id_cycle).subscribe({
       next: (res) => {
-        console.log(res);
         if (res.data) {
           this.course = res.data;
           this.cycle = res.cycle;
@@ -110,11 +108,11 @@ export class UpdateCycleComponent implements OnInit {
       this.room.frequency = this.days;
       this.courseService.add_rooms_cycle(this.room).subscribe({
         next: (res) => {
-          console.log(res);
-          this.rooms.push(this.room);
+          this.init_data();
           this.days = [];
           this.room = { room: '', start_time: '08:00', final_time: '09:45' };
           $('.custom-control-input').prop('checked', false);
+          Swal.fire('Listo!', 'Salón agregado correctamente.', 'success');
         },
       });
     }

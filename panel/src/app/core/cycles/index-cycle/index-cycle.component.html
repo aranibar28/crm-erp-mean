@@ -111,10 +111,10 @@
                                 </td>
                                 <td>
                                     <ng-container *ngIf="item.cycle.status">
-                                        <span class="badge badge-warning">Publicado</span>
+                                        <span (click)="change_status(item.cycle._id, item.cycle.status)" class="badge badge-success pointer">Publicado</span>
                                     </ng-container>
                                     <ng-container *ngIf="!item.cycle.status">
-                                        <span class="badge badge-success">Borrador</span>
+                                        <span (click)="change_status(item.cycle._id, item.cycle.status)" class="badge badge-warning pointer">Borrador</span>
                                     </ng-container>
                                 </td>
                                 

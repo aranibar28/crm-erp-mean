@@ -94,4 +94,9 @@ export class CourseService {
     const url = `${base_url}/del_rooms_cycle/${id}`;
     return this.http.delete(url, this.headers);
   }
+
+  change_status_cycle(id: any, data: any): Observable<any> {
+    const url = `${base_url}/change_status_cycle/${id}`;
+    return this.http.put(url, data, this.headers);
+  }
 }
