@@ -16,7 +16,7 @@
                     <span class="text-muted mt-3 font-weight-bold font-size-sm">Solo se muestran cursos con clases vigentes</span>
                 </h3>
                 <div class="card-toolbar">
-                    <a routerLink="expired" class="btn btn-info btn-sm font-weight-bold font-size-sm mr-3">Ir a vencidos</a>
+                    <a routerLink="expired" class="btn btn-warning btn-sm font-weight-bold font-size-sm mr-3">Ir a vencidos</a>
                     <a routerLink="create" class="btn btn-primary btn-sm font-weight-bold font-size-sm mr-3">Nuevo ciclo</a>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                                 <div class="col-md-5 my-2 my-md-0">
                                     <div class="d-flex align-items-center">
                                         <label class="mr-3 mb-0 d-none d-md-block">Nivel:</label>
-                                        <select class="form-control">
+                                        <select [(ngModel)]="filter" name="filter" class="form-control">
                                             <option value="Todos">Todos</option>
                                             <option value="Basico 1">Basico 1</option>
                                             <option value="Basico 2">Basico 2</option>
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <a class="btn btn-light-primary px-6 font-weight-bold pointer">Buscar</a>
+                                    <a (click)="search()" class="btn btn-light-primary px-6 font-weight-bold pointer">Buscar</a>
                                 </div>
                             </div>
                         </div>
@@ -132,8 +132,8 @@
                                             <i class="ki ki-bold-more-ver"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" >
-                                                <i class="icon-1x text-dark-50 flaticon-edit"></i> &nbsp; Editar curso
+                                            <a [routerLink]="['update', item.cycle._id]" class="dropdown-item" >
+                                                <i class="icon-1x text-dark-50 flaticon-edit"></i> &nbsp; Editar ciclo
                                             </a>
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@
                                                 </td>
                                                 <td>
                                                     <strong>{{ subitem.aforo }}</strong>
-                                                    <span>(0)</span>
+                                                    <span>({{ subitem.students }})</span>
                                                 </td>
                                             </tr>
                                         </ng-container>
@@ -177,7 +177,7 @@
                             </tr>
                         </ng-container>
                     </tbody>
-                    <tbody>
+                    <tbody *ngIf="cycles.length == 0">
                         <tr>
                             <td colspan="6" class="text-center">
                                 <span class="text-muted">No se encontraron resultados.</span>

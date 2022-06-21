@@ -23,8 +23,9 @@ import { CreateCourseComponent } from './courses/create-course/create-course.com
 import { UpdateCourseComponent } from './courses/update-course/update-course.component';
 
 import { IndexCycleComponent } from './cycles/index-cycle/index-cycle.component';
-import { CreateCycleComponent } from './cycles/create-cycle/create-cycle.component';
 import { ExpiredCycleComponent } from './cycles/expired-cycle/expired-cycle.component';
+import { CreateCycleComponent } from './cycles/create-cycle/create-cycle.component';
+import { UpdateCycleComponent } from './cycles/update-cycle/update-cycle.component';
 
 const childRoutes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -55,8 +56,9 @@ const childRoutes: Routes = [
   { path: 'courses/create', component: CreateCourseComponent },
   { path: 'courses/:id', component: UpdateCourseComponent },
   { path: 'courses/:id/cycles', component: IndexCycleComponent },
-  { path: 'courses/:id/cycles/create', component: CreateCycleComponent },
   { path: 'courses/:id/cycles/expired', component: ExpiredCycleComponent },
+  { path: 'courses/:id/cycles/create', component: CreateCycleComponent },
+  { path: 'courses/:id/cycles/update/:cycle', component: UpdateCycleComponent },
 
   { path: '**', redirectTo: '' },
 ];

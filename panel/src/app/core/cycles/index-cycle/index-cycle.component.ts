@@ -15,6 +15,9 @@ export class IndexCycleComponent implements OnInit {
   public id: any;
   public course: any = {};
   public cycles: Array<any> = [];
+  public all_cycles: Array<any> = [];
+
+  public filter = 'Todos';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,10 +50,21 @@ export class IndexCycleComponent implements OnInit {
   }
 
   list_cycles() {
-    this.courseService.read_cycles(this.id).subscribe({
+    this.courseService.read_current_cycles(this.id).subscribe({
       next: (res) => {
         this.cycles = res.data;
+        this.all_cycles = res.data;
       },
     });
+  }
+
+  search() {
+    if (this.filter === 'Todos') {
+      this.cycles = this.all_cycles;
+    } else {
+      this.cycles = this.all_cycles.filter(
+        (item) => item.cycle.nivel == this.filter
+      );
+    }
   }
 }

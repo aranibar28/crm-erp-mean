@@ -65,8 +65,18 @@ export class CourseService {
     return this.http.post(url, data, this.headers);
   }
 
-  read_cycles(id: any): Observable<any> {
-    const url = `${base_url}/read_cycles/${id}`;
+  read_current_cycles(id: any): Observable<any> {
+    const url = `${base_url}/read_current_cycles/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
+  read_expired_cycles(id: any): Observable<any> {
+    const url = `${base_url}/read_expired_cycles/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
+  read_cycle_by_id(id: any, id_cycle: any): Observable<any> {
+    const url = `${base_url}/read_cycle_by_id/${id}/${id_cycle}`;
     return this.http.get(url, this.headers);
   }
 }
