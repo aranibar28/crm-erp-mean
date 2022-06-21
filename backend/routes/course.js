@@ -16,6 +16,10 @@ router.put("/status/:id", [validateJWT], ctrl.change_status);
 router.get("/image/:img", ctrl.image);
 
 router.post("/create_cycle", [validateJWT], ctrl.create_cycle);
-router.get("/read_cycles/:id", [validateJWT], ctrl.read_cycles);
+router.get("/read_cycle_by_id/:id/:id_cycle", [validateJWT], ctrl.read_cycle_by_id);
+router.get("/read_current_cycles/:id", [validateJWT], ctrl.read_current_cycles);
+router.get("/read_expired_cycles/:id", [validateJWT], ctrl.read_expired_cycles);
+router.put("/update_cycle/:id", [validateJWT], ctrl.update_cycle);
+router.post("/add_rooms_cycle", [validateJWT], ctrl.add_rooms_cycle);
 
 module.exports = router;

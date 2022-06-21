@@ -64,12 +64,11 @@ export class CreateCycleComponent implements OnInit {
       this.cycle.course = this.id;
       this.cycle.frequency = this.rooms;
       this.courseService.create_cycle(this.cycle).subscribe({
-        next: (res) => {
-          console.log(res);
+        next: () => {
           this.router.navigate(['/dashboard/courses/' + this.id + '/cycles']);
+          Swal.fire('Listo!', 'Datos Guardados', 'success');
         },
       });
-      Swal.fire('Listo!', 'Datos Guardados', 'success');
     }, 1000);
   }
 

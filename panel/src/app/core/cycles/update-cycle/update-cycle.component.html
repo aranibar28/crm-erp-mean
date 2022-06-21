@@ -9,8 +9,8 @@
         <app-notfound></app-notfound>
     </ng-container>
     <ng-container *ngIf="data">
-        <form (ngSubmit)="update()" #myForm="ngForm" autocomplete="off">
-            <div class="card card-custom gutter-b example example-compact form-group">
+        <div>
+            <form (ngSubmit)="update()" #myForm="ngForm" autocomplete="off" class="card card-custom gutter-b example example-compact form-group">
         
                 <div class="card-header">
                     <h3 class="card-title">
@@ -108,13 +108,19 @@
                                 </div>
             
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button *ngIf="!load_btn" type="submit" class="btn btn-primary font-weight-bold">Actualizar ciclo</button>
+                                    <button *ngIf="load_btn" type="button" class="btn btn-primary font-weight-bold spinner spinner-white spinner-left">Actualizando</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-7 col-sm-12">
                             <tinymce [(ngModel)]="cycle.description" name="description"></tinymce>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             
             <div class="card card-custom gutter-b example example-compact form-group">
                 <div class="card-header">
@@ -241,8 +247,6 @@
                     </div>
                 </div>
             </div>
-            <button *ngIf="!load_btn" type="submit" class="btn btn-primary font-weight-bold">Actualizar ciclo</button>
-            <button *ngIf="load_btn" type="button" class="btn btn-primary font-weight-bold spinner spinner-white spinner-left">Actualizando</button>
-        </form>
+        </div>
     </ng-container>
 </ng-container>

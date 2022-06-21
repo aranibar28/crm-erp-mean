@@ -79,4 +79,14 @@ export class CourseService {
     const url = `${base_url}/read_cycle_by_id/${id}/${id_cycle}`;
     return this.http.get(url, this.headers);
   }
+
+  update_cycle(id: any, data: any): Observable<any> {
+    const url = `${base_url}/update_cycle/${id}`;
+    return this.http.put(url, data, this.headers);
+  }
+
+  add_rooms_cycle(data: any): Observable<any> {
+    const url = `${base_url}/add_rooms_cycle`;
+    return this.http.post(url, data, this.headers);
+  }
 }

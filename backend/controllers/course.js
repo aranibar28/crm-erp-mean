@@ -60,35 +60,39 @@ const read_course_by_id = async (req, res = response) => {
 
 const update_course = async (req, res = response) => {
   let id = req.params["id"];
-  let { ...data } = req.body;
+  let course = await Course.findById(id);
+  let { title, ...data } = req.body;
 
   try {
-    var exist_title = await Course.findOne({ title: data.title });
-    if (exist_title) {
-      return res.json({ data: undefined, msg: "Este título ya se encuentra registrado." });
-    } else {
-      data.slug = data.title
-        .toLowerCase()
-        .replace(/ /g, "-")
-        .replace(/[^\w-]+/g, "");
-
-      if (req.files) {
-        var img_path = req.files.image.path;
-        var name = img_path.split("\\");
-        var image = name[2];
-        let reg = await Course.findByIdAndUpdate(id, { ...data, image });
-        fs.stat("./uploads/courses/" + reg.image, (err) => {
-          if (!err) {
-            fs.unlink("./uploads/courses/" + reg.image, (err) => {
-              if (err) throw err;
-            });
-          }
-        });
-        res.json({ data: reg });
-      } else {
-        let reg = await Course.findByIdAndUpdate(id, data);
-        res.send({ data: reg });
+    if (course.title !== title) {
+      var exist_title = await Course.findOne({ title });
+      if (exist_title) {
+        return res.json({ data: undefined, msg: "Este título ya se encuentra registrado." });
       }
+    }
+
+    data.title = title;
+    data.slug = title
+      .toLowerCase()
+      .replace(/ /g, "-")
+      .replace(/[^\w-]+/g, "");
+
+    if (req.files) {
+      var img_path = req.files.image.path;
+      var name = img_path.split("\\");
+      var image = name[2];
+      let reg = await Course.findByIdAndUpdate(id, { ...data, image });
+      fs.stat("./uploads/courses/" + reg.image, (err) => {
+        if (!err) {
+          fs.unlink("./uploads/courses/" + reg.image, (err) => {
+            if (err) throw err;
+          });
+        }
+      });
+      res.json({ data: reg });
+    } else {
+      let reg = await Course.findByIdAndUpdate(id, data);
+      res.send({ data: reg });
     }
   } catch (error) {
     res.json({ data: undefined, msg: error.message });
@@ -149,15 +153,23 @@ const create_cycle = async (req, res = response) => {
 
     // Calcular fecha de inscripción
     let init_date = start_format;
-    let month_v;
     init_date.setDate(init_date.getDate() - 14);
+    let month;
+    let day;
+
     if (init_date.getMonth() + 1 <= 9) {
-      month_v = "0" + init_date.getMonth() + 1;
+      month = "0" + (init_date.getMonth() + 1);
     } else {
-      month_v = init_date.getMonth() + 1;
+      month = init_date.getMonth() + 1;
     }
 
-    data.inscription = init_date.getFullYear() + "-" + month_v + "-" + init_date.getDate();
+    if (init_date.getDate() + 1 <= 9) {
+      day = "0" + (init_date.getDate() + 1);
+    } else {
+      day = init_date.getDate() + 1;
+    }
+
+    data.inscription = init_date.getFullYear() + "-" + month + "-" + day;
     data.months = arr_months;
     data.year = start_format.getFullYear();
     data.collaborator = req.id;
@@ -175,7 +187,7 @@ const create_cycle = async (req, res = response) => {
         final_time: item.final_time,
         aforo: item.aforo,
         course: data.course,
-        cycle: reg._id,
+        cycle_course: reg._id,
         collaborator: data.collaborator,
       });
     }
@@ -184,7 +196,25 @@ const create_cycle = async (req, res = response) => {
   }
 };
 
-const read_cycles = async (req, res = response) => {
+const read_cycle_by_id = async (req, res = response) => {
+  let id = req.params["id"];
+  let cycle = req.params["id_cycle"];
+
+  try {
+    let reg1 = await Course.findById(id);
+    try {
+      let reg2 = await Cycle_Course.findById({ _id: cycle });
+      let rooms = await Cycle_Room.find({ cycle_course: cycle });
+      res.json({ data: reg1, cycle: reg2, rooms: rooms });
+    } catch (error) {
+      res.json({ data: undefined, msg: error.message });
+    }
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const read_current_cycles = async (req, res = response) => {
   let id = req.params["id"];
 
   let date = new Date();
@@ -195,18 +225,83 @@ const read_cycles = async (req, res = response) => {
   var arr_cycles = [];
 
   for (var item of cycles) {
-    let start_format = Date.parse(new Date(item.start_date + "T00:00:00")) / 1000;
+    let start_format = Date.parse(new Date(item.inscription + "T00:00:00")) / 1000;
     let final_format = Date.parse(new Date(item.final_date + "T00:00:00")) / 1000;
     if (today_format >= start_format && today_format <= final_format) {
-      let cycle = await Cycle_Room.find({ course: item.course });
+      let rooms = await Cycle_Room.find({ cycle_course: item._id });
       arr_cycles.push({
         cycle: item,
-        rooms: item.frequency,
+        rooms: rooms,
       });
     }
   }
-
   res.json({ data: arr_cycles });
+};
+
+const read_expired_cycles = async (req, res = response) => {
+  let id = req.params["id"];
+
+  let date = new Date();
+  let year = date.getFullYear();
+  let today_format = Date.parse(new Date()) / 1000;
+
+  let cycles = await Cycle_Course.find({ course: id, year });
+  var arr_cycles = [];
+
+  for (var item of cycles) {
+    let final_format = Date.parse(new Date(item.final_date + "T00:00:00")) / 1000;
+    if (today_format >= final_format) {
+      let rooms = await Cycle_Room.find({ cycle_course: item._id });
+      arr_cycles.push({
+        cycle: item,
+        rooms: rooms,
+      });
+    }
+  }
+  res.json({ data: arr_cycles });
+};
+
+const update_cycle = async (req, res = response) => {
+  let id = req.params["id"];
+  let data = req.body;
+  try {
+    // Calcular fecha de inscripción
+    let start_format = new Date(data.start_date + "T00:00:00");
+    let init_date = start_format;
+    init_date.setDate(init_date.getDate() - 14);
+    let month;
+    let day;
+
+    if (init_date.getMonth() + 1 <= 9) {
+      month = "0" + (init_date.getMonth() + 1);
+    } else {
+      month = init_date.getMonth() + 1;
+    }
+
+    if (init_date.getDate() + 1 <= 9) {
+      day = "0" + (init_date.getDate() + 1);
+    } else {
+      day = init_date.getDate() + 1;
+    }
+
+    data.inscription = init_date.getFullYear() + "-" + month + "-" + day;
+
+    let reg = await Cycle_Course.findByIdAndUpdate(id, data, { new: true });
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const add_rooms_cycle = async (req, res = response) => {
+  let data = req.body;
+  try {
+    data.collaborator = req.id;
+    let reg = await Cycle_Room.create(data);
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
 };
 
 module.exports = {
@@ -218,5 +313,9 @@ module.exports = {
   delete_course,
   change_status,
   create_cycle,
-  read_cycles,
+  read_cycle_by_id,
+  read_current_cycles,
+  read_expired_cycles,
+  update_cycle,
+  add_rooms_cycle,
 };

@@ -49,6 +49,8 @@ export class UpdateCycleComponent implements OnInit {
         console.log(res);
         if (res.data) {
           this.course = res.data;
+          this.cycle = res.cycle;
+          this.rooms = res.rooms;
           this.load_data = false;
           this.data = true;
         } else {
@@ -60,6 +62,24 @@ export class UpdateCycleComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  update() {
+    if (this.myForm.invalid) {
+      this.myForm.control.markAllAsTouched();
+      return;
+    }
+    this.load_btn = true;
+    setTimeout(() => {
+      this.courseService.update_cycle(this.id_cycle, this.cycle).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.load_btn = false;
+          this.router.navigate(['/dashboard/courses/' + this.id + '/cycles']);
+          Swal.fire('Listo!', 'Datos Guardados', 'success');
+        },
+      });
+    }, 1000);
   }
 
   select_day($event: any) {
@@ -76,26 +96,6 @@ export class UpdateCycleComponent implements OnInit {
     }
   }
 
-  update() {
-    if (this.myForm.invalid) {
-      this.myForm.control.markAllAsTouched();
-      return;
-    }
-    this.load_btn = true;
-    setTimeout(() => {
-      this.load_btn = false;
-      this.cycle.course = this.id;
-      this.cycle.frequency = this.rooms;
-      this.courseService.create_cycle(this.cycle).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.router.navigate(['/dashboard/courses/' + this.id + '/cycles']);
-        },
-      });
-      Swal.fire('Listo!', 'Datos Guardados', 'success');
-    }, 1000);
-  }
-
   add_item() {
     if (!this.room.room) {
       Swal.fire('Error', 'Debe seleccionar un salón.', 'error');
@@ -106,16 +106,23 @@ export class UpdateCycleComponent implements OnInit {
     } else if (this.days?.length <= 0) {
       Swal.fire('Error', 'Debe seleccionar por lo menos un día.', 'error');
     } else {
+      this.room.course = this.id;
+      this.room.cycle_course = this.id_cycle;
       this.room.frequency = this.days;
-      this.rooms.push(this.room);
-      this.room = { room: '', start_time: '08:00', final_time: '09:45' };
-      this.days = [];
-      $('.custom-control-input').prop('checked', false);
+      this.courseService.add_rooms_cycle(this.room).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.rooms.push(this.room);
+          this.days = [];
+          this.room = { room: '', start_time: '08:00', final_time: '09:45' };
+          $('.custom-control-input').prop('checked', false);
+        },
+      });
     }
   }
 
   del_item(index: any) {
-    this.rooms.splice(index, 1);
+    //this.rooms.splice(index, 1);
   }
 
   validators(name: string) {
