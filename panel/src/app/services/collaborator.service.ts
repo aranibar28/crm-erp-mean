@@ -52,4 +52,9 @@ export class CollaboratorService {
     const url = `${base_url}/list_advisors`;
     return this.http.get(url, this.headers);
   }
+
+  list_instructors(): Observable<any> {
+    const url = `${base_url}/list_instructors`;
+    return this.http.get(url, this.headers);
+  }
 }

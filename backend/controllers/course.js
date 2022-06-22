@@ -346,6 +346,36 @@ const change_status_cycle = async (req, res = response) => {
   res.json({ data: reg });
 };
 
+const list_instructors_room = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    reg = await Cycle_Instructor.find({ cycle_course: id }).populate("collaborator").populate("cycle_room");
+    res.status(200).json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const add_instructor_room = async (req, res = response) => {
+  let data = req.body;
+  try {
+    reg = await Cycle_Instructor.create(data);
+    res.status(200).json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const del_instructor_room = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    reg = await Cycle_Instructor.findByIdAndDelete(id);
+    res.status(200).json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
 module.exports = {
   image,
   create_course,
@@ -362,4 +392,7 @@ module.exports = {
   add_rooms_cycle,
   del_rooms_cycle,
   change_status_cycle,
+  list_instructors_room,
+  add_instructor_room,
+  del_instructor_room,
 };

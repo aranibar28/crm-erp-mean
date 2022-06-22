@@ -99,4 +99,19 @@ export class CourseService {
     const url = `${base_url}/change_status_cycle/${id}`;
     return this.http.put(url, data, this.headers);
   }
+
+  list_instructors_room(id: any): Observable<any> {
+    const url = `${base_url}/list_instructors_room/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
+  add_instructor_room(data: any): Observable<any> {
+    const url = `${base_url}/add_instructor_room`;
+    return this.http.post(url, data, this.headers);
+  }
+
+  del_instructor_room(id: any): Observable<any> {
+    const url = `${base_url}/del_instructor_room/${id}`;
+    return this.http.delete(url, this.headers);
+  }
 }

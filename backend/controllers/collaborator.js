@@ -3,6 +3,30 @@ const bcrypt = require("bcryptjs");
 const Collaborator = require("../models/collaborator");
 const jwt = require("../helpers/jwt");
 
+const login_collaborator = async (req, res = response) => {
+  let { email, password } = req.body;
+  try {
+    let user = await Collaborator.findOne({ email });
+    if (!user) {
+      return res.json({ data: undefined, msg: "Este correo no existe en la base de datos." });
+    } else {
+      var valid_password = bcrypt.compareSync(password, user.password);
+      if (!valid_password) {
+        return res.json({ data: undefined, msg: "La contraseña es incorrecta." });
+      } else {
+        if (!user.status) {
+          return res.json({ data: undefined, msg: "El usuario no tiene acceso al panel." });
+        } else {
+          const token = jwt.createToken(user);
+          return res.json({ data: user, token });
+        }
+      }
+    }
+  } catch (error) {
+    return res.json({ data: undefined, msg: error.message });
+  }
+};
+
 const create_collaborator = async (req, res = response) => {
   let data = req.body;
   try {
@@ -88,31 +112,13 @@ const list_advisors = async (req, res = response) => {
   res.json({ data: reg });
 };
 
-const login_collaborator = async (req, res = response) => {
-  let { email, password } = req.body;
-  try {
-    let user = await Collaborator.findOne({ email });
-    if (!user) {
-      return res.json({ data: undefined, msg: "Este correo no existe en la base de datos." });
-    } else {
-      var valid_password = bcrypt.compareSync(password, user.password);
-      if (!valid_password) {
-        return res.json({ data: undefined, msg: "La contraseña es incorrecta." });
-      } else {
-        if (!user.status) {
-          return res.json({ data: undefined, msg: "El usuario no tiene acceso al panel." });
-        } else {
-          const token = jwt.createToken(user);
-          return res.json({ data: user, token });
-        }
-      }
-    }
-  } catch (error) {
-    return res.json({ data: undefined, msg: error.message });
-  }
+const list_instructors = async (req, res = response) => {
+  let reg = await Collaborator.find({ role: "Instructor", status: true }).select("_id first_name last_name full_name email");
+  res.json({ data: reg });
 };
 
 module.exports = {
+  login_collaborator,
   create_collaborator,
   read_collaborators,
   read_collaborator_by_id,
@@ -120,5 +126,5 @@ module.exports = {
   delete_collaborator,
   change_status,
   list_advisors,
-  login_collaborator,
+  list_instructors,
 };

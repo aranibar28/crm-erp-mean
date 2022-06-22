@@ -3,11 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
 import Swal from 'sweetalert2';
+import { CollaboratorService } from 'src/app/services/collaborator.service';
 declare var $: any;
 
 @Component({
   selector: 'app-update-cycle',
   templateUrl: './update-cycle.component.html',
+  styles: ['.modal-body{max-height:400px; overflow:auto;}'],
 })
 export class UpdateCycleComponent implements OnInit {
   @ViewChild('myForm') myForm!: NgForm;
@@ -15,18 +17,25 @@ export class UpdateCycleComponent implements OnInit {
   public load_data: boolean = true;
   public load_btn: boolean = false;
   public data: boolean = false;
+  public filter = '';
 
   public id: any;
   public id_cycle: any;
   public course: any = {};
   public cycle: any = { nivel: '', sede: '' };
   public room: any = { room: '', start_time: '08:00', final_time: '09:45' };
+  public instructor_room: any = { cycle_room: '' };
 
   public days: Array<any> = [];
   public rooms: Array<any> = [];
 
+  public instructors: Array<any> = [];
+  public instructors_arr: Array<any> = [];
+  public instructors_rooms: Array<any> = [];
+
   constructor(
     private activatedRoute: ActivatedRoute,
+    private collaboratorService: CollaboratorService,
     private courseService: CourseService,
     private router: Router
   ) {}
@@ -39,24 +48,43 @@ export class UpdateCycleComponent implements OnInit {
       },
     });
     this.init_data();
+    this.init_instructors_room();
   }
 
   init_data() {
     this.courseService.read_cycle_by_id(this.id, this.id_cycle).subscribe({
       next: (res) => {
         if (res.data) {
+          this.data = true;
           this.course = res.data;
           this.cycle = res.cycle;
           this.rooms = res.rooms;
           this.load_data = false;
-          this.data = true;
+          this.init_instructors();
         } else {
-          this.load_data = false;
           this.data = false;
+          this.load_data = false;
         }
       },
       error: (err) => {
         console.log(err);
+      },
+    });
+  }
+
+  init_instructors() {
+    this.collaboratorService.list_instructors().subscribe({
+      next: (res) => {
+        this.instructors = res.data;
+        this.instructors_arr = res.data;
+      },
+    });
+  }
+
+  init_instructors_room() {
+    this.courseService.list_instructors_room(this.id_cycle).subscribe({
+      next: (res) => {
+        this.instructors_rooms = res.data;
       },
     });
   }
@@ -130,6 +158,60 @@ export class UpdateCycleComponent implements OnInit {
         this.courseService.del_rooms_cycle(id).subscribe(() => {
           Swal.fire('Listo!', name + ' eliminado.', 'success');
           this.init_data();
+        });
+      }
+    });
+  }
+
+  search() {
+    if (this.filter) {
+      var term = new RegExp(this.filter, 'i');
+      this.instructors = this.instructors_arr.filter(
+        (item) => term.test(item.full_name) || term.test(item.email)
+      );
+    } else {
+      this.instructors = this.instructors_arr;
+    }
+  }
+
+  select_instructor(item: any) {
+    this.instructor_room.collaborator = item._id;
+    $('#inp_instructor').val(item.full_name);
+    $('#modalDocente').modal('hide');
+  }
+
+  add_instructor() {
+    this.instructor_room.cycle_course = this.id_cycle;
+    if (!this.instructor_room.cycle_room) {
+      Swal.fire('Error', 'Debe seleccionar un salón.', 'error');
+    } else if (!this.instructor_room.collaborator) {
+      Swal.fire('Error', 'Debe seleccionar un instructor.', 'error');
+    } else {
+      this.courseService.add_instructor_room(this.instructor_room).subscribe({
+        next: () => {
+          this.instructor_room.collaborator = '';
+          this.instructor_room.cycle_room = '';
+          $('#inp_instructor').val('');
+          this.init_instructors_room();
+          Swal.fire('Error', 'Se agregó correctamente los datos', 'success');
+        },
+      });
+    }
+  }
+
+  delete_instructor(item: any) {
+    const name = item.collaborator.full_name;
+    Swal.fire({
+      icon: 'question',
+      title: 'Retirar Instructor',
+      text: `¿Desea retirar el instructor ${name}?`,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.courseService.del_instructor_room(item._id).subscribe(() => {
+          this.init_instructors_room();
+          Swal.fire('Listo!', name + ' retirado.', 'success');
         });
       }
     });

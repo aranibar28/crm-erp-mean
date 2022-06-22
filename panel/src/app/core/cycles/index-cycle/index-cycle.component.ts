@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CourseService } from 'src/app/services/course.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -22,8 +22,7 @@ export class IndexCycleComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private courseService: CourseService,
-    private router: Router
+    private courseService: CourseService
   ) {}
 
   ngOnInit(): void {
