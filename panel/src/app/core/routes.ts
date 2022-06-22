@@ -27,6 +27,10 @@ import { ExpiredCycleComponent } from './cycles/expired-cycle/expired-cycle.comp
 import { CreateCycleComponent } from './cycles/create-cycle/create-cycle.component';
 import { UpdateCycleComponent } from './cycles/update-cycle/update-cycle.component';
 
+import { IndexInscriptionComponent } from './inscriptions/index-inscription/index-inscription.component';
+import { CreateInscriptionComponent } from './inscriptions/create-inscription/create-inscription.component';
+import { UpdateInscriptionComponent } from './inscriptions/update-inscription/update-inscription.component';
+
 const childRoutes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
 
@@ -59,6 +63,10 @@ const childRoutes: Routes = [
   { path: 'courses/:id/cycles/expired', component: ExpiredCycleComponent },
   { path: 'courses/:id/cycles/create', component: CreateCycleComponent },
   { path: 'courses/:id/cycles/update/:cycle', component: UpdateCycleComponent },
+
+  { path: 'inscriptions', component: IndexInscriptionComponent },
+  { path: 'inscriptions/create', component: CreateInscriptionComponent },
+  { path: 'inscriptions/:id', component: UpdateInscriptionComponent },
 
   { path: '**', redirectTo: '' },
 ];

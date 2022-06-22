@@ -1,0 +1,274 @@
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <div class="card card-custom mb-7">
+            <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                <div class="card-title">
+                    <h3 class="card-label">Matriculas
+                    <span class="text-muted pt-2 font-size-sm d-block">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, a?</span></h3>
+                </div>
+                <div class="card-toolbar">
+                    <a class="btn btn-light-danger btn-sm font-weight-bold font-size-sm mr-3" style="cursor: pointer;">
+                        <i class="flaticon-computer"></i> &nbsp; Encuesta
+                    </a>
+
+                    <a class="btn btn-light-success btn-sm font-weight-bold font-size-sm mr-3">
+                        <i class="flaticon-doc"></i>
+                        Exportar
+                    </a>
+                    <!-- <button class="btn btn-light-success btn-sm font-weight-bold font-size-sm mr-3" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Preparando...
+                    </button> -->
+
+                    <a routerLink="create" class="btn btn-light-info btn-sm font-weight-bold font-size-sm">
+                        <i class="flaticon-add-circular-button"></i>
+                        Nueva matrícula
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <!--begin: Search Form-->
+                <!--begin::Search Form-->
+                <div class="">
+                    <div class="row align-items-center">
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="row mb-5">
+                                
+                                <div class="col-md-2 col-sm-6 my-2 my-md-0">
+                                    <label class="mr-3 mb-0 d-md-block"><b>Fecha inicio</b></label>
+                                    <input type="date" class="form-control" placeholder="Fecha de inicio">
+                                </div>
+                                <div class="col-md-2 col-sm-6 my-2 my-md-0">
+                                    <label class="mr-3 mb-0 d-md-block"><b>Fecha fin</b></label>
+                                    <input type="date" class="form-control" placeholder="Fecha fin">
+                                </div>
+                                <div class="col-md-3 col-sm-6 my-2 my-md-0">
+                                    <label class="mr-3 mb-0 d-md-block"><b>Asesor</b></label>
+                                    <select class="form-control selectpicker" data-size="7" data-live-search="true">
+                                        <option value="" selected disabled>Seleccionar</option>
+                                        <option value="Todos">Todos</option>
+                                      
+                                    </select>
+                                </div>
+                         
+                                <div class="col-md-3 my-2 my-md-0">
+                                    <label class="mr-3 mb-0 d-none d-md-block text-white">*</label>
+                                    <a style="cursor: pointer;" class="btn btn-light-primary px-6 font-weight-bold">
+                                       <i class="flaticon-search"></i> Buscar
+                                    </a>
+                                    <!-- <button type="button" class="btn btn-light-primary spinner spinner-white spinner-left">
+                                        Buscando
+                                    </button> -->
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
+                            
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card card-custom">
+            <!--begin::Header-->
+            <div class="card-header border-0 py-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label font-weight-bolder text-dark">Matriculas</span>
+                    <span class="text-muted mt-3 font-weight-bold font-size-sm">Actividades de apertura cursos</span>
+                </h3>
+                <div class="card-toolbar">
+                    <button data-toggle="modal" [attr.data-target]="'#filtroAdvanced'" class="btn btn-light-warning px-6 font-weight-bold">
+                        <i class="flaticon2-console"></i> Avanzado
+                     </button>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-0 pb-7">
+                <!--begin::Table-->
+
+                <div class="row">
+                    <div class="col-12 mb-5">
+                        <div class="card card-custom card-border">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <span class="card-icon">
+                                        <i class="flaticon2-mail text-primary"></i>
+                                    </span>
+                                    <h3 class="card-label">Matricula
+                                    <small>#621814070f6fd07abe6c5aab</small></h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <button type="button" class="btn btn-primary font-weight-bold">1</button>
+                                        <button type="button" class="btn btn-success font-weight-bold">2</button>
+                                        <button type="button" class="btn btn-danger font-weight-bold">3</button>
+                                        <button type="button" class="btn btn-warning font-weight-bold">4</button>
+          
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-dark font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="flaticon-settings"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <a class="dropdown-item" href="#">Dropdown link</a>
+                                                <a class="dropdown-item" href="#">Dropdown link</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-5">
+                                    <div class="col">
+                                        <a class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                           John Doe
+                                        </a>
+                                        <span class="text-muted font-weight-bold d-block">
+                                            john.doe@domain.com
+                                        </span>
+                                    </div>
+                                    <div class="col text-center">
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Vincent Murray</span>
+                                        <span class="text-muted font-weight-bold">Asesor comercial</span>
+                                    </div>
+                                    <div class="col text-center">
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                            WhatsApp
+                                        </span>
+                                        <span class="text-muted font-weight-bold">Canal</span>
+                                    </div>
+                                    <div class="col text-right">
+                                        <span class="badge badge-primary mb-3 mr-3">Procesando</span>
+                                    </div>
+                                </div>
+                                <div class="separator separator-dashed mt-8 mb-5"></div>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <!--begin: Item-->
+                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                        <span class="mr-4">
+                                            <i class="flaticon-piggy-bank icon-2x text-muted font-weight-bold"></i>
+                                        </span>
+                                        <div class="d-flex flex-column text-dark-75">
+                                            <span class="font-weight-bolder font-size-sm">Total</span>
+                                            <span class="font-weight-bolder font-size-h5">
+                                            <span class="text-dark-50 font-weight-bold">$</span>145,200</span>
+                                        </div>
+                                    </div>
+                                    <!--end: Item-->
+                                    <!--begin: Item-->
+                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                        <span class="mr-4">
+                                            <i class="flaticon-confetti icon-2x text-muted font-weight-bold"></i>
+                                        </span>
+                                        <div class="d-flex flex-column text-dark-75">
+                                            <span class="font-weight-bolder font-size-sm">Matricula</span>
+                                            <span class="font-weight-bolder font-size-h5">
+                                            <span class="text-dark-50 font-weight-bold">$</span>274,230</span>
+                                        </div>
+                                    </div>
+                                    <!--end: Item-->
+                                    <!--begin: Item-->
+                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                        <span class="mr-4">
+                                            <i class="flaticon-pie-chart icon-2x text-muted font-weight-bold"></i>
+                                        </span>
+                                        <div class="d-flex flex-column text-dark-75">
+                                            <span class="font-weight-bolder font-size-sm">Fecha</span>
+                                            <span class="font-weight-bolder font-size-h5">
+                                            <span class="text-dark-50 font-weight-bold">$</span>461,120</span>
+                                        </div>
+                                    </div>
+                                    <!--end: Item-->
+                                    <!--begin: Item-->
+                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                        <span class="mr-4">
+                                            <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
+                                        </span>
+                                        <div class="d-flex flex-column flex-lg-fill">
+                                            <span class="text-dark-75 font-weight-bolder font-size-sm">Encuesta</span>
+                                            <a href="#" class="text-primary font-weight-bolder">Ver</a>
+                                        </div>
+                                    </div>
+                                    <!--end: Item-->
+                                    <!--begin: Item-->
+                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                        <span class="mr-4">
+                                            <i class="flaticon-chat-1 icon-2x text-muted font-weight-bold"></i>
+                                        </span>
+                                        <div class="d-flex flex-column">
+                                            <span class="text-dark-75 font-weight-bolder font-size-sm">Comentarios</span>
+                                            <a href="#" class="text-primary font-weight-bolder">Ver</a>
+                                        </div>
+                                    </div>
+                                    <!--end: Item-->
+                                    <!--begin: Item-->
+                                    <div class="d-flex align-items-center flex-lg-fill my-1">
+                                        <span class="mr-4">
+                                            <i class="flaticon-network icon-2x text-muted font-weight-bold"></i>
+                                        </span>
+                                        <div class="symbol-group symbol-hover">
+                                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Mark Stone">
+                                                <img alt="Pic" src="assets/media/users/300_25.jpg">
+                                            </div>
+                                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">
+                                                <img alt="Pic" src="assets/media/users/300_19.jpg">
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <!--end: Item-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                </div>
+
+               
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="d-flex flex-wrap mr-3">
+                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                            <i class="ki ki-bold-arrow-back icon-xs"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
+                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
+                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
+                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">25</a>
+                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">26</a>
+                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
+                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
+                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
+                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                            <i class="ki ki-bold-arrow-next icon-xs"></i>
+                        </a>
+                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span class="text-muted">Displaying 10 of 230 records</span>
+                    </div>
+                </div>
+            </div>
+            <!--end::Body-->
+        </div>
+        
+    </div>
+    <!--end::Container-->
+</div>

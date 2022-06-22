@@ -7,6 +7,7 @@ import { AccountModule } from './account/account.module';
 import { BuyerModule } from './customers/buyer/buyer.module';
 import { CustomersModule } from './customers/customers.module';
 import { CollaboratorModule } from './collaborator/collaborator.module';
+import { InscriptionsModule } from './inscriptions/inscriptions.module';
 import { CoursesModule } from './courses/courses.module';
 import { CyclesModule } from './cycles/cycles.module';
 
@@ -19,6 +20,7 @@ import { CyclesModule } from './cycles/cycles.module';
     BuyerModule,
     CustomersModule,
     CollaboratorModule,
+    InscriptionsModule,
     CoursesModule,
     CyclesModule,
   ],

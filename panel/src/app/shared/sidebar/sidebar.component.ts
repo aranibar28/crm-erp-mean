@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PublicService } from 'src/app/services/public.service';
 declare var $: any;
 
 @Component({
@@ -6,9 +7,13 @@ declare var $: any;
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent implements OnInit {
-  constructor() {}
+  public sidebar: any;
 
-  ngOnInit(): void {}
+  constructor(private publicService: PublicService) {}
+
+  ngOnInit(): void {
+    this.sidebar = this.publicService.sidebar;
+  }
 
   openModal(id: any) {
     setTimeout(() => {
