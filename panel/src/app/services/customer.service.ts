@@ -52,4 +52,9 @@ export class CustomerService {
     const url = `${base_url}/confirm_email_verify/${token}`;
     return this.http.get(url, this.headers);
   }
+
+  list_customers(filter: any): Observable<any> {
+    const url = `${base_url}/read_customers/${filter}`;
+    return this.http.get(url, this.headers);
+  }
 }

@@ -376,6 +376,11 @@ const del_instructor_room = async (req, res = response) => {
   }
 };
 
+const list_courses = async (req, res = response) => {
+  let reg = await Course.find({ status: true }).sort({ title: -1 }).select("_id title");
+  res.json({ data: reg });
+};
+
 module.exports = {
   image,
   create_course,
@@ -395,4 +400,5 @@ module.exports = {
   list_instructors_room,
   add_instructor_room,
   del_instructor_room,
+  list_courses,
 };

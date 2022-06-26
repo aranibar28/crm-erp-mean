@@ -27,5 +27,6 @@ router.put("/change_status_cycle/:id", [validateJWT], ctrl.change_status_cycle);
 router.get("/list_instructors_room/:id", [validateJWT], ctrl.list_instructors_room);
 router.post("/add_instructor_room", [validateJWT], ctrl.add_instructor_room);
 router.delete("/del_instructor_room/:id", [validateJWT], ctrl.del_instructor_room);
+router.get("/list_courses", [validateJWT], ctrl.list_courses);
 
 module.exports = router;

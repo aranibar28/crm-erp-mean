@@ -114,4 +114,9 @@ export class CourseService {
     const url = `${base_url}/del_instructor_room/${id}`;
     return this.http.delete(url, this.headers);
   }
+  
+  list_courses(): Observable<any> {
+    const url = `${base_url}/list_courses`;
+    return this.http.get(url, this.headers);
+  }
 }

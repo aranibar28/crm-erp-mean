@@ -197,6 +197,26 @@ const confirm_email_verify = async (req, res = response) => {
   }
 };
 
+const list_customers = async (req, res = response) => {
+  let filter = req.params["filter"];
+
+  if (filter === "all") {
+    let reg = await Customer.find();
+    return res.json({ data: reg });
+  }
+
+  let reg = await Customer.find({
+    $or: [
+      { first_name: new RegExp(filter, "i") },
+      { last_name: new RegExp(filter, "i") },
+      { email: new RegExp(filter, "i") },
+      { dni: new RegExp(filter, "i") },
+    ],
+  }).select("_id first_name last_name full_name email verify type");
+
+  res.json({ data: reg });
+};
+
 module.exports = {
   create_customer,
   read_customers,
@@ -206,4 +226,5 @@ module.exports = {
   change_status,
   login_customer,
   confirm_email_verify,
+  list_customers,
 };

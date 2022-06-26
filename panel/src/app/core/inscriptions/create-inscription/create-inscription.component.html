@@ -17,9 +17,66 @@
                             </label>
                             <div class="col-lg-9 col-xl-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control form-control-solid" placeholder="Seleccionar cliente">
+                                    <input id="inp_customer" type="text" class="form-control form-control-solid" readonly placeholder="Seleccionar cliente">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">Go!</button>
+                                        <button class="btn btn-primary" data-toggle="modal" [attr.data-target]="'#modalCustomer'" type="button">Go!</button>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="modalCustomer" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Seleccionar Cliente</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i aria-hidden="true" class="ki ki-close"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-header">
+                                                <div class="input-group">
+                                                    <input [(ngModel)]="filter" name="filter" type="text" class="form-control" placeholder="Seleccionar docente">
+                                                    <div class="input-group-append">
+                                                        <button (click)="search_customers()" class="btn btn-primary" type="button">
+                                                            <i class="flaticon-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ng-container *ngIf="load_data">
+                                                    <div class="text-warning text-center">Cargando...</div>
+                                                </ng-container>
+                                                <ng-container *ngIf="!load_data">
+                                                    <div *ngIf="this.customers.length === 0">
+                                                       <h4 class="card-label">
+                                                            <i class="flaticon-search"></i>
+                                                            Búsqueda de clientes
+                                                       </h4>
+                                                       <p>Ingrese <code>un parámetro de búsqueda</code> para poder mostrar clientes.</p>
+                                                    </div>
+                                                    <div *ngFor="let item of customers" class="d-flex align-items-center mb-10">
+                                                        <div class="symbol symbol-40 symbol-light-success">
+                                                            <div class="symbol symbol-40 flex-shrink-0 mr-3"
+                                                            [ngClass]="{'symbol-success' : item.first_name.substr(0,1) >= 'A' && item.first_name.substr(0,1) <= 'H',
+                                                                        'symbol-info' : item.first_name.substr(0,1) >= 'I' && item.first_name.substr(0,1) <= 'O',
+                                                                        'symbol-warning' : item.first_name.substr(0,1) >= 'P' && item.first_name.substr(0,1) <= 'U',
+                                                                        'symbol-primary' : item.first_name.substr(0,1) >= 'V' && item.first_name.substr(0,1) <= 'Z'}">
+                                                            <div class="symbol-label">{{ item.first_name.substr(0,1) }}{{ item.last_name.substr(0,1) }}</div>								
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                            <a class="text-dark text-hover-primary mb-1 font-size-lg">
+                                                                {{ item.full_name }}
+                                                                <span *ngIf="item.type == 'Prospecto'" class="badge badge-warning ml-3">P</span>
+                                                                <span *ngIf="item.type == 'Socio'" class="badge badge-primary ml-3">S</span>
+                                                            </a>
+                                                            <span class="text-muted">{{ item.email }}</span>
+                                                        </div>
+                                                        <button *ngIf="item.verify" (click)="select_customer(item)" class="btn btn-success btn-sm">Seleccionar</button>
+                                                        <button *ngIf="!item.verify" disabled class="btn btn-danger btn-sm">Seleccionar</button>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -29,8 +86,14 @@
                                 <b>Canal:</b>
                             </label>
                             <div class="col-lg-9 col-xl-9">
-                                <select class="custom-select form-control form-control-solid" id="">
+                                <select [(ngModel)]="inscription.canal" name="canal" class="custom-select form-control form-control-solid" id="">
                                     <option value="" selected disabled>Seleccionar</option>
+                                    <option value="Whatsapp">Whatsapp</option>
+                                    <option value="Facebook">Facebook</option>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="Campaña EM">Campaña EM</option>
+                                    <option value="Publicidad FB">Publicidad FB</option>
+                                    <option value="Tienda">Tienda</option>
                                 </select>
                             </div>
                         </div>
@@ -39,7 +102,7 @@
                                 <b>Matricula:</b>
                             </label>
                             <div class="col-lg-9 col-xl-9">
-                                <input type="text" class="form-control form-control-solid" placeholder="0">
+                                <input [(ngModel)]="inscription.matricula" name="matricula" type="number" class="form-control form-control-solid" placeholder="0">
                             </div>
                         </div>
                     </div>
@@ -115,10 +178,9 @@
                                 <b>Curso base:</b>
                             </label>
                             <div class="col-lg-9 col-xl-9">
-                                <select class="form-control selectpicker" data-size="7" data-live-search="true">
+                                <select (change)="select_course($event)" class="form-control selectpicker" data-size="7" data-live-search="true">
                                     <option value="">Select</option>
-                                    <option value="AF">Afghanistan</option>
-                                    <option value="AX">Åland Islands</option>
+                                    <option *ngFor="let item of courses" [value]="item._id">{{ item.title }}</option>
                                 </select>
                             </div>
                            
@@ -131,7 +193,144 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control form-control-solid" placeholder="Seleccionar curso">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">Go!</button>
+                                        <button [attr.data-target]="'#modalCycles'" data-toggle="modal" class="btn btn-primary" type="button">Go!</button>
+                                    </div>
+                                    <div class="modal fade" id="modalCycles" tabindex="-1" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px;">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Seleccionar Ciclo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <i aria-hidden="true" class="ki ki-close"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-header">
+                                                    <div class="input-group">
+                                                        <input [(ngModel)]="filter_cycle" name="filter_cycle" type="text" class="form-control" placeholder="Seleccionar ciclo">
+                                                        <div class="input-group-append">
+                                                            <button (click)="search_cycle()" class="btn btn-primary" type="button">
+                                                                <i class="flaticon-search"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ng-container *ngIf="load_cycles">
+                                                        <div class="text-warning text-center">Cargando...</div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!load_cycles">
+                                                        <table class="table table-borderless table-vertical-center">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="p-0" style="min-width: 120px"></th>
+                                                                    <th class="p-0" style="min-width: 100px"></th>
+                                                                    <th class="p-0" style="min-width: 50px"></th>
+                                                                    <th class="p-0" style="min-width: 70px"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <ng-container *ngFor="let item of cycles | paginate: { itemsPerPage: 5, currentPage: p };">
+                                                                    <tr style="background: #f6f4ff;">
+                                                                        <td colspan="5">
+                                                                            <div>
+                                                                                <p style="margin-bottom: 0px;"><b class="badge badge-dark">Código ciclo:</b> &nbsp; #{{ item.cycle._id }}</p>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="background: #f6f4ff;">
+                                                                        <td class="pl-4">
+                                                                            <a class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                                                                {{ item.cycle.nivel }}
+                                                                            </a>
+                                                                            <span class="text-muted font-weight-bold d-block">
+                                                                                {{ item.cycle.start_date | date }} - {{ item.cycle.final_date | date }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                                                                <ng-container *ngFor="let subitem of item.cycle.months; let last = last">
+                                                                                    <span *ngIf="subitem == 1">Ene<ng-container *ngIf="!last">, </ng-container> </span>
+                                                                                    <span *ngIf="subitem == 2">Feb<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 3">Mar<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 4">Abr<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 5">May<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 6">Jun<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 7">Jul<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 8">Ago<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 9">Sep<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 10">Oct<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 11">Nov<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                    <span *ngIf="subitem == 12">Dic<ng-container *ngIf="!last">, </ng-container></span>
+                                                                                </ng-container>
+                                                                            </span>
+                                                                            <span class="text-muted font-weight-bold d-block">
+                                                                                Ciclos
+                                                                            </span>
+                                                                        </td>                                                                       
+                                                                        <td class="text-right">
+                                                                            <span class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                                                                {{ item.cycle.created_at | date}}
+                                                                            </span>
+                                                                            <span class="text-muted font-weight-bold d-block">
+                                                                                Creación
+                                                                            </span>
+                                                                        </td>
+                                                                        <td class="text-right pr-4">
+                                                                            <button class="btn btn-success btn-sm">Seleccionar</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="6">
+                                                                            <table class="table table-bordered table-sm table-striped" style="margin-bottom: 0px;">
+                                                                                <ng-container>
+                                                                                    <thead>
+                                                                                        <th class="text-primary">Salón</th>
+                                                                                        <th class="text-primary">Horario</th>
+                                                                                        <th class="text-primary">Días</th>
+                                                                                        <th class="text-primary">Aforo</th>
+                                                                                    </thead>
+                                                                                    <tr *ngFor="let subitem of item.rooms">
+                                                                                        <td>
+                                                                                           {{ subitem.room }}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <span>{{ subitem.start_time }}</span> - <span>{{ subitem.final_time }}</span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                                                                <ng-container *ngFor="let item of subitem.frequency; let ultimo = last">
+                                                                                                    <span *ngIf="!ultimo">{{item.substr(0,3)}}, </span>
+                                                                                                    <span *ngIf="ultimo">{{item.substr(0,3)}}</span>
+                                                                                                </ng-container>
+                                                                                            </span>
+                                                                                            <span class="text-muted font-weight-bold">Días</span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <strong>{{ subitem.aforo }}</strong>
+                                                                                            <span>({{ subitem.students }})</span>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </ng-container>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+                                                            </tbody>
+                                                            <tbody *ngIf="cycles.length == 0">
+                                                                <tr>
+                                                                    <td colspan="6" class="text-center">
+                                                                        <span class="text-muted">No se encontraron resultados.</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>  
+                                                        </table>
+                                                    </ng-container>
+                                                    <div class="d-flex justify-content-end">
+                                                        <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event"></pagination-controls>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -240,7 +439,7 @@
                     </div>
                     <div class="card-footer">
                         <button type="button" class="btn btn-danger mr-3" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Matricular</button>
+                        <button (click)="register()" type="button" class="btn btn-primary">Matricular</button>
                     </div> 
                     
                 </div>
