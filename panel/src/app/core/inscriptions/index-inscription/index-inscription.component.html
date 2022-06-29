@@ -53,7 +53,7 @@
                          
                                 <div class="col-md-3 my-2 my-md-0">
                                     <label class="mr-3 mb-0 d-none d-md-block text-white">*</label>
-                                    <a (click)="search_inscriptions()" style="cursor: pointer;" class="btn btn-light-primary px-6 font-weight-bold">
+                                    <a (click)="filter()" style="cursor: pointer;" class="btn btn-light-primary px-6 font-weight-bold">
                                        <i class="flaticon-search"></i> Buscar
                                     </a>
                                     <!-- <button type="button" class="btn btn-light-primary spinner spinner-white spinner-left">
@@ -123,8 +123,9 @@
                                                     <i class="flaticon-settings"></i>
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <a class="dropdown-item" href="#">Dropdown link</a>
-                                                    <a class="dropdown-item" href="#">Dropdown link</a>
+                                                    <a (click)="send_email(item._id)" class="dropdown-item pointer align-items-center">
+                                                        <i class="flaticon-email mr-2"></i>Reenviar orden
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

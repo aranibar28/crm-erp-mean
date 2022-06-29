@@ -86,6 +86,12 @@ const read_inscriptions_dates = async (req, res = response) => {
   }
 };
 
+const send_invoice = async (req, res = response) => {
+  let id = req.params["id"];
+  send_email_invoice(id);
+  res.status(200).send({ data: true });
+};
+
 ////////////////////////////////////////////////////////
 
 const update_aforo = async (id) => {
@@ -143,13 +149,9 @@ const send_email_invoice = async (id) => {
   });
 };
 
-const test_send_invoice = async (req, res = response) => {
-  send_email_invoice("62bb64b7cb430464c6fef3c2");
-  res.status(200).send({ data: true });
-};
-
 module.exports = {
   create_inscription,
   read_inscriptions_today,
   read_inscriptions_dates,
+  send_invoice,
 };

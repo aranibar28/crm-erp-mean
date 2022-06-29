@@ -32,4 +32,9 @@ export class InscriptionService {
     const url = `${base_url}/read_inscriptions_dates/${advisor}/${from}/${to}`;
     return this.http.get(url, this.headers);
   }
+
+  send_invoice(id: any): Observable<any> {
+    const url = `${base_url}/send_invoice/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }
