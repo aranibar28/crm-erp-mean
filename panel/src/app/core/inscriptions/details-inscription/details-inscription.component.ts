@@ -34,7 +34,6 @@ export class DetailsInscriptionComponent implements OnInit {
           this.load_data = false;
           this.inscription = res.data;
           this.details = res.details;
-          console.log(res);
         } else {
           this.my_data = false;
           this.load_data = false;

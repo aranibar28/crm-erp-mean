@@ -113,10 +113,10 @@
                                     </div>
                                     <div class="card-toolbar">
                                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                            <button type="button" class="btn btn-primary font-weight-bold">1</button>
-                                            <button type="button" class="btn btn-success font-weight-bold">2</button>
-                                            <button type="button" class="btn btn-danger font-weight-bold">3</button>
-                                            <button type="button" class="btn btn-warning font-weight-bold">4</button>
+                                            <a class="btn btn-primary font-weight-bold">1</a>
+                                            <a class="btn btn-success font-weight-bold">2</a>
+                                            <a class="btn btn-danger font-weight-bold">3</a>
+                                            <a [routerLink]="['contract', item._id]" class="btn btn-warning font-weight-bold"><i class="flaticon2-google-drive-file mr-2"></i>Contrato</a>
               
                                             <div class="btn-group" role="group">
                                                 <button id="btnGroupDrop1" type="button" class="btn btn-dark font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -99,8 +99,7 @@ export class IndexInscriptionComponent implements OnInit {
       if (result.isConfirmed) {
         this.inscriptionService.send_invoice(id).subscribe({
           next: (res) => {
-            console.log(res);
-            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            Swal.fire('Listo!', 'Mensaje enviado.', 'success');
           },
         });
       }

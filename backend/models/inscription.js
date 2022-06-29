@@ -10,7 +10,7 @@ const InscriptionSchema = Schema({
   month:      { type: String, required: true },
   year:       { type: String, required: true },
   coupon:     { type: String, required: false },
-  status:     { type: Boolean, required: true, default: false },
+  status:     { type: String, required: true, default: "PROCESANDO" },
   renew:      { type: Boolean, required: true, default: false },
   renovation: { type: Schema.Types.ObjectId, required: false, ref: "Inscription" },
   customer:   { type: Schema.Types.ObjectId, required: false, ref: "Customer" },

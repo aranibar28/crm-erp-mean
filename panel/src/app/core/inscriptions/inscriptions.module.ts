@@ -9,6 +9,7 @@ import { IndexInscriptionComponent } from './index-inscription/index-inscription
 import { CreateInscriptionComponent } from './create-inscription/create-inscription.component';
 import { UpdateInscriptionComponent } from './update-inscription/update-inscription.component';
 import { DetailsInscriptionComponent } from './details-inscription/details-inscription.component';
+import { ContractInscriptionComponent } from './contract-inscription/contract-inscription.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { DetailsInscriptionComponent } from './details-inscription/details-inscr
     CreateInscriptionComponent,
     UpdateInscriptionComponent,
     DetailsInscriptionComponent,
+    ContractInscriptionComponent,
   ],
   imports: [
     CommonModule,

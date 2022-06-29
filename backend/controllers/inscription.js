@@ -92,6 +92,17 @@ const send_invoice = async (req, res = response) => {
   res.status(200).send({ data: true });
 };
 
+const read_inscription_by_id = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let inscription = await Inscription.findById(id).populate("customer").populate("advisor");
+    let details = await Inscription_Detail.find({ inscription: id }).populate("course").populate("cycle_course").populate("cycle_room");
+    res.json({ data: inscription, details: details });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
 ////////////////////////////////////////////////////////
 
 const update_aforo = async (id) => {
@@ -153,5 +164,6 @@ module.exports = {
   create_inscription,
   read_inscriptions_today,
   read_inscriptions_dates,
+  read_inscription_by_id,
   send_invoice,
 };
