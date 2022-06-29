@@ -126,6 +126,9 @@
                                                     <a (click)="send_email(item._id)" class="dropdown-item pointer align-items-center">
                                                         <i class="flaticon-email mr-2"></i>Reenviar orden
                                                     </a>
+                                                    <a [routerLink]="['details', item._id]" class="dropdown-item pointer align-items-center">
+                                                        <i class="flaticon-bag mr-2"></i>Detalles
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

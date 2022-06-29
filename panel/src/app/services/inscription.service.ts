@@ -33,6 +33,11 @@ export class InscriptionService {
     return this.http.get(url, this.headers);
   }
 
+  read_inscription_by_id(id: any): Observable<any> {
+    const url = `${base_url}/read_inscription_by_id/${id}`;
+    return this.http.get(url, this.headers);
+  }
+
   send_invoice(id: any): Observable<any> {
     const url = `${base_url}/send_invoice/${id}`;
     return this.http.get(url, this.headers);

@@ -4,20 +4,24 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 
+import { SharedModule } from 'src/app/shared/shared.module';
 import { IndexInscriptionComponent } from './index-inscription/index-inscription.component';
 import { CreateInscriptionComponent } from './create-inscription/create-inscription.component';
 import { UpdateInscriptionComponent } from './update-inscription/update-inscription.component';
+import { DetailsInscriptionComponent } from './details-inscription/details-inscription.component';
 
 @NgModule({
   declarations: [
     IndexInscriptionComponent,
     CreateInscriptionComponent,
     UpdateInscriptionComponent,
+    DetailsInscriptionComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     NgxPaginationModule,
   ],
