@@ -148,7 +148,7 @@ const send_email_verify = async (email) => {
       host: "smtp.gmail.com",
       auth: {
         user: "aranibargerson28@gmail.com",
-        pass: "rkzxjmwoqaeupyuq",
+        pass: "crgswynloywvucho",
       },
     })
   );

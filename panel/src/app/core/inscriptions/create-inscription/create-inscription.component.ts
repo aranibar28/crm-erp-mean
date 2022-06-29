@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CourseService } from 'src/app/services/course.service';
 import { CustomerService } from 'src/app/services/customer.service';
+import { InscriptionService } from 'src/app/services/inscription.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 declare var $: any;
@@ -11,6 +13,7 @@ declare var $: any;
 })
 export class CreateInscriptionComponent implements OnInit {
   public img_url = environment.img_url;
+  public load_btn = false;
   public load_data = false;
   public load_cycles = false;
   public filter = '';
@@ -39,7 +42,9 @@ export class CreateInscriptionComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private inscriptionService: InscriptionService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -200,8 +205,18 @@ export class CreateInscriptionComponent implements OnInit {
     } else {
       this.inscription.amount = this.amount;
       this.inscription.discount = this.discount;
-      console.log(this.inscription);
-      console.log(this.details);
+      this.inscription.details = this.details;
+      this.load_btn = true;
+      this.inscriptionService.create_inscription(this.inscription).subscribe({
+        next: (res) => {
+          this.load_btn = false;
+          this.router.navigateByUrl('/dashboard/inscriptions');
+          Swal.fire('Listo!', 'Matrícula completada.', 'success');
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
     }
   }
 }

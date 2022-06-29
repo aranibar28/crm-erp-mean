@@ -95,7 +95,7 @@ const send_email_prospect = async (customer, asunt, email, container) => {
     smtpTransport({
       service: "gmail",
       host: "smtp.gmail.com",
-      auth: { user: "aranibargerson28@gmail.com", pass: "rkzxjmwoqaeupyuq" },
+      auth: { user: "aranibargerson28@gmail.com", pass: "crgswynloywvucho" },
     })
   );
 

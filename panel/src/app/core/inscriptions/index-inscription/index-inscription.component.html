@@ -37,24 +37,23 @@
                                 
                                 <div class="col-md-2 col-sm-6 my-2 my-md-0">
                                     <label class="mr-3 mb-0 d-md-block"><b>Fecha inicio</b></label>
-                                    <input type="date" class="form-control" placeholder="Fecha de inicio">
+                                    <input [(ngModel)]="from" name="from" type="date" class="form-control" placeholder="Fecha de inicio">
                                 </div>
                                 <div class="col-md-2 col-sm-6 my-2 my-md-0">
                                     <label class="mr-3 mb-0 d-md-block"><b>Fecha fin</b></label>
-                                    <input type="date" class="form-control" placeholder="Fecha fin">
+                                    <input [(ngModel)]="to" name="to" type="date" class="form-control" placeholder="Fecha fin">
                                 </div>
                                 <div class="col-md-3 col-sm-6 my-2 my-md-0">
                                     <label class="mr-3 mb-0 d-md-block"><b>Asesor</b></label>
-                                    <select class="form-control selectpicker" data-size="7" data-live-search="true">
-                                        <option value="" selected disabled>Seleccionar</option>
-                                        <option value="Todos">Todos</option>
-                                      
+                                    <select [(ngModel)]="advisor" name="advisor" class="form-control selectpicker" data-size="7" data-live-search="true">
+                                        <option value="all">Todos</option>
+                                        <option *ngFor="let item of advisors" [value]="item._id">{{ item.full_name }}</option>
                                     </select>
                                 </div>
                          
                                 <div class="col-md-3 my-2 my-md-0">
                                     <label class="mr-3 mb-0 d-none d-md-block text-white">*</label>
-                                    <a style="cursor: pointer;" class="btn btn-light-primary px-6 font-weight-bold">
+                                    <a (click)="search_inscriptions()" style="cursor: pointer;" class="btn btn-light-primary px-6 font-weight-bold">
                                        <i class="flaticon-search"></i> Buscar
                                     </a>
                                     <!-- <button type="button" class="btn btn-light-primary spinner spinner-white spinner-left">
@@ -91,179 +90,171 @@
                 <!--begin::Table-->
 
                 <div class="row">
-                    <div class="col-12 mb-5">
-                        <div class="card card-custom card-border">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <span class="card-icon">
-                                        <i class="flaticon2-mail text-primary"></i>
-                                    </span>
-                                    <h3 class="card-label">Matricula
-                                    <small>#621814070f6fd07abe6c5aab</small></h3>
-                                </div>
-                                <div class="card-toolbar">
-                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                        <button type="button" class="btn btn-primary font-weight-bold">1</button>
-                                        <button type="button" class="btn btn-success font-weight-bold">2</button>
-                                        <button type="button" class="btn btn-danger font-weight-bold">3</button>
-                                        <button type="button" class="btn btn-warning font-weight-bold">4</button>
-          
-                                        <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button" class="btn btn-dark font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="flaticon-settings"></i>
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
+
+                    <ng-container *ngIf="load_data">
+                        <div class="text-center">Cargando...</div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!load_data">
+                        <div *ngIf="inscriptions.length == 0" class="col-12 mb-5 text-center">
+                            <img src="assets/media/images/search.png" alt="search" style="width: 80px;">
+                            <h1 class="font-weight-bolder text-dark mt-4">Resultados de matrículas</h1>
+                            <div class="font-size-h4 mb-8">No se encontraron resultados para mostrar.</div>
+                        </div>
+                        <div *ngFor="let item of inscriptions | paginate: { itemsPerPage: size, currentPage: p };" class="col-12 mb-5">
+                            <div class="card card-custom card-border">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <span class="card-icon">
+                                            <i class="flaticon2-mail text-primary"></i>
+                                        </span>
+                                        <h3 class="card-label">Matricula
+                                        <small>#{{ item._id }}</small></h3>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <button type="button" class="btn btn-primary font-weight-bold">1</button>
+                                            <button type="button" class="btn btn-success font-weight-bold">2</button>
+                                            <button type="button" class="btn btn-danger font-weight-bold">3</button>
+                                            <button type="button" class="btn btn-warning font-weight-bold">4</button>
+              
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-dark font-weight-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="flaticon-settings"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <a class="dropdown-item" href="#">Dropdown link</a>
+                                                    <a class="dropdown-item" href="#">Dropdown link</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row mb-5">
-                                    <div class="col">
-                                        <a class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
-                                           John Doe
-                                        </a>
-                                        <span class="text-muted font-weight-bold d-block">
-                                            john.doe@domain.com
-                                        </span>
-                                    </div>
-                                    <div class="col text-center">
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Vincent Murray</span>
-                                        <span class="text-muted font-weight-bold">Asesor comercial</span>
-                                    </div>
-                                    <div class="col text-center">
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                            WhatsApp
-                                        </span>
-                                        <span class="text-muted font-weight-bold">Canal</span>
-                                    </div>
-                                    <div class="col text-right">
-                                        <span class="badge badge-primary mb-3 mr-3">Procesando</span>
-                                    </div>
-                                </div>
-                                <div class="separator separator-dashed mt-8 mb-5"></div>
-                                <div class="d-flex align-items-center flex-wrap">
-                                    <!--begin: Item-->
-                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                        <span class="mr-4">
-                                            <i class="flaticon-piggy-bank icon-2x text-muted font-weight-bold"></i>
-                                        </span>
-                                        <div class="d-flex flex-column text-dark-75">
-                                            <span class="font-weight-bolder font-size-sm">Total</span>
-                                            <span class="font-weight-bolder font-size-h5">
-                                            <span class="text-dark-50 font-weight-bold">$</span>145,200</span>
+                                <div class="card-body">
+                                    <div class="row mb-5">
+                                        <div class="col">
+                                            <a class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                                                {{ item.customer.full_name }}
+                                            </a>
+                                            <span class="text-muted font-weight-bold d-block">
+                                                {{ item.customer.email }}
+                                            </span>
+                                        </div>
+                                        <div class="col text-center">
+                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ item.advisor.full_name }}</span>
+                                            <span class="text-muted font-weight-bold">Asesor comercial</span>
+                                        </div>
+                                        <div class="col text-center">
+                                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                {{ item.channel }}
+                                            </span>
+                                            <span class="text-muted font-weight-bold">Canal</span>
+                                        </div>
+                                        <div class="col text-right">
+                                            <span *ngIf="item.status == 'Procesando'" class="badge badge-primary mb-3 mr-3">Procesando</span>
                                         </div>
                                     </div>
-                                    <!--end: Item-->
-                                    <!--begin: Item-->
-                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                        <span class="mr-4">
-                                            <i class="flaticon-confetti icon-2x text-muted font-weight-bold"></i>
-                                        </span>
-                                        <div class="d-flex flex-column text-dark-75">
-                                            <span class="font-weight-bolder font-size-sm">Matricula</span>
-                                            <span class="font-weight-bolder font-size-h5">
-                                            <span class="text-dark-50 font-weight-bold">$</span>274,230</span>
-                                        </div>
-                                    </div>
-                                    <!--end: Item-->
-                                    <!--begin: Item-->
-                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                        <span class="mr-4">
-                                            <i class="flaticon-pie-chart icon-2x text-muted font-weight-bold"></i>
-                                        </span>
-                                        <div class="d-flex flex-column text-dark-75">
-                                            <span class="font-weight-bolder font-size-sm">Fecha</span>
-                                            <span class="font-weight-bolder font-size-h5">
-                                            <span class="text-dark-50 font-weight-bold">$</span>461,120</span>
-                                        </div>
-                                    </div>
-                                    <!--end: Item-->
-                                    <!--begin: Item-->
-                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                        <span class="mr-4">
-                                            <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
-                                        </span>
-                                        <div class="d-flex flex-column flex-lg-fill">
-                                            <span class="text-dark-75 font-weight-bolder font-size-sm">Encuesta</span>
-                                            <a href="#" class="text-primary font-weight-bolder">Ver</a>
-                                        </div>
-                                    </div>
-                                    <!--end: Item-->
-                                    <!--begin: Item-->
-                                    <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                        <span class="mr-4">
-                                            <i class="flaticon-chat-1 icon-2x text-muted font-weight-bold"></i>
-                                        </span>
-                                        <div class="d-flex flex-column">
-                                            <span class="text-dark-75 font-weight-bolder font-size-sm">Comentarios</span>
-                                            <a href="#" class="text-primary font-weight-bolder">Ver</a>
-                                        </div>
-                                    </div>
-                                    <!--end: Item-->
-                                    <!--begin: Item-->
-                                    <div class="d-flex align-items-center flex-lg-fill my-1">
-                                        <span class="mr-4">
-                                            <i class="flaticon-network icon-2x text-muted font-weight-bold"></i>
-                                        </span>
-                                        <div class="symbol-group symbol-hover">
-                                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Mark Stone">
-                                                <img alt="Pic" src="assets/media/users/300_25.jpg">
+                                    <div class="separator separator-dashed mt-8 mb-5"></div>
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <!--begin: Item-->
+                                        <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                            <span class="mr-4">
+                                                <i class="flaticon-piggy-bank icon-2x text-muted font-weight-bold"></i>
+                                            </span>
+                                            <div class="d-flex flex-column text-dark-75">
+                                                <span class="font-weight-bolder font-size-sm">Total</span>
+                                                <span class="font-weight-bolder font-size-h5">{{ item.amount | currency: 'S/ ' }}</span>
                                             </div>
-                                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">
-                                                <img alt="Pic" src="assets/media/users/300_19.jpg">
-                                            </div>
-                                            
                                         </div>
+                                        <!--end: Item-->
+                                        <!--begin: Item-->
+                                        <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                            <span class="mr-4">
+                                                <i class="flaticon-confetti icon-2x text-muted font-weight-bold"></i>
+                                            </span>
+                                            <div class="d-flex flex-column text-dark-75">
+                                                <span class="font-weight-bolder font-size-sm">Matricula</span>
+                                                <span class="font-weight-bolder font-size-h5">{{ item.matricula | currency: 'S/ ' }}</span>
+                                            </div>
+                                        </div>
+                                        <!--end: Item-->
+                                        <!--begin: Item-->
+                                        <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                            <span class="mr-4">
+                                                <i class="flaticon-pie-chart icon-2x text-muted font-weight-bold"></i>
+                                            </span>
+                                            <div class="d-flex flex-column text-dark-75">
+                                                <span class="font-weight-bolder font-size-sm">Fecha</span>
+                                                <span class="font-weight-bolder font-size-h5">{{ item.created_at | date }}</span>
+                                            </div>
+                                        </div>
+                                        <!--end: Item-->
+                                        <!--begin: Item-->
+                                        <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                            <span class="mr-4">
+                                                <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
+                                            </span>
+                                            <div class="d-flex flex-column flex-lg-fill">
+                                                <span class="text-dark-75 font-weight-bolder font-size-sm">Encuesta</span>
+                                                <a href="#" class="text-primary font-weight-bolder">Ver</a>
+                                            </div>
+                                        </div>
+                                        <!--end: Item-->
+                                        <!--begin: Item-->
+                                        <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
+                                            <span class="mr-4">
+                                                <i class="flaticon-chat-1 icon-2x text-muted font-weight-bold"></i>
+                                            </span>
+                                            <div class="d-flex flex-column">
+                                                <span class="text-dark-75 font-weight-bolder font-size-sm">Comentarios</span>
+                                                <a href="#" class="text-primary font-weight-bolder">Ver</a>
+                                            </div>
+                                        </div>
+                                        <!--end: Item-->
+                                        <!--begin: Item-->
+                                        <div class="d-flex align-items-center flex-lg-fill my-1">
+                                            <span class="mr-4">
+                                                <i class="flaticon-network icon-2x text-muted font-weight-bold"></i>
+                                            </span>
+    
+                                            <div class="symbol-group symbol-hover">
+                                                
+                                                <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Mark Stone">
+                                                    <img [routerLink]="'/dashboard/customers/buyer/' + item.customer._id + '/dashboard'" alt="Pic" src="assets/media/users/300_25.jpg">
+                                                </div>
+                                                <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="" data-original-title="Charlie Stone">
+                                                    <img alt="Pic" src="assets/media/users/300_19.jpg">
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <!--end: Item-->
                                     </div>
-                                    <!--end: Item-->
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                   
+                    </ng-container>
+                    
                 </div>
 
                
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-between align-items-center flex-wrap">
-                    <div class="d-flex flex-wrap mr-3">
-                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                        </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                            <i class="ki ki-bold-arrow-back icon-xs"></i>
-                        </a>
-                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
-                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
-                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">25</a>
-                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">26</a>
-                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
-                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
-                        <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                            <i class="ki ki-bold-arrow-next icon-xs"></i>
-                        </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                        </a>
-                    </div>
+                    
+                    <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event"></pagination-controls>
+
                     <div class="d-flex align-items-center">
-                        <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
+                        <select (change)="p = 1" [(ngModel)]="size" name="size" class="form-control form-control-sm font-weight-bold mr-4 border-0 bg-light-secondary" style="width: 75px;">
+                            <option value="1">1</option>
+                            <option value="3">3</option>
+                            <option value="6">6</option>
+                            <option value="9">9</option>
+                            <option value="12">12</option>
                         </select>
-                        <span class="text-muted">Displaying 10 of 230 records</span>
+                        <span class="text-muted">Mostrando {{ size }} de {{ inscriptions.length }} registros.</span>
                     </div>
+
                 </div>
             </div>
             <!--end::Body-->

@@ -310,8 +310,7 @@
                                                                                         <span class="text-muted font-weight-bold">Días</span>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <strong>{{ subitem.aforo }}</strong>
-                                                                                        <span>({{ subitem.students }})</span>
+                                                                                        <strong>{{ subitem.students }}/{{ subitem.aforo }}</strong>
                                                                                     </td>
                                                                                 </tr>
                                                                             </ng-container>
@@ -363,7 +362,7 @@
                                         <span class="option-head">
                                             <span *ngIf="item.aforo == item.students" class="option-title text-danger">{{ item.room }}</span>
                                             <span *ngIf="item.aforo > item.students" class="option-title text-primary">{{ item.room }}</span>
-                                            <span class="option-focus">{{ item.students }}({{ item.aforo }})</span>
+                                            <span class="option-focus">{{ item.students }}/{{ item.aforo }}</span>
                                         </span>
                                         <span class="option-body">
                                             <b>Días:</b>&nbsp;
@@ -459,8 +458,9 @@
 
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="btn btn-danger mr-3" data-dismiss="modal">Cancelar</button>
-                        <button (click)="register()" type="button" class="btn btn-primary">Matricular</button>
+                        <button routerLink="/dashboard/inscriptions" type="button" class="btn btn-danger mr-3" data-dismiss="modal">Cancelar</button>
+                        <button *ngIf="!load_btn" (click)="register()" type="button" class="btn btn-success">Matricular</button>
+                        <button *ngIf="load_btn" class="btn btn-success font-weight-bold spinner spinner-white spinner-left" disabled>Creando</button>
                     </div> 
                     
                 </div>
