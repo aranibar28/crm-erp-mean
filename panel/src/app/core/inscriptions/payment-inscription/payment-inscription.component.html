@@ -1,0 +1,305 @@
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <!--begin::Page Layout-->
+        <ng-container *ngIf="load_data">
+            <div class="text-center">Cargando...</div>
+        </ng-container>
+        <ng-container *ngIf="!load_data">
+
+            <ng-container *ngIf="!my_data">
+                <app-notfound></app-notfound>
+            </ng-container>
+
+            <ng-container *ngIf="my_data">
+                <div class="d-flex flex-row">
+                    <!--begin::Aside-->
+                    <div class="flex-column offcanvas-mobile w-300px w-xl-325px" id="kt_profile_aside">
+        
+                        <div class="card card-custom gutter-b">
+                            <div class="card-header border-0 pt-5">
+                                <h3 class="card-title font-weight-bolder">Resumen de matricula</h3>
+                            </div>
+                            <div class="card-body pt-4">
+                               
+                                <!--begin::Contact-->
+                                <div class="pt-8 pb-6">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="font-weight-bold mr-2">Código:</span>
+                                        <a class="text-muted">{{ inscription._id }}</a>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="font-weight-bold mr-2">Asesor:</span>
+                                        <span class="text-muted">{{ inscription.advisor?.full_name }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="font-weight-bold mr-2">Canal:</span>
+                                        <span class="text-muted">{{ inscription.channel }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="font-weight-bold mr-2">Monto:</span>
+                                        <span class="text-muted">{{ inscription.amount | currency: 'S/ ' }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="font-weight-bold mr-2">Matricula:</span>
+                                        <span class="text-muted">{{ inscription.matricula | currency: 'S/ ' }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="font-weight-bold mr-2">Descuento:</span>
+                                        <span class="text-muted">{{ inscription.discount | currency: 'S/ ' }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="font-weight-bold mr-2">Fecha:</span>
+                                        <span class="text-muted">{{ inscription.created_at | date }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="font-weight-bold mr-2">Estado:</span>
+                                        <span class="text-muted">{{ inscription.status }}</span>
+                                    </div>
+                                </div>
+                                <!--end::Contact-->
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="card card-custom gutter-b">
+                            <!--begin::Header-->
+                            <div class="card-header border-0 pt-5">
+                                <h3 class="card-title align-items-start flex-column mb-5">
+                                    <span class="card-label font-weight-bolder text-dark mb-1">Cursos matriculados</span>
+                                </h3>
+                                <span class="text-muted mt-2 font-weight-bold font-size-sm">{{ details.length }} cursos</span>
+                            </div>
+                            <!--end::Header-->
+                            <!--begin::Body-->
+                            <div class="card-body pt-2">
+                                
+                                <div *ngFor="let item of details" class="d-flex mb-8">
+                                    <!--begin::Symbol-->
+                                    <div class="symbol symbol-50 symbol-2by3 flex-shrink-0 mr-4">
+                                        <div class="d-flex flex-column">
+                                            <div class="symbol-label mb-3" style="background-image: url({{ img_url }}{{ item.course.image }})"></div>
+                                        </div>
+                                    </div>
+                                    <!--end::Symbol-->
+                                    <!--begin::Title-->
+                                    <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pr-3">
+                                        <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">{{ item.course.title }}</a>
+                                        <span class="text-muted font-weight-bold font-size-sm">Salón: 
+                                        <span class="text-dark-75 font-weight-bolder">{{ item.cycle_room.room }}</span></span>
+                                        <span class="text-muted font-weight-bold font-size-sm">Precio: 
+                                            <span class="text-dark-75 font-weight-bolder">{{ item.price | currency: 'S/ ' }}</span></span>
+                                    </div>
+                                    <!--end::Title-->
+                                </div>
+                                
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        
+                    </div>
+                    <!--end::Aside-->
+                    <!--begin::Layout-->
+                    <div class="flex-row-fluid ml-lg-8">
+                        <!--begin::Card-->
+                        <div class="card card-custom gutter-b">
+                            <div class="card-header border-0 pt-5">
+                                <h3 class="card-title align-items-start flex-column mb-5">
+                                    <span class="card-label font-weight-bolder text-dark mb-1">Pagos de matricula</span>
+                                    <span class="text-muted mt-2 font-weight-bold font-size-sm">{{ payments.length }} pagos registrados</span>
+                                </h3>
+                                <div class="card-toolbar">
+        
+                                    <a data-toggle="modal" [attr.data-target]="'#modalPago'" class="btn btn-light-primary font-weight-bolder py-2 font-size-sm pointer">Generar pago</a>
+                                    
+                                    <div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Generar pago</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <i aria-hidden="true" class="ki ki-close"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-xl-6">
+                                                            <!--begin::Input-->
+                                                            <div class="form-group fv-plugins-icon-container">
+                                                                <label>Curso</label>
+                                                                <select name="" class="form-control form-control-solid">
+                                                                    <option value="" selected disabled>Seleccionar</option>
+                                                                </select>
+                                                            </div>
+                                                            <!--end::Input-->
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <!--begin::Input-->
+                                                            <div class="form-group fv-plugins-icon-container">
+                                                                <label>Metodo</label>
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;text-align: left;">
+                                                                        Seleccionar
+                                                                    </button>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#">
+                                                                            <img src="assets/media/logos/paypal.png" style="width: 17px;">
+                                                                            &nbsp; Paypal
+                                                                        </a>
+                                                                        <a class="dropdown-item" href="#">
+                                                                            <img src="assets/media/logos/transferencia-de-dinero.png" style="width: 17px;">
+                                                                            &nbsp; Transferencia
+                                                                        </a>
+                                                                        <a class="dropdown-item" href="#">
+                                                                            <img src="assets/media/logos/depositar.png" style="width: 17px;">
+                                                                            &nbsp; Deposito
+                                                                        </a>
+                                                                        <a class="dropdown-item" href="#">
+                                                                            <img src="assets/media/logos/tarjeta-de-credito.png" style="width: 17px;">
+                                                                            &nbsp; Tarjeta crédito
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                               
+                                                            </div>
+                                                            <!--end::Input-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-6">
+                                                            <!--begin::Input-->
+                                                            <div class="form-group fv-plugins-icon-container">
+                                                                <label>Banco</label>
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;text-align: left;">
+                                                                        Seleccionar
+                                                                    </button>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#">
+                                                                            <img src="assets/media/logos/bbva.png" style="width: 17px;">
+                                                                            &nbsp; BBVA
+                                                                        </a>
+                                                                        <a class="dropdown-item" href="#">
+                                                                            <img src="assets/media/logos/interbank.png" style="width: 17px;">
+                                                                            &nbsp; Interbank
+                                                                        </a>
+                                                                        <a class="dropdown-item" href="#">
+                                                                            <img src="assets/media/logos/santander.png" style="width: 17px;">
+                                                                            &nbsp; Santander
+                                                                        </a>
+                                                                       
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Input-->
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <!--begin::Input-->
+                                                            <div class="form-group fv-plugins-icon-container">
+                                                                <label>Fecha de pago</label>
+                                                                <input type="date" class="form-control form-control-solid" >
+                                                            </div>
+                                                            <!--end::Input-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-6">
+                                                            <!--begin::Input-->
+                                                            <div class="form-group fv-plugins-icon-container">
+                                                                <label>Código T</label>
+                                                                <input type="text" class="form-control form-control-solid" placeholder="ID transacción">
+                                                            </div>
+                                                            <!--end::Input-->
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <!--begin::Input-->
+                                                            <div class="form-group fv-plugins-icon-container">
+                                                                <label>Monto</label>
+                                                                <input type="number" class="form-control form-control-solid" placeholder="Monto pago">
+                                                            </div>
+                                                            <!--end::Input-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-dark-50 line-height-lg">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="pl-0 font-weight-bold text-muted text-uppercase">Método de pago</th>
+                                                    <th class="text-right font-weight-bold text-muted text-uppercase">ID transacción</th>
+                                                    <th class="text-right font-weight-bold text-muted text-uppercase">Fecha</th>
+                                                    <th class="text-right font-weight-bold text-muted text-uppercase">Monto</th>
+                                                    <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">
+                                                        <i class="flaticon2-settings"></i>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="font-weight-boldest">
+                                                    <td class="border-0 pl-0 pt-7 d-flex align-items-center">
+                                                    <!--begin::Symbol-->
+                                                        <div class="symbol symbol-40 flex-shrink-0 mr-4 bg-light">
+                                                            <div class="symbol-label" style="background-image: url('https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/products/11.png')"></div>
+                                                        </div>
+                                                        <!--end::Symbol-->
+                                                        Street Sneakers
+                                                      
+                                                    </td>
+                                                    <td class="text-right pt-7 align-middle">245DSF4532E1RT654</td>
+                                                    <td class="text-right pt-7 align-middle">Mar 6, 2022</td>
+                                                    <td class="text-primary pr-0 pt-7 text-right align-middle">$180.00</td>
+                                                    <td class="text-primary pr-0 pt-7 text-right align-middle">
+                                                        <a class="btn btn-icon btn-info btn-sm mr-2">
+                                                            <i class="flaticon2-paper"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <td class="font-weight-bolder text-right">Total</td>
+                                                <td class="font-weight-bolder text-right pr-0">$1538.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="border-0 pt-0"></td>
+                                                <td class="border-0 pt-0 font-weight-bolder text-right">Monto pagado</td>
+                                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">$15.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="border-0 pt-0"></td>
+                                                <td class="border-0 pt-0 font-weight-bolder text-right">Deuda</td>
+                                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">$15.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="border-0 pt-0"></td>
+                                                <td class="border-0 pt-0 font-weight-bolder font-size-h5 text-right">Grand Total</td>
+                                                <td class="border-0 pt-0 font-weight-bolder font-size-h5 text-success text-right pr-0">$1553.00</td>
+                                            </tr>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Card-->
+                    </div>
+                    <!--end::Layout-->
+                </div>
+            </ng-container>
+        </ng-container>
+        <!--end::Page Layout-->
+    </div>
+    <!--end::Container-->
+</div>

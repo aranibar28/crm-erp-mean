@@ -114,8 +114,8 @@
                                     <div class="card-toolbar">
                                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                             <a class="btn btn-primary font-weight-bold">1</a>
-                                            <a class="btn btn-success font-weight-bold">2</a>
-                                            <a class="btn btn-danger font-weight-bold">3</a>
+                                            <a [routerLink]="['payment', item._id]" class="btn btn-success font-weight-bold"><i class="flaticon-piggy-bank mr-2"></i>Pagos</a>
+                                            <!-- <a class="btn btn-danger font-weight-bold">Cancelar</a> -->
                                             <a [routerLink]="['contract', item._id]" class="btn btn-warning font-weight-bold"><i class="flaticon2-google-drive-file mr-2"></i>Contrato</a>
               
                                             <div class="btn-group" role="group">

@@ -32,6 +32,7 @@ import { CreateInscriptionComponent } from './inscriptions/create-inscription/cr
 import { UpdateInscriptionComponent } from './inscriptions/update-inscription/update-inscription.component';
 import { DetailsInscriptionComponent } from './inscriptions/details-inscription/details-inscription.component';
 import { ContractInscriptionComponent } from './inscriptions/contract-inscription/contract-inscription.component';
+import { PaymentInscriptionComponent } from './inscriptions/payment-inscription/payment-inscription.component';
 
 const childRoutes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -70,6 +71,7 @@ const childRoutes: Routes = [
   { path: 'inscriptions/create', component: CreateInscriptionComponent },
   { path: 'inscriptions/details/:id', component: DetailsInscriptionComponent },
   { path: 'inscriptions/contract/:id', component: ContractInscriptionComponent },
+  { path: 'inscriptions/payment/:id', component: PaymentInscriptionComponent },
   { path: 'inscriptions/:id', component: UpdateInscriptionComponent },
 
   { path: '**', redirectTo: '' },
