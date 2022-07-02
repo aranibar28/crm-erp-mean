@@ -2,7 +2,7 @@ const { response } = require("express");
 const moment = require("moment");
 const Inscription = require("../models/inscription");
 const Inscription_Detail = require("../models/inscription_detail");
-const Inscription_Payment = require("../models/payments");
+const Payment = require("../models/payments");
 const Cycle_Room = require("../models/cycles/cycle_room");
 
 var fs = require("fs");
@@ -118,11 +118,37 @@ const firm_inscription = async (req, res = response) => {
   }
 };
 
+const cancel_inscription = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    if (req.role === "Administrador") {
+      let reg = await Inscription.findByIdAndUpdate(id, { status: "Cancelado" });
+      let details = await Inscription_Detail.find({ inscription: id });
+      for (let item of details) {
+        cancel_aforo(item.cycle_room);
+      }
+      await Inscription_Detail.updateMany({ inscription: id }, { status: "Cancelado" });
+      await Payment.updateMany({ inscription: id }, { status: "Cancelado" });
+      res.json({ data: reg });
+    } else {
+      res.json({ data: undefined, msg: "No tienes permisos para esta acción." });
+    }
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
 ////////////////////////////////////////////////////////
 
 const update_aforo = async (id) => {
   let room = await Cycle_Room.findById(id);
   let new_aforo = room.students + 1;
+  await Cycle_Room.findByIdAndUpdate(id, { students: new_aforo });
+};
+
+const cancel_aforo = async (id) => {
+  let room = await Cycle_Room.findById(id);
+  let new_aforo = room.students - 1;
   await Cycle_Room.findByIdAndUpdate(id, { students: new_aforo });
 };
 
@@ -182,4 +208,5 @@ module.exports = {
   read_inscription_by_id,
   send_invoice,
   firm_inscription,
+  cancel_inscription,
 };

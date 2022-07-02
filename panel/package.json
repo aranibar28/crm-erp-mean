@@ -22,6 +22,7 @@
     "ngx-image-drawing": "^1.2.4",
     "ngx-pagination": "^6.0.1",
     "ngx-tinymce": "^13.0.0",
+    "print-js": "^1.6.0",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.4.17",
     "tslib": "^2.3.0",

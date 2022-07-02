@@ -1,5 +1,5 @@
 <div class="d-flex flex-column-fluid">
-    <!--begin::Container-->
+
     <div class="container">
         <div class="card card-custom mb-7">
             <div class="card-header flex-wrap border-0 pt-6 pb-0">
@@ -28,45 +28,41 @@
                 </div>
             </div>
             <div class="card-body">
-                <!--begin: Search Form-->
-                <!--begin::Search Form-->
-                <div class="">
-                    <div class="row align-items-center">
-                        <div class="col-lg-12 col-xl-12">
-                            <div class="row mb-5">
-                                
-                                <div class="col-md-2 col-sm-6 my-2 my-md-0">
-                                    <label class="mr-3 mb-0 d-md-block"><b>Fecha inicio</b></label>
-                                    <input [(ngModel)]="from" name="from" type="date" class="form-control" placeholder="Fecha de inicio">
-                                </div>
-                                <div class="col-md-2 col-sm-6 my-2 my-md-0">
-                                    <label class="mr-3 mb-0 d-md-block"><b>Fecha fin</b></label>
-                                    <input [(ngModel)]="to" name="to" type="date" class="form-control" placeholder="Fecha fin">
-                                </div>
-                                <div class="col-md-3 col-sm-6 my-2 my-md-0">
-                                    <label class="mr-3 mb-0 d-md-block"><b>Asesor</b></label>
-                                    <select [(ngModel)]="advisor" name="advisor" class="form-control selectpicker" data-size="7" data-live-search="true">
-                                        <option value="all">Todos</option>
-                                        <option *ngFor="let item of advisors" [value]="item._id">{{ item.full_name }}</option>
-                                    </select>
-                                </div>
-                         
-                                <div class="col-md-3 my-2 my-md-0">
-                                    <label class="mr-3 mb-0 d-none d-md-block text-white">*</label>
-                                    <a (click)="filter()" style="cursor: pointer;" class="btn btn-light-primary px-6 font-weight-bold">
-                                       <i class="flaticon-search"></i> Buscar
-                                    </a>
-                                    <!-- <button type="button" class="btn btn-light-primary spinner spinner-white spinner-left">
-                                        Buscando
-                                    </button> -->
-                                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-12 col-xl-12">
+                        <div class="row mb-5">
+                            
+                            <div class="col-md-2 col-sm-6 my-2 my-md-0">
+                                <label class="mr-3 mb-0 d-md-block"><b>Fecha inicio</b></label>
+                                <input [(ngModel)]="from" name="from" type="date" class="form-control" placeholder="Fecha de inicio">
                             </div>
-                            
+                            <div class="col-md-2 col-sm-6 my-2 my-md-0">
+                                <label class="mr-3 mb-0 d-md-block"><b>Fecha fin</b></label>
+                                <input [(ngModel)]="to" name="to" type="date" class="form-control" placeholder="Fecha fin">
+                            </div>
+                            <div class="col-md-3 col-sm-6 my-2 my-md-0">
+                                <label class="mr-3 mb-0 d-md-block"><b>Asesor</b></label>
+                                <select [(ngModel)]="advisor" name="advisor" class="form-control selectpicker" data-size="7" data-live-search="true">
+                                    <option value="all">Todos</option>
+                                    <option *ngFor="let item of advisors" [value]="item._id">{{ item.full_name }}</option>
+                                </select>
+                            </div>
+                     
+                            <div class="col-md-3 my-2 my-md-0">
+                                <label class="mr-3 mb-0 d-none d-md-block text-white">*</label>
+                                <a (click)="filter()" style="cursor: pointer;" class="btn btn-light-primary px-6 font-weight-bold">
+                                   <i class="flaticon-search"></i> Buscar
+                                </a>
+                                <!-- <button type="button" class="btn btn-light-primary spinner spinner-white spinner-left">
+                                    Buscando
+                                </button> -->
+                            </div>
                         </div>
-                        <!-- <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
-                            
-                        </div> -->
+                        
                     </div>
+                    <!-- <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
+                        
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -79,7 +75,7 @@
                     <span class="text-muted mt-3 font-weight-bold font-size-sm">Actividades de apertura cursos</span>
                 </h3>
                 <div class="card-toolbar">
-                    <button data-toggle="modal" [attr.data-target]="'#filtroAdvanced'" class="btn btn-light-warning px-6 font-weight-bold">
+                    <button data-toggle="modal" [attr.data-target]="'#modalAdvanced'" class="btn btn-light-warning px-6 font-weight-bold">
                         <i class="flaticon2-console"></i> Avanzado
                      </button>
                 </div>
@@ -114,7 +110,7 @@
                                     </div>
                                     <div class="card-toolbar">
                                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                            <a class="btn btn-primary font-weight-bold">1</a>
+                                            <a *ngIf="user.role == 'Administrador' && item.status != 'Cancelado'" (click)="cancel_inscription(item._id)" class="btn btn-danger font-weight-bold"><i class="flaticon2-cancel-music mr-2"></i>Cancelar</a>
                                             <a [routerLink]="['payment', item._id]" class="btn btn-success font-weight-bold"><i class="flaticon-piggy-bank mr-2"></i>Pagos</a>
                                             <!-- <a class="btn btn-danger font-weight-bold">Cancelar</a> -->
                                             <a [routerLink]="['contract', item._id]" class="btn btn-warning font-weight-bold"><i class="flaticon2-google-drive-file mr-2"></i>Contrato</a>
@@ -157,6 +153,7 @@
                                         </div>
                                         <div class="col text-right">
                                             <span *ngIf="item.status == 'Procesando'" class="badge badge-primary mb-3 mr-3">Procesando</span>
+                                            <span *ngIf="item.status == 'Cancelado'" class="badge badge-danger mb-3 mr-3">Cancelado</span>
                                         </div>
                                     </div>
                                     <div class="separator separator-dashed mt-8 mb-5"></div>
@@ -262,9 +259,53 @@
 
                 </div>
             </div>
-            <!--end::Body-->
         </div>
-        
     </div>
-    <!--end::Container-->
+</div>
+
+<div class="modal fade" id="modalAdvanced" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Buscador avanzado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label>Código:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select (change)="get_type_filter()" [(ngModel)]="type_filter" name="type_filter" class="form-control form-control-solid">
+                                    <option value="" disabled selected>Seleccionar</option>
+                                    <option value="codigo">Código de matricula</option>
+                                    <option value="nombres">Cliente</option>
+                                    <option value="canal">Canal</option>
+                                </select>
+                            </div>
+                            <input *ngIf="interruptor == 'input'" [(ngModel)]="value_filter" name="value_filter" type="text" class="form-control" placeholder="Filtro a buscar">
+                            <select *ngIf="interruptor == 'select'" [(ngModel)]="value_filter" name="value_filter" class="custom-select form-control form-control-solid" id="">
+                                <option value="" selected disabled>Seleccionar</option>
+                                <option value="Whatsapp">Whatsapp</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Campaña EM">Campaña EM</option>
+                                <option value="Publicidad FB">Publicidad FB</option>
+                                <option value="Tienda">Tienda</option>
+                            </select>
+                        </div>
+                    </div>
+                   
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                <button (click)="clean_arr()" type="button" class="btn btn-info font-weight-bold">Limpiar</button>
+                <button (click)="search_advanced()" type="button" class="btn btn-primary font-weight-bold">Buscar</button>
+            </div>
+        </div>
+    </div>
 </div>

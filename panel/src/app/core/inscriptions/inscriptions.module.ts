@@ -12,6 +12,7 @@ import { UpdateInscriptionComponent } from './update-inscription/update-inscript
 import { DetailsInscriptionComponent } from './details-inscription/details-inscription.component';
 import { ContractInscriptionComponent } from './contract-inscription/contract-inscription.component';
 import { PaymentInscriptionComponent } from './payment-inscription/payment-inscription.component';
+import { ZfillPipe } from 'src/app/pipes/zfill.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PaymentInscriptionComponent } from './payment-inscription/payment-inscr
     DetailsInscriptionComponent,
     ContractInscriptionComponent,
     PaymentInscriptionComponent,
+    ZfillPipe,
   ],
   imports: [
     CommonModule,

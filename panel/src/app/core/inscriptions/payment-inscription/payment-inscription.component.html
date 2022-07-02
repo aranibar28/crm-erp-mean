@@ -270,17 +270,109 @@
                                            </ng-container>
 
                                            <ng-container *ngIf="payments.length >= 1">
-                                            <tbody *ngFor="let item of payments">
+                                            <tbody *ngFor="let item of payments; let i = index">
                                                 <tr class="font-weight-boldest">
                                                     <td class="pt-7">{{ item.method }}</td>
-                                                    <td class="pt-7">{{ item.inscription_detail?.course.title || 'Matrícula' }}</td>
+                                                    <td class="pt-7">
+                                                        {{ item.inscription_detail?.course.title || 'Matrícula' }}
+                                                        <span class="text-muted fw-bold d-block fs-7">{{ item.created_at | date: 'yyyy' }}-{{ item.correlative | zfill: 7 }}</span>
+                                                    </td>
                                                     <td class="pt-7">{{ item.transaction }}</td>
                                                     <td class="text-right pt-7">{{ item.date | date: 'dd-MM-YYYY' }}</td>
                                                     <td class="text-primary pr-0 pt-7 text-right">{{ item.amount | currency: 'S/ ' }}</td>
-                                                    <td class="text-primary pr-0 pt-7 text-right">
-                                                        <a class="btn btn-icon btn-info btn-sm mr-2">
+                                                    <td>
+                                                        <a data-toggle="modal" [attr.data-target]="'#ticket-'+item._id" class="btn btn-icon btn-info btn-sm mr-2">
                                                             <i class="flaticon2-paper"></i>
                                                         </a>
+
+                                                        <div class="modal fade" id="ticket-{{item._id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <form class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">TICKET N°{{ item.created_at | date: 'yyyy' }}-{{ item.correlative | zfill: 7 }}</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="card-body" [id]="'printdiv-' + i">
+                                                                        --------------------------------------------------------<br>
+                                                                                                            
+                                                                        <div style="width: 300px; margin: 0 auto; display: flex; justify-content: center">
+                                                                            NOMBRE-EMPRESA<br>
+                                                                        </div>
+                                                                        --------------------------------------------------------<br>
+                                                                        <div style="width: 300px; margin: 0 auto; display: flex; justify-content: center">
+                                                                            RUC: 12345678798<br>
+                                                                        </div>
+                                                                        <div style="width: 300px; margin: 0 auto; display: flex; justify-content: center">
+                                                                            N°: {{ item.created_at | date: 'yyyy' }}-{{ item.correlative | zfill: 7 }}<br>
+                                                                        </div>
+                                                                        <div style="width: 300px; margin: 0 auto; display: flex; justify-content: center">
+                                                                            Av. Del Ejército 1059 - Magdalena del Mar
+                                                                        </div>
+                                                                            
+                                                                        --------------------------------------------------------<br>
+
+                                                                        <b>Cliente</b>: {{ inscription.customer.full_name }}<br>
+                                                                        <b>Correo</b>: {{ inscription.customer.email }}<br>
+                                                                        <b>Telefono</b>: {{ inscription.customer.phone }}<br>
+
+                                                                        --------------------------------------------------------<br>
+
+                                                                        <b>Correo</b>: informes@domain.com<br>
+                                                                        <b>Fecha</b>: {{ item.date | date: 'dd-MM-YYYY' }}<br>
+                                                                        <b>Tipo</b>: {{ item.type }}<br>
+
+                                                                        --------------------------------------------------------<br>
+
+                                                                        <div style="width: 300px">
+                                                                            <span style="display: flex; justify-content: space-between">
+                                                                                <span style="width: 15%"><b>Qtd</b></span>
+                                                                                <span style="width: 60%"><b>Concepto</b></span> 
+                                                                                <span style="width: 25%"><b>Subotal</b></span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        ===============================<br>
+
+                                                                        <div style="width: 300px">
+                                                                            <span style="display: flex; justify-content: space-between">
+                                                                            <span style="width: 15%">x1</span>
+                                                                            <span style="width: 60%">
+                                                                                    {{ item.inscription_detail?.course.title || 'Matrícula' }}<br>
+                                                                                    <span>
+                                                                                        {{ item.transaction }}
+                                                                                    </span>
+                                                                            </span> 
+                                                                            <span style="width: 25%">{{ item.amount | currency: 'S/ ' }}</span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        ===============================<br>
+
+                                                                        <div style="width: 300px">
+                                                                            <span style="display: flex; justify-content: space-between">
+
+                                                                            <span style="width: 75%">
+                                                                                TOTAL
+                                                                            </span> 
+                                                                            <span style="width: 25%">{{ item.amount | currency: 'S/ ' }}</span>
+                                                                            </span>
+                                                                        </div>
+                                                                        --------------------------------------------------------<br>
+
+                                                                        <div style="width: 300px;display: flex; justify-content: center">
+                                                                            <b>Lorem ipsum dolor sit amet consectetur adipisicing elit.</b> <br>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                                                                        <button (click)="print_ticket(i)" type="button" class="btn btn-primary font-weight-bold">Imprimir</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        
                                                     </td>
                                                 </tr>
                                             </tbody>

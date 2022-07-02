@@ -4,7 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { InscriptionService } from 'src/app/services/inscription.service';
 import { PaymentsService } from 'src/app/services/payments.service';
 import { environment } from 'src/environments/environment';
+import * as printJS from 'print-js';
 import Swal from 'sweetalert2';
+
 declare var $: any;
 
 @Component({
@@ -50,7 +52,6 @@ export class PaymentInscriptionComponent implements OnInit {
     this.load_data = true;
     this.inscriptionService.read_inscription_by_id(this.id).subscribe({
       next: (res) => {
-        console.log(res);
         if (res.data) {
           this.my_data = true;
           this.load_data = false;
@@ -75,7 +76,6 @@ export class PaymentInscriptionComponent implements OnInit {
         for (let item of this.payments) {
           this.total_payment = this.total_payment + item.amount;
         }
-        console.log(this.payments);
       },
     });
   }
@@ -113,6 +113,13 @@ export class PaymentInscriptionComponent implements OnInit {
           Swal.fire('Listo!', 'Pago realizado.', 'success');
         },
       });
+  }
+
+  print_ticket(i: any) {
+    printJS({
+      printable: ['printdiv-' + i],
+      type: 'html',
+    });
   }
 
   validators(name: string) {

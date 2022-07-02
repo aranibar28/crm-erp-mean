@@ -24,6 +24,7 @@ const validateJWT = (req, res, next) => {
     }
   }
   req.user = payload;
+  req.role = payload.role;
   req.id = payload.sub;
   next();
 };

@@ -47,4 +47,9 @@ export class InscriptionService {
     const url = `${base_url}/firm_inscription/${id}`;
     return this.http.put(url, data, this.headers);
   }
+
+  cancel_inscription(id: any): Observable<any> {
+    const url = `${base_url}/cancel_inscription/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }
