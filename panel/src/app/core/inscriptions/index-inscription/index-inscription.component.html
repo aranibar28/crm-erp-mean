@@ -110,6 +110,7 @@
                                         </span>
                                         <h3 class="card-label">Matricula
                                         <small>#{{ item._id }}</small></h3>
+                                        <span *ngIf="item.firm" class="badge badge-info">Firmado</span>
                                     </div>
                                     <div class="card-toolbar">
                                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">

@@ -9,5 +9,6 @@ router.get("/read_inscriptions_today", [validateJWT], ctrl.read_inscriptions_tod
 router.get("/read_inscriptions_dates/:advisor/:from?/:to?", [validateJWT], ctrl.read_inscriptions_dates);
 router.get("/read_inscription_by_id/:id", [validateJWT], ctrl.read_inscription_by_id);
 router.get("/send_invoice/:id", [validateJWT], ctrl.send_invoice);
+router.put("/firm_inscription/:id", [validateJWT], ctrl.firm_inscription);
 
 module.exports = router;

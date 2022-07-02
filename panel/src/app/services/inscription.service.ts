@@ -42,4 +42,9 @@ export class InscriptionService {
     const url = `${base_url}/send_invoice/${id}`;
     return this.http.get(url, this.headers);
   }
+
+  firm_inscription(id: any, data: any): Observable<any> {
+    const url = `${base_url}/firm_inscription/${id}`;
+    return this.http.put(url, data, this.headers);
+  }
 }

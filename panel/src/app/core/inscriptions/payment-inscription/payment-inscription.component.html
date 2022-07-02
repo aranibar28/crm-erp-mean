@@ -110,11 +110,11 @@
                                 </h3>
                                 <div class="card-toolbar">
         
-                                    <a data-toggle="modal" [attr.data-target]="'#modalPago'" class="btn btn-light-primary font-weight-bolder py-2 font-size-sm pointer">Generar pago</a>
+                                    <a data-toggle="modal" [attr.data-target]="'#modalPayment'" class="btn btn-light-primary font-weight-bolder py-2 font-size-sm pointer">Generar pago</a>
                                     
-                                    <div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                    <div class="modal fade" id="modalPayment" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
+                                            <form (ngSubmit)="register()" [formGroup]="myForm" class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Generar pago</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -127,9 +127,12 @@
                                                             <!--begin::Input-->
                                                             <div class="form-group fv-plugins-icon-container">
                                                                 <label>Curso</label>
-                                                                <select name="" class="form-control form-control-solid">
+                                                                <select formControlName="destination" class="form-control form-control-solid">
                                                                     <option value="" selected disabled>Seleccionar</option>
+                                                                    <option *ngIf="inscription.matricula >= 1" value="Matricula">Matricula</option>
+                                                                    <option *ngFor="let item of details" [value]="item._id">{{ item.course.title }} {{ item.cycle_room.room }}</option>
                                                                 </select>
+                                                                <small *ngIf="validators('destination')" class="text-danger"> Este campo es obligatorio. </small>
                                                             </div>
                                                             <!--end::Input-->
                                                         </div>
@@ -138,29 +141,29 @@
                                                             <div class="form-group fv-plugins-icon-container">
                                                                 <label>Metodo</label>
                                                                 <div class="dropdown">
-                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;text-align: left;">
+                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMethod" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;text-align: left;">
                                                                         Seleccionar
                                                                     </button>
-                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item" href="#">
+                                                                    <div class="dropdown-menu w100" aria-labelledby="dropdownMethod">
+                                                                        <a class="dropdown-item pointer" (click)="select_method('Paypal')">
                                                                             <img src="assets/media/logos/paypal.png" style="width: 17px;">
                                                                             &nbsp; Paypal
                                                                         </a>
-                                                                        <a class="dropdown-item" href="#">
+                                                                        <a class="dropdown-item pointer" (click)="select_method('Transferencia')">
                                                                             <img src="assets/media/logos/transferencia-de-dinero.png" style="width: 17px;">
                                                                             &nbsp; Transferencia
                                                                         </a>
-                                                                        <a class="dropdown-item" href="#">
+                                                                        <a class="dropdown-item pointer" (click)="select_method('Depósito')">
                                                                             <img src="assets/media/logos/depositar.png" style="width: 17px;">
-                                                                            &nbsp; Deposito
+                                                                            &nbsp; Depósito
                                                                         </a>
-                                                                        <a class="dropdown-item" href="#">
+                                                                        <a class="dropdown-item pointer" (click)="select_method('Tarjeta Crédito')">
                                                                             <img src="assets/media/logos/tarjeta-de-credito.png" style="width: 17px;">
-                                                                            &nbsp; Tarjeta crédito
+                                                                            &nbsp; Tarjeta Crédito
                                                                         </a>
                                                                     </div>
                                                                 </div>
-                                                               
+                                                                <small *ngIf="validators('method')" class="text-danger"> Este campo es obligatorio. </small>
                                                             </div>
                                                             <!--end::Input-->
                                                         </div>
@@ -171,24 +174,24 @@
                                                             <div class="form-group fv-plugins-icon-container">
                                                                 <label>Banco</label>
                                                                 <div class="dropdown">
-                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;text-align: left;">
+                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownBank" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;text-align: left;">
                                                                         Seleccionar
                                                                     </button>
-                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item" href="#">
+                                                                    <div class="dropdown-menu w100" aria-labelledby="dropdownBank">
+                                                                        <a class="dropdown-item pointer" (click)="select_bank('BBVA')">
                                                                             <img src="assets/media/logos/bbva.png" style="width: 17px;">
                                                                             &nbsp; BBVA
                                                                         </a>
-                                                                        <a class="dropdown-item" href="#">
+                                                                        <a class="dropdown-item pointer" (click)="select_bank('Interbank')">
                                                                             <img src="assets/media/logos/interbank.png" style="width: 17px;">
                                                                             &nbsp; Interbank
                                                                         </a>
-                                                                        <a class="dropdown-item" href="#">
+                                                                        <a class="dropdown-item pointer" (click)="select_bank('Santander')">
                                                                             <img src="assets/media/logos/santander.png" style="width: 17px;">
                                                                             &nbsp; Santander
                                                                         </a>
-                                                                       
                                                                     </div>
+                                                                    <small *ngIf="validators('bank')" class="text-danger"> Este campo es obligatorio. </small>
                                                                 </div>
                                                             </div>
                                                             <!--end::Input-->
@@ -197,7 +200,8 @@
                                                             <!--begin::Input-->
                                                             <div class="form-group fv-plugins-icon-container">
                                                                 <label>Fecha de pago</label>
-                                                                <input type="date" class="form-control form-control-solid" >
+                                                                <input formControlName="date" type="date" class="form-control form-control-solid" >
+                                                                <small *ngIf="validators('date')" class="text-danger"> Este campo es obligatorio. </small>
                                                             </div>
                                                             <!--end::Input-->
                                                         </div>
@@ -207,7 +211,8 @@
                                                             <!--begin::Input-->
                                                             <div class="form-group fv-plugins-icon-container">
                                                                 <label>Código T</label>
-                                                                <input type="text" class="form-control form-control-solid" placeholder="ID transacción">
+                                                                <input formControlName="transaction" type="text" class="form-control form-control-solid" placeholder="ID transacción">
+                                                                <small *ngIf="validators('transaction')" class="text-danger"> Este campo es obligatorio. </small>
                                                             </div>
                                                             <!--end::Input-->
                                                         </div>
@@ -215,17 +220,19 @@
                                                             <!--begin::Input-->
                                                             <div class="form-group fv-plugins-icon-container">
                                                                 <label>Monto</label>
-                                                                <input type="number" class="form-control form-control-solid" placeholder="Monto pago">
+                                                                <input formControlName="amount" type="number" class="form-control form-control-solid" placeholder="Monto pago">
+                                                                <small *ngIf="validators('amount')" class="text-danger"> Este campo es obligatorio. </small>
                                                             </div>
                                                             <!--end::Input-->
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                                                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                                                    <button *ngIf="!load_btn" type="submit" class="btn btn-primary font-weight-bold">Generar Pago</button>
+                                                    <button *ngIf="load_btn" type="button" class="btn btn-primary font-weight-bold spinner spinner-white spinner-left">Generando</button>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
         
@@ -238,29 +245,39 @@
                                             <thead>
                                                 <tr>
                                                     <th class="pl-0 font-weight-bold text-muted text-uppercase">Método de pago</th>
-                                                    <th class="text-right font-weight-bold text-muted text-uppercase">ID transacción</th>
-                                                    <th class="text-right font-weight-bold text-muted text-uppercase">Fecha</th>
-                                                    <th class="text-right font-weight-bold text-muted text-uppercase">Monto</th>
-                                                    <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">
+                                                    <th class="font-weight-bold text-muted text-uppercase">Concepto</th>
+                                                    <th class="font-weight-bold text-muted text-uppercase">ID transacción</th>
+                                                    <th class="font-weight-bold text-muted text-uppercase">Fecha</th>
+                                                    <th class="font-weight-bold text-muted text-uppercase">Monto</th>
+                                                    <th class="text-center pr-0 font-weight-bold text-muted text-uppercase">
                                                         <i class="flaticon2-settings"></i>
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr class="font-weight-boldest">
-                                                    <td class="border-0 pl-0 pt-7 d-flex align-items-center">
-                                                    <!--begin::Symbol-->
-                                                        <div class="symbol symbol-40 flex-shrink-0 mr-4 bg-light">
-                                                            <div class="symbol-label" style="background-image: url('https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/products/11.png')"></div>
+
+                                           <ng-container *ngIf="payments.length == 0">
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div class="row mt-7" style="width: 100%;">
+                                                        <div class="col-12 text-center">
+                                                            <img src="assets/media/images/search.png" alt="search" style="width: 80px;">
+                                                            <h3 class="font-weight-bolder text-dark mt-4">Resultados de matrículas</h3>
+                                                            <div class="font-size-h4 mb-8">No se encontraron resultados para mostrar.</div>
                                                         </div>
-                                                        <!--end::Symbol-->
-                                                        Street Sneakers
-                                                      
-                                                    </td>
-                                                    <td class="text-right pt-7 align-middle">245DSF4532E1RT654</td>
-                                                    <td class="text-right pt-7 align-middle">Mar 6, 2022</td>
-                                                    <td class="text-primary pr-0 pt-7 text-right align-middle">$180.00</td>
-                                                    <td class="text-primary pr-0 pt-7 text-right align-middle">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                           </ng-container>
+
+                                           <ng-container *ngIf="payments.length >= 1">
+                                            <tbody *ngFor="let item of payments">
+                                                <tr class="font-weight-boldest">
+                                                    <td class="pt-7">{{ item.method }}</td>
+                                                    <td class="pt-7">{{ item.inscription_detail?.course.title || 'Matrícula' }}</td>
+                                                    <td class="pt-7">{{ item.transaction }}</td>
+                                                    <td class="text-right pt-7">{{ item.date | date: 'dd-MM-YYYY' }}</td>
+                                                    <td class="text-primary pr-0 pt-7 text-right">{{ item.amount | currency: 'S/ ' }}</td>
+                                                    <td class="text-primary pr-0 pt-7 text-right">
                                                         <a class="btn btn-icon btn-info btn-sm mr-2">
                                                             <i class="flaticon2-paper"></i>
                                                         </a>
@@ -270,24 +287,20 @@
                                             <tr>
                                                 <td colspan="2"></td>
                                                 <td class="font-weight-bolder text-right">Total</td>
-                                                <td class="font-weight-bolder text-right pr-0">$1538.00</td>
+                                                <td class="font-weight-bolder text-right pr-0">{{ total_amount | currency: 'S/ ' }}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" class="border-0 pt-0"></td>
                                                 <td class="border-0 pt-0 font-weight-bolder text-right">Monto pagado</td>
-                                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">$15.00</td>
+                                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">{{ total_payment | currency: 'S/ ' }}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" class="border-0 pt-0"></td>
                                                 <td class="border-0 pt-0 font-weight-bolder text-right">Deuda</td>
-                                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">$15.00</td>
+                                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">{{ total_amount - total_payment | currency: 'S/ ' }}</td>
                                             </tr>
-                                            <tr>
-                                                <td colspan="2" class="border-0 pt-0"></td>
-                                                <td class="border-0 pt-0 font-weight-bolder font-size-h5 text-right">Grand Total</td>
-                                                <td class="border-0 pt-0 font-weight-bolder font-size-h5 text-success text-right pr-0">$1553.00</td>
-                                            </tr>
-                                            
+                                           </ng-container>
+
                                         </table>
                                     </div>
                                 </div>

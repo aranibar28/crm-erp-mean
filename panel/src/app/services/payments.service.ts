@@ -18,6 +18,11 @@ export class PaymentsService {
     return { headers: { token: this.token } };
   }
 
+  create_inscription_payment(data: any): Observable<any> {
+    const url = `${base_url}/create_inscription_payment`;
+    return this.http.post(url, data, this.headers);
+  }
+
   read_inscription_payments(id: any): Observable<any> {
     const url = `${base_url}/read_inscription_payments/${id}`;
     return this.http.get(url, this.headers);

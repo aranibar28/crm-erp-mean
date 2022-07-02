@@ -39,6 +39,9 @@
               "src/styles.scss"
             ],
             "scripts": [
+            ],
+            "allowedCommonJsDependencies": [
+              "fabric"
             ]
           },
           "configurations": {

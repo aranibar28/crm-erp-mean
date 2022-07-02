@@ -2,6 +2,7 @@ const { response } = require("express");
 const moment = require("moment");
 const Inscription = require("../models/inscription");
 const Inscription_Detail = require("../models/inscription_detail");
+const Inscription_Payment = require("../models/payments");
 const Cycle_Room = require("../models/cycles/cycle_room");
 
 var fs = require("fs");
@@ -86,18 +87,32 @@ const read_inscriptions_dates = async (req, res = response) => {
   }
 };
 
-const send_invoice = async (req, res = response) => {
-  let id = req.params["id"];
-  send_email_invoice(id);
-  res.status(200).send({ data: true });
-};
-
 const read_inscription_by_id = async (req, res = response) => {
   let id = req.params["id"];
   try {
     let inscription = await Inscription.findById(id).populate("customer").populate("advisor");
     let details = await Inscription_Detail.find({ inscription: id }).populate("course").populate("cycle_course").populate("cycle_room");
     res.json({ data: inscription, details: details });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const send_invoice = async (req, res = response) => {
+  let id = req.params["id"];
+  send_email_invoice(id);
+  res.status(200).send({ data: true });
+};
+
+const firm_inscription = async (req, res = response) => {
+  let id = req.params["id"];
+  let data = req.body;
+  try {
+    await Inscription.findByIdAndUpdate(id, {
+      firm: data.firm,
+      date_firm: Date.now(),
+    });
+    res.json({ data: true });
   } catch (error) {
     res.json({ data: undefined, msg: error.message });
   }
@@ -166,4 +181,5 @@ module.exports = {
   read_inscriptions_dates,
   read_inscription_by_id,
   send_invoice,
+  firm_inscription,
 };

@@ -15,6 +15,7 @@ app.use("/api/customer", require("./routes/customer"));
 app.use("/api/prospect", require("./routes/prospect"));
 app.use("/api/courses", require("./routes/course"));
 app.use("/api/inscriptions", require("./routes/inscription"));
+app.use("/api/payments", require("./routes/payments"));
 
 app.listen(port, () => {
   console.log("Servidor corriendo Puerto: " + port);

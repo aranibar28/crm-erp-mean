@@ -57,16 +57,15 @@
                                 <div class="col-md-3 border-right-md pr-md-10 py-md-10">
                                     <!--begin::Invoice To-->
                                     <div class="text-dark-50 font-size-lg font-weight-bold mb-3">CLIENTE.</div>
-                                    <div class="font-size-lg font-weight-bold mb-10">Lorem Ipsum 
-                                    <br>Lorem Ipsum  </div>
+                                    <div class="font-size-lg font-weight-bold mb-10">{{ inscription.customer.full_name }}</div>
                                     <!--end::Invoice To-->
                                     <!--begin::Invoice No-->
                                     <div class="text-dark-50 font-size-lg font-weight-bold mb-3">ASESOR.</div>
-                                    <div class="font-size-lg font-weight-bold mb-10">Lorem Ipsum  </div>
+                                    <div class="font-size-lg font-weight-bold mb-10">{{ inscription.advisor.full_name }}</div>
                                     <!--end::Invoice No-->
                                     <!--begin::Invoice Date-->
                                     <div class="text-dark-50 font-size-lg font-weight-bold mb-3">FECHA</div>
-                                    <div class="font-size-lg font-weight-bold mb-7">Lorem Ipsum </div>
+                                    <div class="font-size-lg font-weight-bold mb-7">{{ inscription.created_at | date }}</div>
                                     <!--end::Invoice Date-->
         
                                     <div class="row">
@@ -81,7 +80,6 @@
                                             <h4 class="font-weight-bold text-dark mb-4">Basic License</h4>
                                             <div class="text-dark-50 line-height-lg mb-8">
                                                 <p>Windows 10 automatically downloads and installs updates to make sure your device is secure and up to date. This means you receive the latest fixes and security updates, helping your device run efficiently and stay protected. In most cases, restarting your device completes the update. Make sure your device is plugged in when you know updates will be installed.</p>
-                                               
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -110,15 +108,15 @@
                                             <div class="font-weight-bold font-size-h6 mb-3">MATRICULA</div>
                                             <div class="d-flex justify-content-between font-size-lg mb-3">
                                                 <span class="font-weight-bold mr-15">Código:</span>
-                                                <span class="text-right">Lorem Ipsum </span>
+                                                <span class="text-right">{{ inscription._id }}</span>
                                             </div>
                                             <div class="d-flex justify-content-between font-size-lg mb-3">
                                                 <span class="font-weight-bold mr-15">Canal:</span>
-                                                <span class="text-right">Lorem Ipsum </span>
+                                                <span class="text-right">{{ inscription.channel }}</span>
                                             </div>
                                             <div class="d-flex justify-content-between font-size-lg">
                                                 <span class="font-weight-bold mr-15">Origen:</span>
-                                                <span class="text-right">Lorem Ipsum </span>
+                                                <span class="text-right">{{ inscription.origin }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -146,21 +144,21 @@
                                         <!--end::Shape-->
                                         <div class="font-weight-boldest font-size-h5">TOTAL</div>
                                         <div class="text-right d-flex flex-column">
-                                            <span class="font-weight-boldest font-size-h3 line-height-sm">5000</span>
+                                            <span class="font-weight-boldest font-size-h3 line-height-sm">{{ inscription.amount +  inscription.matricula | currency: 'S/ ' }}</span>
                                             <span class="font-size-sm">Incluido derecho matricula</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!--end::Invoice footer-->
-                            <div class="row">
+                            <div *ngIf="inscription.firm" class="row">
                                 <div class="col-5 mx-auto">
                                     <div class="card">
                                         <div class="card-body">
-                                            <img  alt="" style="width: 100%;">
+                                            <img [src]="inscription.firm" style="width: 100%;">
                                         </div>
                                         <div class="card-footer text-center">
-                                            <h4 style="margin-bottom:0px">Lorem Ipsum </h4>
+                                            <h4 style="margin-bottom:0px">{{ inscription.customer?.full_name }}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -172,11 +170,37 @@
                         <div class="col-md-9">
                             <div class="d-flex font-size-sm flex-wrap">
                                 <button type="button" class="btn btn-primary font-weight-bolder py-4 mr-3 mr-sm-14 my-1" onclick="window.print();">Imprimir contrato</button>
-                                <button  type="button" class="btn btn-light-primary font-weight-bolder mr-3 my-1">Firmar</button>
-        
-         
+                                <button *ngIf="!inscription.firm" data-toggle="modal" [attr.data-target]="'#firmaModal'" type="button" class="btn btn-light-primary font-weight-bolder mr-3 my-1">Firmar</button>
+                                <button *ngIf="inscription.firm" type="button" class="btn btn-light-success font-weight-bolder mr-3 my-1" disabled>Contrato Firmado</button>
                                 <button type="button" class="btn btn-warning font-weight-bolder ml-sm-auto my-1">Ir a matricula</button>
                             </div>
+
+                             <div class="modal fade" id="firmaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Firmar contrato</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <image-drawing
+                                                [src]="'assets/media/bg/firm.jpg'"
+                                                [borderCss]="'1px solid black'"
+                                                [showCancelButton]="false"
+                                                [i18n]="i18n"
+                                                [drawingSizes]="{small:3, medium: 3, large:3, extra:3}"
+                                                outputMimeType="'image/jpeg'"
+                                                (save)="save($event)"
+                                                (cancel)="cancel()">
+                                            </image-drawing>
+                                            <input type="hidden" id="firma_img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                     <!-- end: Invoice action-->

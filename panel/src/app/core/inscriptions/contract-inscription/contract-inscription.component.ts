@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InscriptionService } from 'src/app/services/inscription.service';
+import { I18nInterface } from 'ngx-image-drawing';
+declare var $: any;
 
 @Component({
   selector: 'app-contract-inscription',
@@ -11,6 +13,11 @@ export class ContractInscriptionComponent implements OnInit {
   public load_data = false;
   public my_data = false;
   public id: any;
+
+  public i18n: I18nInterface = {
+    saveBtn: 'Confirmar firma',
+    sizes: { extra: 'Extra' },
+  };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,4 +43,21 @@ export class ContractInscriptionComponent implements OnInit {
       },
     });
   }
+
+  save(event: any) {
+    var reader = new FileReader();
+    reader.readAsDataURL(event);
+    reader.onload = () => {
+      var img = reader.result;
+      $('#firma_img').val(img);
+      let firm = $('#firma_img').val();
+      this.inscriptionService.firm_inscription(this.id, { firm }).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+      });
+    };
+  }
+
+  cancel() {}
 }
