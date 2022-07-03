@@ -57,4 +57,19 @@ export class CustomerService {
     const url = `${base_url}/read_customers/${filter}`;
     return this.http.get(url, this.headers);
   }
+
+  generate_token(inscription: any, customer: any): Observable<any> {
+    const url = `${base_url}/generate_token/${inscription}/${customer}`;
+    return this.http.get(url, this.headers);
+  }
+
+  send_survey(data: any): Observable<any> {
+    const url = `${base_url}/send_survey`;
+    return this.http.post(url, data, this.headers);
+  }
+
+  read_survey(id: any): Observable<any> {
+    const url = `${base_url}/read_survey/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }

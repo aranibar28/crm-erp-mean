@@ -1,8 +1,11 @@
 const { response } = require("express");
 const bcrypt = require("bcryptjs");
 const Customer = require("../models/customer");
+const Inscription = require("../models/inscription");
+const Survey = require("../models/survey");
 const jwt_customer = require("../helpers/jwt");
 const jwt = require("jwt-simple");
+const moment = require("moment");
 
 var fs = require("fs");
 var handlebars = require("handlebars");
@@ -191,9 +194,61 @@ const confirm_email_verify = async (req, res = response) => {
       await Customer.findByIdAndUpdate({ _id: payload.sub }, { verify: true });
       res.status(200).send({ data: true });
     } catch (error) {
-      console.log(error);
       return res.status(200).send({ msg: "Expired verify token", data: undefined });
     }
+  }
+};
+
+const generate_token = async (req, res = response) => {
+  let inscription = req.params["inscription"];
+  let customer = req.params["customer"];
+
+  var payload = {
+    inscription: inscription,
+    customer: customer,
+    iat: moment().unix(),
+    exp: moment().add(1, "day").unix(),
+  };
+  let token = jwt.encode(payload, "aranibar");
+  res.json({ token: token });
+};
+
+const send_survey = async (req, res = response) => {
+  let data = req.body;
+  let customer;
+  let inscription;
+
+  try {
+    customer = await Customer.findById(data.customer);
+  } catch (error) {
+    res.json({ data: undefined, msg: "El código del cliente no existe" });
+  }
+
+  try {
+    inscription = await Inscription.findById(data.inscription);
+    data.advisor = inscription.advisor;
+  } catch (error) {
+    res.json({ data: undefined, msg: "El código de la inscripción no existe" });
+  }
+
+  let surveys = await Survey.find({ customer: customer._id, inscription: inscription._id });
+
+  if (surveys.length == 0) {
+    let reg = await Survey.create(data);
+    await Inscription.findByIdAndUpdate(inscription._id, { survey: true });
+    res.json({ data: reg });
+  } else {
+    res.json({ data: undefined, msg: "Ya se envió una respuesta de esta encuesta." });
+  }
+};
+
+const read_survey = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Survey.findOne({ inscription: id });
+    res.json({ data: reg });
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
   }
 };
 
@@ -227,4 +282,7 @@ module.exports = {
   login_customer,
   confirm_email_verify,
   list_customers,
+  generate_token,
+  send_survey,
+  read_survey,
 };

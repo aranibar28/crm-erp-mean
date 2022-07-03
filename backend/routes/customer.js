@@ -14,6 +14,10 @@ router.put("/status/:id", [validateJWT], ctrl.change_status);
 router.get("/list_customers/:filter?", [validateJWT], ctrl.list_customers);
 
 router.get("/confirm_email_verify/:token", ctrl.confirm_email_verify);
+router.get("/generate_token/:inscription/:customer", ctrl.generate_token);
+router.post("/send_survey", ctrl.send_survey);
+router.get("/read_survey/:id", ctrl.read_survey);
+
 router.post("/login", ctrl.login_customer);
 
 module.exports = router;

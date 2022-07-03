@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CollaboratorService } from 'src/app/services/collaborator.service';
+import { CustomerService } from 'src/app/services/customer.service';
 import { InscriptionService } from 'src/app/services/inscription.service';
 import Swal from 'sweetalert2';
 declare var $: any;
@@ -29,6 +30,7 @@ export class IndexInscriptionComponent implements OnInit {
   constructor(
     private inscriptionService: InscriptionService,
     private collaboratorService: CollaboratorService,
+    private customerService: CustomerService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
@@ -181,6 +183,14 @@ export class IndexInscriptionComponent implements OnInit {
           },
         });
       }
+    });
+  }
+
+  generate_token(inscription: any, customer: any) {
+    this.customerService.generate_token(inscription, customer).subscribe({
+      next: (res) => {
+        window.open('/survey/' + res.token);
+      },
     });
   }
 }

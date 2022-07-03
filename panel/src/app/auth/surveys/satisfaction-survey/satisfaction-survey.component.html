@@ -1,0 +1,280 @@
+
+<div class="d-flex flex-column flex-row-fluid">
+
+    
+    <!--begin::Content-->
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+        <!--begin::Subheader-->
+        
+        <!--end::Subheader-->
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <form (ngSubmit)="send_survey()" [formGroup]="myForm" class="container">
+                <div class="row mt-7 mb-6">
+                    <div class="col-12 text-center">
+                        <h1 class="font-weight-bolder text-dark mb-0">Encuesta de satisfacción</h1>
+                        <div *ngIf="expired" class="font-size-h4 text-danger mb-8">La cuenta ya expiró, porfavor solicite una nueva encuesta.</div>
+                        <div *ngIf="!expired" class="font-size-h4 mb-8">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card card-custom gutter-b form-group">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h5 class="card-label">¿Cómo calificarías el servicio brindado?</h5>
+                                </div>
+                            </div>
+                            <!--begin::Form-->
+                            <form  class="form">
+                                <div class="card-body">
+                                    <div class="radio-inline">
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_one" value="1">1
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" formControlName="answ_one" value="2">2
+                                                <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_one" value="3">3
+                                            <span></span>
+                                        </label>
+        
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_one" value="4">4
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_one" value="5">5
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <small *ngIf="validators('answ_one')" class="text-danger"> Este campo es obligatorio. </small>
+                                </div>
+                                
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card card-custom gutter-b form-group">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h5 class="card-label">¿Cómo calificarías al asesor que te atendio?</h5>
+                                </div>
+                            </div>
+                            <!--begin::Form-->
+                            <form class="form">
+                                <div class="card-body">
+                                    <div class="radio-inline">
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_two" value="1">1
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" formControlName="answ_two" value="2">2
+                                                <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_two" value="3">3
+                                            <span></span>
+                                        </label>
+        
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_two" value="4">4
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_two" value="5">5
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <small *ngIf="validators('answ_two')" class="text-danger"> Este campo es obligatorio. </small>
+                                </div>
+                                
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card card-custom gutter-b form-group">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h5 class="card-label">¿Cómo calificarías la experiencia de compra?</h5>
+                                </div>
+                            </div>
+                            <!--begin::Form-->
+                            <form class="form">
+                                <div class="card-body">
+                                    <div class="radio-inline">
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_three" value="1">1
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" formControlName="answ_three" value="2">2
+                                                <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_three" value="3">3
+                                            <span></span>
+                                        </label>
+        
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_three" value="4">4
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_three" value="5">5
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <small *ngIf="validators('answ_three')" class="text-danger"> Este campo es obligatorio. </small>
+                                </div>
+                                
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card card-custom gutter-b form-group">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h5 class="card-label">¿Cómo te enteraste del servicio?</h5>
+                                </div>
+                            </div>
+                            <!--begin::Form-->
+                            <form class="form">
+                                <div class="card-body">
+                                    <div class="radio-inline">
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_four" value="Facebook">Facebook
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" formControlName="answ_four" value="Instragram">Instragram
+                                                <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_four" value="Web">Web
+                                            <span></span>
+                                        </label>
+        
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_four" value="Local">Local
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_four" value="Un amigo">Un amigo
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" formControlName="answ_four" value="Soy cliente">Soy cliente
+                                                <span></span>
+                                        </label>
+                                    </div>
+                                    <small *ngIf="validators('answ_four')" class="text-danger"> Este campo es obligatorio. </small>
+                                </div>
+                                
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card card-custom gutter-b form-group">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h5 class="card-label">¿Volverias a adquirir el serivicio nuevamente?</h5>
+                                </div>
+                            </div>
+                            <!--begin::Form-->
+                            <form class="form">
+                                <div class="card-body">
+                                    <div class="radio-inline">
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_five" value="Si">Si
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" formControlName="answ_five" value="No">No
+                                                <span></span>
+                                        </label>
+                                    </div>
+                                    <small *ngIf="validators('answ_five')" class="text-danger"> Este campo es obligatorio. </small>
+                                </div>
+                                
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card card-custom gutter-b form-group">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h5 class="card-label">¿Desde cuando es usted cliente?</h5>
+                                </div>
+                            </div>
+                            <!--begin::Form-->
+                            <form class="form">
+                                <div class="card-body">
+                                    <div class="radio-inline">
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_six" value="Primera compra">Primera compra
+                                            <span></span>
+                                        </label>
+        
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_six" value="Menos de un año">Menos de un año
+                                            <span></span>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" formControlName="answ_six" value="Entre 1 - 2 años">Entre 1 - 2 años
+                                                <span></span>
+                                        </label>
+                                        <label class="radio">
+                                        <input type="radio" formControlName="answ_six" value="Entre 2 - 4 años">Entre 2 - 4 años
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <small *ngIf="validators('answ_six')" class="text-danger"> Este campo es obligatorio. </small>
+                                </div>
+                                
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 mx-auto text-center">
+                        <button *ngIf="expired" class="btn btn-danger btn-lg" disabled>Enviar encuesta</button>
+                        <button *ngIf="!expired" type="submit" class="btn btn-info btn-lg">Enviar encuesta</button>
+                    </div>
+                </div>
+
+                <div *ngIf="send" class="row mt-7">
+                    <div class="col-12 text-center">
+                        <img src="assets/media/logos/sonriendo.png" style="width: 60px;" alt="">
+                        <h1 class="font-weight-bolder text-dark mt-3">Gracias por darnos su opinion</h1>
+                        <div class="font-size-h4 mb-8">Mejoramos con tus experiencias</div>
+                    </div>
+                </div>
+
+                
+            </form>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+    <!--end::Content-->
+</div>

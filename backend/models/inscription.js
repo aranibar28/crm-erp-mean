@@ -13,6 +13,7 @@ const InscriptionSchema = Schema({
   status:     { type: String, required: true, default: "Procesando" },
   firm:       { type: String, required: false },
   date_firm:  { type: Date, required: false },
+  survey:     { type: Boolean, required: false, default: false },
   renew:      { type: Boolean, required: true, default: false },
   renovation: { type: Schema.Types.ObjectId, required: false, ref: "Inscription" },
   customer:   { type: Schema.Types.ObjectId, required: false, ref: "Customer" },

@@ -12,6 +12,7 @@ import { UpdateInscriptionComponent } from './update-inscription/update-inscript
 import { DetailsInscriptionComponent } from './details-inscription/details-inscription.component';
 import { ContractInscriptionComponent } from './contract-inscription/contract-inscription.component';
 import { PaymentInscriptionComponent } from './payment-inscription/payment-inscription.component';
+import { SurveyInscriptionComponent } from './survey-inscription/survey-inscription.component';
 import { ZfillPipe } from 'src/app/pipes/zfill.pipe';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ZfillPipe } from 'src/app/pipes/zfill.pipe';
     DetailsInscriptionComponent,
     ContractInscriptionComponent,
     PaymentInscriptionComponent,
+    SurveyInscriptionComponent,
     ZfillPipe,
   ],
   imports: [
