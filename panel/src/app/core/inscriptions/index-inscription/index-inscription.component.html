@@ -12,10 +12,10 @@
                         <i class="flaticon-computer"></i> &nbsp; Encuesta
                     </a>
 
-                    <a class="btn btn-light-success btn-sm font-weight-bold font-size-sm mr-3">
+                    <!-- <a class="btn btn-light-success btn-sm font-weight-bold font-size-sm mr-3">
                         <i class="flaticon-doc"></i>
                         Exportar
-                    </a>
+                    </a> -->
                     <!-- <button class="btn btn-light-success btn-sm font-weight-bold font-size-sm mr-3" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Preparando...
@@ -75,6 +75,36 @@
                     <span class="text-muted mt-3 font-weight-bold font-size-sm">Actividades de apertura cursos</span>
                 </h3>
                 <div class="card-toolbar">
+                    <div class="dropdown dropdown-inline mr-2">
+                        <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <i class="flaticon-file-2 mr-2"></i>Exportar
+                        </button>
+                        <!--begin::Dropdown Menu-->
+                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                            <!--begin::Navigation-->
+                            <ul class="navi flex-column navi-hover py-2">
+                                <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">Choose an option:</li>
+                                <li class="navi-item">
+                                    <a (click)="to_excel()" class="navi-link pointer">
+                                        <span class="navi-icon">
+                                            <i class="la la-file-excel-o"></i>
+                                        </span>
+                                        <span class="navi-text">Excel</span>
+                                    </a>
+                                </li>
+                                <li class="navi-item">
+                                    <a (click)="to_csv()" class="navi-link pointer">
+                                        <span class="navi-icon">
+                                            <i class="la la-file-text-o"></i>
+                                        </span>
+                                        <span class="navi-text">CSV</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--end::Navigation-->
+                        </div>
+                        <!--end::Dropdown Menu-->
+                    </div>
                     <button data-toggle="modal" [attr.data-target]="'#modalAdvanced'" class="btn btn-light-warning px-6 font-weight-bold">
                         <i class="flaticon2-console"></i> Avanzado
                      </button>
@@ -211,8 +241,48 @@
                                             </span>
                                             <div class="d-flex flex-column">
                                                 <span class="text-dark-75 font-weight-bolder font-size-sm">Comentarios</span>
-                                                <a href="#" class="text-primary font-weight-bolder">Ver</a>
+                                                <a (click)="init_comments(item._id)" data-toggle="modal" [attr.data-target]="'#modalComment-' + item._id" class="text-primary font-weight-bolder pointer">Ver</a>
                                             </div>
+
+                                            <div class="modal fade" [id]="'modalComment-'+ item._id" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Comentarios</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body" style="max-height: 480px; min-height: 480px; overflow: hidden; overflow-y: auto;">
+                                                            <div class="timeline timeline-5 mt-3">
+                                                                <!--begin::Item-->
+                                                                <ng-container *ngIf="load_comments">
+                                                                    <div class="text-warning text-center">Cargando...</div>
+                                                                </ng-container>
+
+                                                                <ng-container *ngIf="!load_comments">
+                                                                    <div *ngIf="comments.length == 0">
+                                                                        <div class="text-warning text-center">No hay actividades registradas.</div>
+                                                                    </div>
+                                                                    <div *ngFor="let subitem of comments" class="timeline-item align-items-start">
+                                                                        <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg text-right pr-3" style="width: 70px;">
+                                                                            {{ subitem.created_at | date: "dd/MM/YY" }}
+                                                                        </div>
+                                                                        <div class="timeline-badge">
+                                                                            <i class="fa fa-genderless text-success icon-xxl"></i>
+                                                                        </div>
+                                                                        <div class="timeline-content text-dark-50">
+                                                                            <b>{{ subitem.created_at | date: "shortTime" }}</b><br/>
+                                                                            {{ subitem.activity }}
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <!--end::Item-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                            
                                         </div>
                                         <!--end: Item-->
                                         <!--begin: Item-->

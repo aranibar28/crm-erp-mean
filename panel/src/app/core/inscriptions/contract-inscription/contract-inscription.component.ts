@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InscriptionService } from 'src/app/services/inscription.service';
 import { I18nInterface } from 'ngx-image-drawing';
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -53,7 +54,8 @@ export class ContractInscriptionComponent implements OnInit {
       let firm = $('#firma_img').val();
       this.inscriptionService.firm_inscription(this.id, { firm }).subscribe({
         next: (res) => {
-          console.log(res);
+          this.init_data();
+          Swal.fire('Muy bien!', 'Se guardaron los datos.', 'success');
         },
       });
     };

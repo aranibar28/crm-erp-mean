@@ -2,6 +2,7 @@ const { response } = require("express");
 const bcrypt = require("bcryptjs");
 const Customer = require("../models/customer");
 const Inscription = require("../models/inscription");
+const Inscription_Comment = require("../models/inscription_comments");
 const Survey = require("../models/survey");
 const jwt_customer = require("../helpers/jwt");
 const jwt = require("jwt-simple");
@@ -236,6 +237,7 @@ const send_survey = async (req, res = response) => {
   if (surveys.length == 0) {
     let reg = await Survey.create(data);
     await Inscription.findByIdAndUpdate(inscription._id, { survey: true });
+    register_activity("El cliente completó la encuesta", req.id, inscription._id);
     res.json({ data: reg });
   } else {
     res.json({ data: undefined, msg: "Ya se envió una respuesta de esta encuesta." });
@@ -270,6 +272,14 @@ const list_customers = async (req, res = response) => {
   }).select("_id first_name last_name full_name email verify type");
 
   res.json({ data: reg });
+};
+
+const register_activity = async (activity, collaborator, inscription) => {
+  await Inscription_Comment.create({
+    activity: activity,
+    collaborator: collaborator,
+    inscription: inscription,
+  });
 };
 
 module.exports = {

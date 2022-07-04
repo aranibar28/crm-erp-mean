@@ -2,6 +2,7 @@ const { response } = require("express");
 const moment = require("moment");
 const Inscription = require("../models/inscription");
 const Inscription_Detail = require("../models/inscription_detail");
+const Inscription_Comment = require("../models/inscription_comments");
 const Payment = require("../models/payments");
 const Cycle_Room = require("../models/cycles/cycle_room");
 
@@ -31,6 +32,7 @@ const create_inscription = async (req, res = response) => {
       await Inscription_Detail.create(item);
       update_aforo(item.cycle_room);
     }
+    register_activity("Se creo la matrícula del cliente", req.id, reg._id);
     send_email_invoice(reg._id);
     res.status(200).send({ data: true });
   } catch (error) {
@@ -101,6 +103,7 @@ const read_inscription_by_id = async (req, res = response) => {
 const send_invoice = async (req, res = response) => {
   let id = req.params["id"];
   send_email_invoice(id);
+  register_activity("El reenvió la orden al cliente", req.id, id);
   res.status(200).send({ data: true });
 };
 
@@ -112,6 +115,7 @@ const firm_inscription = async (req, res = response) => {
       firm: data.firm,
       date_firm: Date.now(),
     });
+    register_activity("El cliente firmó el contrato de la matrícula", req.id, id);
     res.json({ data: true });
   } catch (error) {
     res.json({ data: undefined, msg: error.message });
@@ -129,10 +133,21 @@ const cancel_inscription = async (req, res = response) => {
       }
       await Inscription_Detail.updateMany({ inscription: id }, { status: "Cancelado" });
       await Payment.updateMany({ inscription: id }, { status: "Cancelado" });
+      register_activity("El cliente canceló la matrícula", req.id, id);
       res.json({ data: reg });
     } else {
       res.json({ data: undefined, msg: "No tienes permisos para esta acción." });
     }
+  } catch (error) {
+    res.json({ data: undefined, msg: error.message });
+  }
+};
+
+const list_comments = async (req, res = response) => {
+  let id = req.params["id"];
+  try {
+    let reg = await Inscription_Comment.find({ inscription: id }).sort({ created_at: -1 });
+    res.json({ data: reg });
   } catch (error) {
     res.json({ data: undefined, msg: error.message });
   }
@@ -201,6 +216,14 @@ const send_email_invoice = async (id) => {
   });
 };
 
+const register_activity = async (activity, collaborator, inscription) => {
+  await Inscription_Comment.create({
+    activity: activity,
+    collaborator: collaborator,
+    inscription: inscription,
+  });
+};
+
 module.exports = {
   create_inscription,
   read_inscriptions_today,
@@ -209,4 +232,5 @@ module.exports = {
   send_invoice,
   firm_inscription,
   cancel_inscription,
+  list_comments,
 };

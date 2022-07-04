@@ -11,5 +11,6 @@ router.get("/read_inscription_by_id/:id", [validateJWT], ctrl.read_inscription_b
 router.get("/send_invoice/:id", [validateJWT], ctrl.send_invoice);
 router.put("/firm_inscription/:id", [validateJWT], ctrl.firm_inscription);
 router.get("/cancel_inscription/:id", [validateJWT], ctrl.cancel_inscription);
+router.get("/list_comments/:id", [validateJWT], ctrl.list_comments);
 
 module.exports = router;

@@ -4,6 +4,10 @@ import { CollaboratorService } from 'src/app/services/collaborator.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { InscriptionService } from 'src/app/services/inscription.service';
 import Swal from 'sweetalert2';
+import { ExportToCsv } from 'export-to-csv';
+import { Workbook } from 'exceljs';
+import * as fs from 'file-saver';
+import * as moment from 'moment';
 declare var $: any;
 
 @Component({
@@ -14,12 +18,15 @@ export class IndexInscriptionComponent implements OnInit {
   public user = JSON.parse(localStorage.getItem('x-user')!);
   public inscriptions: Array<any> = [];
   public inscriptions_arr: Array<any> = [];
+  public arr_json: Array<any> = [];
   public advisors: Array<any> = [];
+  public comments: Array<any> = [];
   public advisor = '';
   public from = '';
   public to = '';
 
   public load_data = false;
+  public load_comments = false;
   public size = 1;
   public p = 1;
 
@@ -84,6 +91,16 @@ export class IndexInscriptionComponent implements OnInit {
         setTimeout(() => {
           $('.selectpicker').selectpicker('refresh');
         }, 200);
+      },
+    });
+  }
+
+  init_comments(id: any) {
+    this.load_comments = true;
+    this.inscriptionService.list_comments(id).subscribe({
+      next: (res) => {
+        this.comments = res.data;
+        this.load_comments = false;
       },
     });
   }
@@ -192,5 +209,102 @@ export class IndexInscriptionComponent implements OnInit {
         window.open('/survey/' + res.token);
       },
     });
+  }
+
+  prepared_data() {
+    this.arr_json = [];
+    for (var item of this.inscriptions) {
+      let fecha = moment(item.created_at).format('YYYY-MM-DD');
+      let color = '';
+
+      if (item.status == 'Cancelado') {
+        color = 'F78870';
+      } else if (item.status == 'Procesando') {
+        color = '70F793';
+      }
+
+      this.arr_json.push({
+        customer: item.customer.full_name,
+        email: item.customer.email,
+        channel: item.channel,
+        advisor: item.advisor.full_name,
+        total: item.amount,
+        matricula: item.matricula,
+        date: fecha,
+        color: color,
+      });
+    }
+  }
+
+  to_excel() {
+    if (this.inscriptions.length == 0) {
+      Swal.fire('', 'No hay matrículas para exportar.', 'warning');
+      return;
+    }
+
+    this.prepared_data();
+    let workbook = new Workbook();
+    let worksheet = workbook.addWorksheet('Matriculas');
+
+    worksheet.addRow(undefined);
+    for (let x1 of this.arr_json) {
+      let x2 = Object.keys(x1);
+
+      let temp = [];
+      for (let y of x2) {
+        temp.push(x1[y]);
+      }
+      let item = worksheet.addRow(temp);
+      item.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: {
+          argb: x1.color,
+        },
+      };
+    }
+
+    let fname = 'Matriculas';
+
+    worksheet.columns = [
+      { header: 'Cliente', key: 'col1', width: 30 },
+      { header: 'Correo', key: 'col2', width: 25 },
+      { header: 'Canal', key: 'col3', width: 20 },
+      { header: 'Asesor', key: 'col4', width: 30 },
+      { header: 'Monto', key: 'col5', width: 15 },
+      { header: 'Matricula', key: 'col6', width: 15 },
+      { header: 'Fecha', key: 'col7', width: 20 },
+    ] as any;
+
+    workbook.xlsx.writeBuffer().then((data) => {
+      let blob = new Blob([data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      fs.saveAs(blob, fname + '.xlsx');
+    });
+  }
+
+  to_csv() {
+    if (this.inscriptions.length == 0) {
+      Swal.fire('', 'No hay matrículas para exportar.', 'warning');
+      return;
+    }
+
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'Lista de Inscripciones',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+    };
+
+    this.arr_json = [];
+    this.prepared_data();
+    const csvExporter = new ExportToCsv(options);
+    csvExporter.generateCsv(this.arr_json);
   }
 }

@@ -52,4 +52,9 @@ export class InscriptionService {
     const url = `${base_url}/cancel_inscription/${id}`;
     return this.http.get(url, this.headers);
   }
+
+  list_comments(id: any): Observable<any> {
+    const url = `${base_url}/list_comments/${id}`;
+    return this.http.get(url, this.headers);
+  }
 }
