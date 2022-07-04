@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './account/dashboard/dashboard.component';
 
-import { CreateCollaboratorComponent } from './collaborator/create-collaborator/create-collaborator.component';
-import { IndexCollaboratorComponent } from './collaborator/index-collaborator/index-collaborator.component';
-import { UpdateCollaboratorComponent } from './collaborator/update-collaborator/update-collaborator.component';
+import { CreateCollaboratorComponent } from './collaborators/create-collaborator/create-collaborator.component';
+import { IndexCollaboratorComponent } from './collaborators/index-collaborator/index-collaborator.component';
+import { UpdateCollaboratorComponent } from './collaborators/update-collaborator/update-collaborator.component';
 
 import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
 import { IndexCustomerComponent } from './customers/index-customer/index-customer.component';
@@ -22,6 +22,11 @@ import { IndexCourseComponent } from './courses/index-course/index-course.compon
 import { CreateCourseComponent } from './courses/create-course/create-course.component';
 import { UpdateCourseComponent } from './courses/update-course/update-course.component';
 
+import { IndexProductComponent } from './products/index-product/index-product.component';
+import { CreateProductComponent } from './products/create-product/create-product.component';
+import { UpdateProductComponent } from './products/update-product/update-product.component';
+import { InventoryProductComponent } from './products/inventory-product/inventory-product.component';
+
 import { IndexCycleComponent } from './cycles/index-cycle/index-cycle.component';
 import { ExpiredCycleComponent } from './cycles/expired-cycle/expired-cycle.component';
 import { CreateCycleComponent } from './cycles/create-cycle/create-cycle.component';
@@ -29,11 +34,11 @@ import { UpdateCycleComponent } from './cycles/update-cycle/update-cycle.compone
 
 import { IndexInscriptionComponent } from './inscriptions/index-inscription/index-inscription.component';
 import { CreateInscriptionComponent } from './inscriptions/create-inscription/create-inscription.component';
-import { UpdateInscriptionComponent } from './inscriptions/update-inscription/update-inscription.component';
 import { DetailsInscriptionComponent } from './inscriptions/details-inscription/details-inscription.component';
 import { ContractInscriptionComponent } from './inscriptions/contract-inscription/contract-inscription.component';
 import { PaymentInscriptionComponent } from './inscriptions/payment-inscription/payment-inscription.component';
 import { SurveyInscriptionComponent } from './inscriptions/survey-inscription/survey-inscription.component';
+
 
 const childRoutes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
@@ -45,6 +50,11 @@ const childRoutes: Routes = [
   { path: 'customers', component: IndexCustomerComponent },
   { path: 'customers/create', component: CreateCustomerComponent },
   { path: 'customers/:id', component: UpdateCustomerComponent },
+
+  { path: 'products', component: IndexProductComponent },
+  { path: 'products/create', component: CreateProductComponent },
+  { path: 'products/update/:id', component: UpdateProductComponent },
+  { path: 'products/inventory', component: InventoryProductComponent },
 
   {
     path: 'customers/buyer/:id',
@@ -74,7 +84,6 @@ const childRoutes: Routes = [
   { path: 'inscriptions/contract/:id', component: ContractInscriptionComponent },
   { path: 'inscriptions/payment/:id', component: PaymentInscriptionComponent },
   { path: 'inscriptions/survey/:id', component: SurveyInscriptionComponent },
-  { path: 'inscriptions/:id', component: UpdateInscriptionComponent },
 
   { path: '**', redirectTo: '' },
 ];

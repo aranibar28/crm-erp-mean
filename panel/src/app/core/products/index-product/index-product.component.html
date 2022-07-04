@@ -1,0 +1,144 @@
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <div class="card card-custom mb-7">
+            <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                <div class="card-title">
+                    <h3 class="card-label">Productos
+                    <span class="text-muted pt-2 font-size-sm d-block">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat, tempore.</span></h3>
+                </div>
+                <div class="card-toolbar">
+                    <a class="btn btn-light-warning btn-sm font-weight-bold font-size-sm mr-3" style="cursor: pointer;">
+                        <i class="flaticon-computer"></i> &nbsp; Inventario
+                    </a>
+
+                    <a routerLink="create" class="btn btn-light-success btn-sm font-weight-bold font-size-sm">
+                        <i class="flaticon-add-circular-button"></i>
+                        Nuevo producto
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <!--begin: Search Form-->
+                <!--begin::Search Form-->
+                <div class="mb-7">
+                    <div class="row align-items-center">
+                        <div class="col-lg-9 col-xl-8">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 my-2 my-md-0">
+                                    <div class="input-icon">
+                                        <input type="text" class="form-control" placeholder="Nombre del producto">
+                                        <span>
+                                            <i class="flaticon2-search-1 text-muted"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 my-2 my-md-0">
+                                    <div class="d-flex align-items-center">
+                                        <label class="mr-3 mb-0 d-none d-md-block">Categoría:</label>
+                                        <select class="form-control selectpicker" data-size="7" data-live-search="true">
+                                            <option value="" selected disabled>Seleccionar</option>
+                                            <option value="Todos">Todos</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 my-2 my-md-0">
+                                    <div class="d-flex align-items-center">
+                                        <label class="mr-3 mb-0 d-none d-md-block">Estado:</label>
+                                        <select class="form-control selectpicker" data-size="7" data-live-search="true">
+                                            <option value="" selected disabled>Seleccionar</option>
+                                            <option value="Todos">Todos</option>
+                                          
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
+                            <a href="#" class="btn btn-light-primary px-6 font-weight-bold">Buscar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_4">
+                        <thead>
+                            <tr class="text-left">
+                             
+                                <th class="pl-0" style="min-width: 120px">Producto</th>
+                                <th style="min-width: 110px">Categoría</th>
+                                <th style="min-width: 110px">Tipo</th>
+                                <th style="min-width: 100px">Stock</th>
+                                <th style="min-width: 100px">Precio</th>
+                                <th style="min-width: 120px">Estado</th>
+                                <th class="pr-0 text-right" style="min-width: 160px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            
+                                <td class="pl-0 d-flex align-items-center">
+                                    <!--begin::Symbol-->
+                                    <div class="symbol symbol-40 flex-shrink-0 mr-4 bg-light">
+                                        <div class="symbol-label" style="background-image: url('https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/products/11.png')"></div>
+                                    </div>
+                                    <!--end::Symbol-->
+                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Licensia Visual Studio</span>
+                                </td>
+                                <td>
+                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Software</span>
+                        
+                                </td>
+                                <td>
+                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Digital</span>
+                          
+                                </td>
+                                <td>
+                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">10</span>
+                                    <span class="text-muted font-weight-bold">unidades</span>
+                                </td>
+                                <td>
+                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">150USD</span>
+                                </td>
+                                <td>
+                                    <span style="width: 108px;">
+                                        <span class="label label-danger label-dot mr-2"></span>
+                                        <span class="font-weight-bold text-danger">Online</span>
+                                    </span>
+                                </td>
+                                <td class="pr-0 text-right">
+                                   
+                                    <div class="dropdown dropdown-inline">
+                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ki ki-bold-more-hor"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                            <!--begin::Navigation-->
+                                            <ul class="navi navi-hover py-5">
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                        <span class="navi-icon">
+                                                            <i class="flaticon2-drop"></i>
+                                                        </span>
+                                                        <span class="navi-text">New Group</span>
+                                                    </a>
+                                                </li>
+                                                
+                                            </ul>
+                                            <!--end::Navigation-->
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+     
+        
+    </div>
+    <!--end::Container-->
+</div>

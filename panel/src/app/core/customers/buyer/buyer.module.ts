@@ -6,8 +6,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxTinymceModule } from 'ngx-tinymce';
 
 import { BuyerComponent } from './buyer.component';
-import { TimePipe } from 'src/app/pipes/time.pipe';
 import { SanitizingPipe } from 'src/app/pipes/sanitizing.pipe';
+import { TimePipe } from 'src/app/pipes/time.pipe';
 
 import { DashboardCustomerComponent } from './dashboard-customer/dashboard-customer.component';
 import { ActivityCustomerComponent } from './activity-customer/activity-customer.component';

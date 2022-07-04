@@ -22,4 +22,4 @@ import { UpdateCollaboratorComponent } from './update-collaborator/update-collab
     NgxPaginationModule,
   ],
 })
-export class CollaboratorModule {}
+export class CollaboratorsModule {}
